@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10sp"
+    android:layout_marginStart="15sp"
+    android:layout_marginEnd="15sp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nomeLocale"
+        android:textColor="@color/black"
+        android:text="nome"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/indirizzoLocale"
+        android:layout_below="@id/nomeLocale"
+        android:text="indirizzo"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="10sp"
+        android:layout_below="@id/indirizzoLocale"/>
+
+
+
+</RelativeLayout>
