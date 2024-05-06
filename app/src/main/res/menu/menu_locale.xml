@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home_locale"
+        android:icon="@drawable/round_home"
+        android:title="HOME" />
+
+    <item
+        android:id="@+id/bottom_calendar"
+        android:icon="@drawable/round_calendar"
+        android:title="EVENTI" />
+
+    <item
+        android:id="@+id/bottom_profile_locale"
+        android:icon="@drawable/round_person"
+        android:title="PROFILO" />
+
+</menu>

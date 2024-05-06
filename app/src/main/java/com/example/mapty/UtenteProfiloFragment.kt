@@ -6,13 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-<<<<<<< Updated upstream
-class UtenteWishlistFragment : Fragment(R.layout.fragment_utente_wishlist){
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-
-    }
-}
-=======
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -20,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [UtenteWishlistFragment.newInstance] factory method to
+ * Use the [UtenteProfiloFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class UtenteWishlistFragment : Fragment() {
+class UtenteProfiloFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -41,7 +34,7 @@ class UtenteWishlistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_utente_wishlist, container, false)
+        return inflater.inflate(R.layout.fragment_utente_profilo, container, false)
     }
 
     companion object {
@@ -51,12 +44,12 @@ class UtenteWishlistFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment UtenteWishlistFragment.
+         * @return A new instance of fragment UtenteProfiloFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            UtenteWishlistFragment().apply {
+            UtenteProfiloFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -64,4 +57,3 @@ class UtenteWishlistFragment : Fragment() {
             }
     }
 }
->>>>>>> Stashed changes
