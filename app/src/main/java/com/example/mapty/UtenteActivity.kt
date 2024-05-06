@@ -1,12 +1,15 @@
 package com.example.mapty
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 class UtenteActivity : AppCompatActivity() {
+
     private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,4 +45,6 @@ class UtenteActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
 
     }
+
+
 }
