@@ -1,11 +1,8 @@
 package com.example.mapty
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
 class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
@@ -54,8 +51,8 @@ class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
             "indirizzo 15"
         )
 
-        listaLocali = findViewById(R.id.recyclerViewLocali)
-        listaLocali.layoutManager = LinearLayoutManager(this)
+        listaLocali = view.findViewById(R.id.recyclerViewLocali)
+        //listaLocali.layoutManager = LinearLayoutManager(this, )
         listaLocali.setHasFixedSize(true)
 
         dataList = arrayListOf<ItemLocale>()
