@@ -69,6 +69,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="526dp"
+        android:textSize="17sp"
         app:cornerRadius="10dp"
         android:onClick="goUtenteActivity"
         />
