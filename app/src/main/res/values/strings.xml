@@ -2,4 +2,12 @@
     <string name="app_name">Mapty</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="descrizione">Descrizione:</string>
+    <string name="nome">Nome:</string>
+    <string name="tipo">Tipo:</string>
+    <string name="luogo">Luogo:</string>
+    <string name="data">Data:</string>
+    <string name="prezzo">Prezzo:</string>
+    <string name="contatto">Contatto:</string>
+    <string name="aggiunge_evento">Aggiunge Evento:</string>
 </resources>

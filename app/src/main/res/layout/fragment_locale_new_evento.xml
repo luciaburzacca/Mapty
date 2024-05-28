@@ -1,9 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LocaleNewEventoFragment">
+    android:background="@drawable/img"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/nomeEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="218dp"
+        android:text="@string/nome"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/editNomeEvento"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="147dp" />
+
+    <EditText
+        android:id="@+id/editNomeEvento"
+        android:layout_width="217dp"
+        android:layout_height="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="148dp"
+        tools:ignore="LabelFor,MissingConstraints"
+        android:background="@color/lila"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/descrizioneEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="216dp"
+        android:text="@string/descrizione"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/editdescrizioneEvento"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="194dp" />
+
+    <EditText
+        android:id="@+id/editdescrizioneEvento"
+        android:layout_width="214dp"
+        android:layout_height="27dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="194dp"
+        tools:ignore="LabelFor,MissingConstraints"
+        android:background="@color/lila"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/tipoEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="214dp"
+        android:text="@string/tipo"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/scrollTipoEvento"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="242dp" />
+
+    <ScrollView
+        android:id="@+id/scrollTipoEvento"
+        android:layout_width="215dp"
+        android:layout_height="26dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="243dp"
+        android:background="@color/lila">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/luogoEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:text="@string/luogo"
+        android:textColor="#FFFFFF"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="292dp" />
+
+    <TextView
+        android:id="@+id/dataEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="216dp"
+        android:text="@string/data"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/editdataEvento"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="338dp" />
+
+    <EditText
+        android:id="@+id/editdataEvento"
+        android:layout_width="216dp"
+        android:layout_height="27dp"
+        android:ems="10"
+        android:inputType="date"
+        android:textColor="#FFFFFF"
+        tools:ignore="LabelFor,MissingConstraints"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="338dp"
+        android:background="@color/lila"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/prezzoEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="212dp"
+        android:text="@string/prezzo"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/editprezzoEvento"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="385dp" />
+
+    <EditText
+        android:id="@+id/editprezzoEvento"
+        android:layout_width="215dp"
+        android:layout_height="25dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="386dp"
+        tools:ignore="LabelFor,MissingConstraints"
+        android:background="@color/lila"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/contattoEvento"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="213dp"
+        android:text="@string/contatto"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/editcontattoEvento"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="431dp" />
+
+    <EditText
+        android:id="@+id/editcontattoEvento"
+        android:layout_width="213dp"
+        android:layout_height="24dp"
+        android:ems="10"
+        android:inputType="phone"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="432dp"
+        tools:ignore="LabelFor,MissingConstraints"
+        android:background="@color/lila"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/aggiungeEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aggiunge_evento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="529dp" />
 
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
