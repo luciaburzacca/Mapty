@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_utente"
+    app:startDestination="@id/utenteHomeFragment">
+
+    <fragment
+        android:id="@+id/utenteHomeFragment"
+        android:name="com.example.mapty.UtenteHomeFragment"
+        android:label="fragment_utente_home"
+        tools:layout="@layout/fragment_utente_home" >
+        <action
+            android:id="@+id/action_utenteHomeFragment_to_utenteListaEventiFragment"
+            app:destination="@id/utenteListaEventiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/utenteListaEventiFragment"
+        android:name="com.example.mapty.UtenteListaEventiFragment"
+        android:label="fragment_utente_lista_eventi"
+        tools:layout="@layout/fragment_utente_lista_eventi" />
+</navigation>

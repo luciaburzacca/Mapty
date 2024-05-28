@@ -1,52 +1,12 @@
 package com.example.mapty
 
-<<<<<<< Updated upstream
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
-
-class UtenteActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.utente_activity)
-
-        val profileFragment = UtenteProfileFragment()
-        val wishlistFragment = UtenteWishlistFragment()
-
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, profileFragment)
-            commit()
-        }
-
-        val profileBtn: Button = findViewById(R.id.ProfileButton)
-        val wishlistBtn: Button = findViewById(R.id.WishlistButton)
-
-        profileBtn.setOnClickListener(){
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.flFragment, profileFragment)
-                commit()
-            }
-        }
-
-        wishlistBtn.setOnClickListener(){
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.flFragment, wishlistFragment)
-                commit()
-            }
-        }
-
-    }
-=======
-import android.content.Intent
-import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class UtenteActivity : AppCompatActivity() {
 
@@ -71,7 +31,7 @@ class UtenteActivity : AppCompatActivity() {
                 }
 
                 R.id.bottom_profile -> {
-                    replaceFragment(UtenteProfiloFragment())
+                    replaceFragment(UtenteProfileFragment())
                     true
                 }
                 else -> false
@@ -87,5 +47,4 @@ class UtenteActivity : AppCompatActivity() {
     }
 
 
->>>>>>> Stashed changes
 }

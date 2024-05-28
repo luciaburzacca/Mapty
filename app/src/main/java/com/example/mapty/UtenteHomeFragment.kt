@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.findNavController
 
 class UtenteHomeFragment : Fragment() {
 
@@ -23,10 +25,12 @@ class UtenteHomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_utente_home, container, false)
+        /*val bottoneListaEventi: Button = findViewById(R.id.button_visualizza_eventi)
+
+        bottoneListaEventi.setOnClickListener{
+            findNavController().navigate(R.id.action_utenteHomeFragment_to_utenteListaEventiFragment)
+        }*/
     }
 
-    /*fun goListaEventi(view: View?) {
-        val intent = Intent(this, LocaleListaEventiFragment::class.java)
-        startActivity(intent)
-    }*/
+
 }

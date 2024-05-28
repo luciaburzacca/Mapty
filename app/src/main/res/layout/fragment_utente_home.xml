@@ -39,7 +39,6 @@
             android:layout_marginStart="20sp"
             android:layout_marginTop="20sp"
             android:layout_marginEnd="20sp"
-            android:onClick="goListaEventi"
             android:text="TUTTI GLI EVENTI"
             app:cornerRadius="10dp" />
 
