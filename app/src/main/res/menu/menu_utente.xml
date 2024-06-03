@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_home"
+        android:id="@+id/utenteHomeFragment"
         android:icon="@drawable/round_home"
-        android:title="HOME" />
+        android:title="@string/home" />
 
     <item
-        android:id="@+id/bottom_wishlist"
+        android:id="@+id/utenteWishlistFragment"
         android:icon="@drawable/round_favorite"
-        android:title="WISHLIST" />
+        android:title="@string/wishlist" />
 
     <item
-        android:id="@+id/bottom_profile"
+        android:id="@+id/utenteProfileFragment"
         android:icon="@drawable/round_person"
-        android:title="PROFILE" />
+        android:title="@string/profile" />
 
 </menu>

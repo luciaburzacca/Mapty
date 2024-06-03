@@ -4,42 +4,26 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class LocaleActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    //@SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContentView(R.layout.activity_locale)
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation_locale)
 
-        bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.bottom_home_locale -> {
-                    replaceFragment(LocaleHomeFragment())
-                    true
-                }
+        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_locale)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.frame_container_locale) as NavHostFragment
+        val navController = navHostFragment.navController
 
-                R.id.bottom_calendar -> {
-                    replaceFragment(LocaleEventiFragment())
-                    true
-                }
+        bottomNavigationView.setupWithNavController(navController)
 
-                R.id.bottom_profile_locale -> {
-                    replaceFragment(LocaleProfiloFragment())
-                    true
-                }
-                else -> false
-
-            }
-        }
-        replaceFragment(LocaleHomeFragment())
-    }
-
-    private fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
 
     }
 }

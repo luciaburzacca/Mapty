@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
 
-class LocaleHomeFragment : Fragment() {
+class UtenteFiltroEventiFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_locale_home, container, false)
 
-        view.findViewById<Button>(R.id.aggiungi_evento).setOnClickListener {
-            findNavController().navigate(R.id.action_localeHomeFragment_to_localeNewEventoFragment)
+        val view = inflater.inflate(R.layout.fragment_utente_filtro_eventi, container, false)
+        view.findViewById<Button>(R.id.buttonTornaHome).setOnClickListener {
+            findNavController().navigate(R.id.action_utenteFiltroEventiFragment_to_utenteHomeFragment)
         }
         return view
     }

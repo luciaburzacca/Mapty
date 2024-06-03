@@ -33,7 +33,7 @@
             android:layout_gravity="center" />
 
         <Button
-            android:id="@+id/button_visualizza_eventi"
+            android:id="@+id/button_filtro_eventi"
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginStart="20sp"

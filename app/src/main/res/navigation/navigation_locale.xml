@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_locale"
+    app:startDestination="@id/localeHomeFragment">
+
+    <fragment
+        android:id="@+id/localeHomeFragment"
+        android:name="com.example.mapty.LocaleHomeFragment"
+        android:label="fragment_locale_home"
+        tools:layout="@layout/fragment_locale_home" >
+        <action
+            android:id="@+id/action_localeHomeFragment_to_localeNewEventoFragment"
+            app:destination="@id/localeNewEventoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/localeProfiloFragment"
+        android:name="com.example.mapty.LocaleProfiloFragment"
+        android:label="fragment_locale_profilo"
+        tools:layout="@layout/fragment_locale_profilo" />
+    <fragment
+        android:id="@+id/localeEventiFragment"
+        android:name="com.example.mapty.LocaleEventiFragment"
+        android:label="fragment_locale_eventi"
+        tools:layout="@layout/fragment_locale_eventi" />
+    <fragment
+        android:id="@+id/localeNewEventoFragment"
+        android:name="com.example.mapty.LocaleNewEventoFragment"
+        android:label="LocaleNewEventoFragment" />
+</navigation>

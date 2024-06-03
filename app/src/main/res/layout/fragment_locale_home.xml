@@ -12,7 +12,7 @@
         android:textSize="100sp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/aggiungi_evento"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_marginStart="20sp"

@@ -11,12 +11,34 @@
         android:label="fragment_utente_home"
         tools:layout="@layout/fragment_utente_home" >
         <action
-            android:id="@+id/action_utenteHomeFragment_to_utenteListaEventiFragment"
-            app:destination="@id/utenteListaEventiFragment" />
+            android:id="@+id/action_utenteHomeFragment_to_utenteFiltroEventiFragment"
+            app:destination="@id/utenteFiltroEventiFragment" />
     </fragment>
     <fragment
         android:id="@+id/utenteListaEventiFragment"
         android:name="com.example.mapty.UtenteListaEventiFragment"
         android:label="fragment_utente_lista_eventi"
         tools:layout="@layout/fragment_utente_lista_eventi" />
+    <fragment
+        android:id="@+id/utenteWishlistFragment"
+        android:name="com.example.mapty.UtenteWishlistFragment"
+        android:label="fragment_utente_wishlist"
+        tools:layout="@layout/fragment_utente_wishlist" />
+    <fragment
+        android:id="@+id/utenteProfileFragment"
+        android:name="com.example.mapty.UtenteProfileFragment"
+        android:label="fragment_utente_profile"
+        tools:layout="@layout/fragment_utente_profile" />
+    <fragment
+        android:id="@+id/utenteFiltroEventiFragment"
+        android:name="com.example.mapty.UtenteFiltroEventiFragment"
+        android:label="fragment_utente_filtro_eventi"
+        tools:layout="@layout/fragment_utente_filtro_eventi" >
+        <action
+            android:id="@+id/action_utenteFiltroEventiFragment_to_utenteListaEventiFragment"
+            app:destination="@id/utenteListaEventiFragment" />
+        <action
+            android:id="@+id/action_utenteFiltroEventiFragment_to_utenteHomeFragment"
+            app:destination="@id/utenteHomeFragment" />
+    </fragment>
 </navigation>

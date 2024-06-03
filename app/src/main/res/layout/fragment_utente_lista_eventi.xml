@@ -7,22 +7,7 @@
     android:background="@color/black">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp">
-
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25sp"
-            android:background="@color/white"
-            android:gravity="center"
-            tools:layout_editor_absoluteY="526dp" />
+    <!--colonne e 4 righe come fares
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,6 +156,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </FrameLayout>

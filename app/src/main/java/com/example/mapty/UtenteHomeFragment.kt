@@ -23,13 +23,15 @@ class UtenteHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_utente_home, container, false)
-        /*val bottoneListaEventi: Button = findViewById(R.id.button_visualizza_eventi)
 
-        bottoneListaEventi.setOnClickListener{
-            findNavController().navigate(R.id.action_utenteHomeFragment_to_utenteListaEventiFragment)
-        }*/
+        val view = inflater.inflate(R.layout.fragment_utente_home, container, false)
+        //mapView = view.findViewById(R.id.mapView)
+
+        view.findViewById<Button>(R.id.button_filtro_eventi).setOnClickListener {
+            findNavController().navigate(R.id.action_utenteHomeFragment_to_utenteFiltroEventiFragment)
+        }
+        return view
+
     }
 
 

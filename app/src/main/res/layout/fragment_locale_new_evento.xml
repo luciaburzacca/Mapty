@@ -60,27 +60,32 @@
         android:id="@+id/tipoEvento"
         android:layout_width="102dp"
         android:layout_height="26dp"
-        android:layout_marginEnd="214dp"
+        android:layout_marginEnd="212dp"
         android:text="@string/tipo"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/scrollTipoEvento"
-        tools:ignore="MissingConstraints"
+        app:layout_constraintEnd_toStartOf="@+id/lista_item_locale"
+        app:layout_constraintStart_toStartOf="@+id/descrizioneEvento"
+        tools:ignore="MissingConstraints,NotSibling"
         tools:layout_editor_absoluteY="242dp" />
 
-    <ScrollView
-        android:id="@+id/scrollTipoEvento"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="215dp"
         android:layout_height="26dp"
-        tools:ignore="MissingConstraints"
+
         tools:layout_editor_absoluteX="142dp"
         tools:layout_editor_absoluteY="243dp"
-        android:background="@color/lila">
+        tools:ignore="MissingConstraints"
+        android:hint="@string/SELEZIONA"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-        <LinearLayout
+        <AutoCompleteTextView
+            android:id="@+id/lista_item_locale"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_height="26dp"
+            android:inputType="none"
+            android:background="@color/lila"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/luogoEvento"

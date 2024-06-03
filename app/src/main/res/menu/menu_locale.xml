@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_home_locale"
+        android:id="@+id/localeHomeFragment"
         android:icon="@drawable/round_home"
-        android:title="HOME" />
+        android:title="@string/home" />
 
     <item
-        android:id="@+id/bottom_calendar"
+        android:id="@+id/localeEventiFragment"
         android:icon="@drawable/round_calendar"
-        android:title="EVENTI" />
+        android:title="@string/eventi" />
 
     <item
-        android:id="@+id/bottom_profile_locale"
+        android:id="@+id/localeEventiFragment"
         android:icon="@drawable/round_person"
-        android:title="PROFILO" />
+        android:title="@string/profile" />
 
 </menu>
