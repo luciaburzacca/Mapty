@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UtenteListaEventiFragment"
     android:background="@color/black">
-
-
-    <!--colonne e 4 righe come fares
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +19,7 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/all"
                 android:background="@color/black" />
 
             <ImageButton
@@ -32,7 +30,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/bar"
                 android:background="@color/black"/>
 
             <ImageButton
@@ -41,7 +39,7 @@
                 android:layout_height="100dp"
                 android:layout_marginEnd="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/beach"
                 android:background="@color/black" />
 
         </LinearLayout>
@@ -58,7 +56,7 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/disco"
                 android:background="@color/black" />
 
             <ImageButton
@@ -69,7 +67,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/film"
                 android:background="@color/black"/>
 
             <ImageButton
@@ -78,7 +76,7 @@
                 android:layout_height="100dp"
                 android:layout_marginEnd="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/karaoke"
                 android:background="@color/black" />
         </LinearLayout>
 
@@ -94,7 +92,7 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/live"
                 android:background="@color/black" />
 
             <ImageButton
@@ -105,7 +103,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/local"
                 android:background="@color/black"/>
 
             <ImageButton
@@ -114,7 +112,7 @@
                 android:layout_height="100dp"
                 android:layout_marginEnd="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
+                tools:src="@drawable/reggaeton"
                 android:background="@color/black" />
 
         </LinearLayout>
@@ -131,7 +129,6 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
                 android:background="@color/black" />
 
             <ImageButton
@@ -142,7 +139,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
                 android:background="@color/black"/>
 
             <ImageButton
@@ -151,11 +147,8 @@
                 android:layout_height="100dp"
                 android:layout_marginEnd="15dp"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/esempio"
                 android:background="@color/black" />
 
         </LinearLayout>
 
-    </LinearLayout>-->
-
-</FrameLayout>
+    </FrameLayout>

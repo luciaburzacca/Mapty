@@ -28,7 +28,11 @@
         android:id="@+id/utenteProfileFragment"
         android:name="com.example.mapty.UtenteProfileFragment"
         android:label="fragment_utente_profile"
-        tools:layout="@layout/fragment_utente_profile" />
+        tools:layout="@layout/fragment_utente_profile" >
+        <action
+            android:id="@+id/action_utenteProfileFragment_to_utentePaginaLocaleFragment"
+            app:destination="@id/utentePaginaLocaleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/utenteFiltroEventiFragment"
         android:name="com.example.mapty.UtenteFiltroEventiFragment"
@@ -41,4 +45,9 @@
             android:id="@+id/action_utenteFiltroEventiFragment_to_utenteHomeFragment"
             app:destination="@id/utenteHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/utentePaginaLocaleFragment"
+        android:name="com.example.mapty.UtentePaginaLocaleFragment"
+        android:label="fragment_utente_pagina_locale"
+        tools:layout="@layout/fragment_utente_pagina_locale" />
 </navigation>

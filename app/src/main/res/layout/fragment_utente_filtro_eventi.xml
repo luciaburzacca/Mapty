@@ -12,16 +12,17 @@
         android:orientation="vertical"
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        tools:ignore="UselessParent">
 
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="25sp"
-        android:background="@color/white"
-        android:gravity="center"
-        tools:layout_editor_absoluteY="526dp" />
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25sp"
+            android:background="@color/white"
+            android:gravity="center"
+            tools:layout_editor_absoluteY="526dp" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
             android:layout_weight="1"
             android:layout_marginBottom="15dp">
 
-            <!-- Prima riga -->
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -41,137 +42,152 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/all"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/all" />
 
                 <ImageButton
                     android:id="@+id/imageButtonBar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/bar"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/bar" />
 
                 <ImageButton
                     android:id="@+id/imageButtonBeach"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/beach"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/beach" />
             </TableRow>
 
-            <!-- Seconda riga -->
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="15dp">
+
                 <ImageButton
                     android:id="@+id/imageButtonDisco"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/disco"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/disco" />
 
                 <ImageButton
                     android:id="@+id/imageButtonFilm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/film"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/film" />
 
                 <ImageButton
                     android:id="@+id/imageButtonKaraoke"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/karaoke"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/karaoke" />
             </TableRow>
 
-            <!-- Terza riga -->
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="15dp">
+
                 <ImageButton
                     android:id="@+id/imageButtonLive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/live"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/live" />
 
                 <ImageButton
                     android:id="@+id/imageButtonLocal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/local"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/local" />
 
                 <ImageButton
                     android:id="@+id/imageButtonReggaeton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/reggaeton"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/reggaeton" />
             </TableRow>
 
-            <!-- Quarta riga -->
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="15dp">
+
                 <ImageButton
                     android:id="@+id/imageButtonSlay"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/slay"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/slay" />
 
                 <ImageButton
                     android:id="@+id/imageButtonTechno"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/techno"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/techno" />
 
                 <ImageButton
                     android:id="@+id/imageButtonThematic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/thematic"
-                    android:scaleType="centerCrop"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/thematic" />
             </TableRow>
 
         </TableLayout>
@@ -181,7 +197,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TORNA A HOME"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"/>
 
     </LinearLayout>
 
