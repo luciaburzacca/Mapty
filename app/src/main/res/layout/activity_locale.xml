@@ -19,18 +19,17 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:itemIconSize="30dp"
-        app:menu="@menu/menu_locale"
+        app:menu="@menu/menu_locale"/>
 
-        />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frame_container_locale"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_locale"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_locale"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/navigation_locale" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,19 +3,19 @@ package com.example.mapty
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
 
-    lateinit var listaLocali: RecyclerView
-    lateinit var dataList: ArrayList<ItemLocale>
-    lateinit var nameList: Array<String>
-    lateinit var addressList: Array<String>
+    lateinit var recyclerView: RecyclerView
+    lateinit var arrayList: ArrayList<ItemLocale>
+    lateinit var nomiLocali: Array<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
-        nameList = arrayOf(
+        nomiLocali = arrayOf(
             "locale 1",
             "locale 2",
             "locale 3",
@@ -33,39 +33,23 @@ class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
             "locale 15"
         )
 
-        addressList = arrayOf(
-            "indirizzo 1",
-            "indirizzo 2",
-            "indirizzo 3",
-            "indirizzo 4",
-            "indirizzo 5",
-            "indirizzo 6",
-            "indirizzo 7",
-            "indirizzo 8",
-            "indirizzo 9",
-            "indirizzo 10",
-            "indirizzo 11",
-            "indirizzo 12",
-            "indirizzo 13",
-            "indirizzo 14",
-            "indirizzo 15"
-        )
+        recyclerView = view.findViewById(R.id.recycler_view_locali_preferiti)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
 
-        listaLocali = view.findViewById(R.id.recyclerViewLocali)
-        //listaLocali.layoutManager = LinearLayoutManager(this, )
-        listaLocali.setHasFixedSize(true)
-
-        dataList = arrayListOf<ItemLocale>()
-        getData()
+        arrayList = arrayListOf<ItemLocale>()
+        getDataLocali()
 
     }
 
-    fun getData(){
-        for (i in nameList.indices){
-            val dataClass = ItemLocale(nameList[i], addressList[i])
-            dataList.add(dataClass)
+    private fun getDataLocali() {
+        for(i in nomiLocali.indices){
+            val locale = ItemLocale(nomiLocali[i])
+            arrayList.add(locale)
         }
-        listaLocali.adapter = MyAdapter(dataList)
+
+        recyclerView.adapter = MyAdapter(arrayList)
     }
+
 
 }
