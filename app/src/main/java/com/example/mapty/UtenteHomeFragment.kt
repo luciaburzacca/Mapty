@@ -24,6 +24,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.MapView
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
@@ -35,63 +36,63 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 class UtenteHomeFragment : Fragment() {
 
     private lateinit var mapView: MapView
+    private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    // Define the reference GeoPoint (Ancona)
+    private val referencePoint = GeoPoint(43.6189, 13.5152)
+    private val distanceThresholdInMeters = 10000.0  // 10 km
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Initialize osmdroid configuration
+        Configuration.getInstance().load(
+            requireActivity().applicationContext,
+            androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireActivity().applicationContext)
+        )
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+    }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_utente_home, container, false)
-
+        mapView = view.findViewById(R.id.map)
 
         view.findViewById<Button>(R.id.button_filtro_eventi).setOnClickListener {
             findNavController().navigate(R.id.action_utenteHomeFragment_to_utenteFiltroEventiFragment)
         }
-
-        mapView = view.findViewById(R.id.map)
-        mapView.setBuiltInZoomControls(true)
-        mapView.setMultiTouchControls(true)
-
-        // Configura la mappa con un punto iniziale su Ancona
-        val startPoint = GeoPoint(43.6158, 13.5189)
-        val mapController = mapView.controller
-        mapController.setZoom(15.0)
-        mapController.setCenter(startPoint)
-
-        // Aggiungi un marker su Ancona
-        val startMarker = Marker(mapView)
-        startMarker.position = startPoint
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        startMarker.title = "Ancona"
-        mapView.overlays.add(startMarker)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
-        checkLocationPermission()
-
         return view
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        checkLocationPermission()
     }
 
     private fun checkLocationPermission() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_PERMISSIONS_REQUEST_CODE)
         } else {
             getLastKnownLocation()
         }
     }
 
     private fun getLastKnownLocation() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            val locationResult: Task<Location> = fusedLocationClient.lastLocation
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            val locationResult = fusedLocationClient.lastLocation
             locationResult.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val location = task.result
                     if (location != null) {
                         val userLocation = GeoPoint(location.latitude, location.longitude)
-                        mapView.controller.setCenter(userLocation)
+                        initializeMap(userLocation)
+                    } else {
+                        Toast.makeText(requireContext(), "Unable to get location", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(requireContext(), "Unable to get location", Toast.LENGTH_SHORT).show()
@@ -100,19 +101,35 @@ class UtenteHomeFragment : Fragment() {
         }
     }
 
+    private fun initializeMap(userLocation: GeoPoint) {
+        mapView.setTileSource(TileSourceFactory.MAPNIK)
+        mapView.setMultiTouchControls(true)
+
+        // Calculate the distance between the reference point and the user's location
+        val distance = referencePoint.distanceToAsDouble(userLocation)
+
+        // Set the map's center based on the distance
+        val centerPoint = if (distance > distanceThresholdInMeters) referencePoint else userLocation
+
+        // Set the view of the map and zoom
+        mapView.controller.setCenter(centerPoint)
+        mapView.controller.setZoom(15.0)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastKnownLocation()
             } else {
-                Toast.makeText(requireContext(), "Ci siamo impeganti tanto, perchè non vui utilizzare tutto quello che abbiamo fatto? Non ti rubiamo mica i dati", Toast.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), "Location permission denied, sei una persona ANTIPATICA", Snackbar.LENGTH_LONG).show()
             }
         }
     }
 
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release resources when the fragment is destroyed
+        mapView.onDetach()
     }
-
 }

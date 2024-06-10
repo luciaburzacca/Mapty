@@ -1,8 +1,11 @@
 package com.example.mapty
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,7 +16,7 @@ class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
     lateinit var nomiLocali: Array<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         nomiLocali = arrayOf(
             "locale 1",
@@ -40,6 +43,11 @@ class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
         arrayList = arrayListOf<ItemLocale>()
         getDataLocali()
 
+        // Trova il bottone e imposta il listener del click
+        val buttonProva = view.findViewById<Button>(R.id.prova)
+        buttonProva.setOnClickListener {
+            findNavController().navigate(R.id.action_utenteProfileFragment_to_utentePaginaLocaleFragment)
+        }
     }
 
     private fun getDataLocali() {
@@ -50,6 +58,4 @@ class UtenteProfileFragment : Fragment(R.layout.fragment_utente_profile){
 
         recyclerView.adapter = MyAdapter(arrayList)
     }
-
-
 }

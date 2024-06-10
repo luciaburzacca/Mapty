@@ -3,16 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UtentePaginaLocaleFragment"
-    android:layout_marginStart="20sp"
-    android:layout_marginEnd="20dp"
-    android:layout_marginTop="50dp">
+    android:background="@color/black">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/textView5"
@@ -60,9 +63,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/black"
-                android:shadowColor="@color/lila"
+                android:background="@color/viola"
+                android:textColor="@color/white"
                 android:text="EVENTI"
+                app:cornerRadius="0dp"
                  />
 
             <Button
@@ -70,26 +74,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/black"
+                android:background="@color/dark_gray"
+                android:textColor="@color/white"
                 android:text="FOTO"
+                app:cornerRadius="0dp"
                  />
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/lila"
+        android:id="@+id/sfondoRecycler">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="100dp"
+             />
 
-            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
 
 
-        <ImageView
+       <!-- <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:id="@+id/heartImageView"
             android:src="@drawable/round_favorite_border"
+            /> -->
+
+        <Button
+            android:id="@+id/buttonRitornaHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:text="TORNA A HOME"
+            app:cornerRadius="10dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             />
 
 
