@@ -33,6 +33,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
+
+
 }
 
 dependencies {
@@ -45,8 +51,18 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation (libs.osmdroid.android)
+    implementation (libs.osmdroid.geopackage)
+    implementation (libs.osmdroid.wms)
+    
+    implementation(libs.androidx.navigation.ui.ktx)
+
+
 
 }

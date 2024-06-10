@@ -12,7 +12,7 @@
         android:title="@string/eventi" />
 
     <item
-        android:id="@+id/localeEventiFragment"
+        android:id="@+id/localeProfiloFragment"
         android:icon="@drawable/round_person"
         android:title="@string/profile" />
 

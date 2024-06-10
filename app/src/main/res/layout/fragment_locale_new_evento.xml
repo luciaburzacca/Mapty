@@ -4,24 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img"
-    >
+    android:background="@drawable/img" >
 
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="150dp">
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="20dp"
             >
 
             <TextView
@@ -56,7 +55,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 tools:ignore="MissingConstraints,NotSibling"
-                 />
+                />
 
             <TextView
                 android:id="@+id/luogoEvento"
@@ -76,6 +75,30 @@
                 android:layout_height="35dp"
                 android:layout_marginBottom="15dp"
                 android:text="@string/data"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                />
+
+            <TextView
+                android:id="@+id/inizioEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="35dp"
+                android:layout_marginBottom="15dp"
+                android:text="Ora di inizio:"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                />
+
+            <TextView
+                android:id="@+id/fineEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="35dp"
+                android:layout_marginBottom="15dp"
+                android:text="Ora di fine:"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 tools:ignore="MissingConstraints"
@@ -110,7 +133,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/editNomeEvento"
@@ -134,6 +158,7 @@
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:textSize="20sp"
+                android:textAlignment="textStart"
                 tools:ignore="LabelFor,MissingConstraints" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -154,6 +179,14 @@
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/selezionaMappa"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Seleziona Mappa"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"/>
 
             <EditText
                 android:id="@+id/editdataEvento"
@@ -198,30 +231,30 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center">
+        tools:layout_editor_absoluteX="20dp">
 
         <Button
             android:id="@+id/aggiungeEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/aggiunge_evento"
-            tools:ignore="MissingConstraints"
-            android:layout_marginBottom="15dp"/>
+            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/annullaEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ANNULLA"
-            tools:ignore="MissingConstraints"
-            android:textSize="15dp"/>
+            android:textSize="15dp"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
 
 
