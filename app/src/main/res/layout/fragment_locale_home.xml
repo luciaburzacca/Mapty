@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LocaleHomeFragment">
+    tools:context=".LocaleHomeFragment"
+    android:background="@color/black">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="LOCALE HOME"
-        android:textSize="100sp" />
+        android:textSize="100sp"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/aggiungi_evento"

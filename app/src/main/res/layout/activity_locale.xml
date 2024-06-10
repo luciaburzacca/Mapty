@@ -15,10 +15,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        android:background="@color/black"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        style="@style/BottomNavigationViewItem"
+        android:background="@drawable/bottom_navigation_shadow"
+        app:itemIconTint="@color/bottom_bar_color"
+        app:itemTextColor="@color/bottom_bar_color"
         app:itemIconSize="30dp"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/menu_locale"/>
 
 

@@ -11,10 +11,16 @@
         android:id="@+id/bottom_navigation_utente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
+        style="@style/BottomNavigationViewItem"
+        android:background="@drawable/bottom_navigation_shadow"
+        app:itemIconTint="@color/bottom_bar_color"
+        app:itemTextColor="@color/bottom_bar_color"
+        app:itemIconSize="30dp"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/menu_utente"
         android:layout_alignParentBottom="true"
         />

@@ -5,4 +5,6 @@
     <color name="verdino">#89bfdd</color>
     <color name="viola">#89bfdd</color>
     <color name="lila">#9999CC</color>
+    <color name="colorSelected">#9999CC</color>
+    <color name="colorUnselected">#80FFFFFF</color>
 </resources>

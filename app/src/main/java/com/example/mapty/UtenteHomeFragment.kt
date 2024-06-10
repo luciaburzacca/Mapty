@@ -106,7 +106,7 @@ class UtenteHomeFragment : Fragment() {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLastKnownLocation()
             } else {
-                Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Ci siamo impeganti tanto, perchè non vui utilizzare tutto quello che abbiamo fatto? Non ti rubiamo mica i dati", Toast.LENGTH_SHORT).show()
             }
         }
     }
