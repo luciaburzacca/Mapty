@@ -1,18 +1,17 @@
 <resources>
     <string name="app_name">Mapty</string>
 
-    <string name="descrizione">Descrizione:</string>
-    <string name="nome">Nome:</string>
-    <string name="tipo">Tipo:</string>
-    <string name="luogo">Luogo:</string>
-    <string name="data">Data:</string>
-    <string name="prezzo">Prezzo:</string>
-    <string name="contatto">Contatto:</string>
-    <string name="aggiunge_evento">Aggiunge Evento:</string>
+    <string name="descrizione">Descrizione: </string>
+    <string name="nome">Nome: </string>
+    <string name="tipo">Tipo: </string>
+    <string name="luogo">Luogo: </string>
+    <string name="data">Data: </string>
+    <string name="prezzo">Prezzo: </string>
+    <string name="contatto">Contatto: </string>
+    <string name="aggiunge_evento">AGGIUNGI EVENTO </string>
     <string name="home">HOME</string>
     <string name="wishlist">WISHLIST</string>
-    <string name="profile">PROFILE</string>
-    <string name="eventi">EVENTI</string>
+    <string name="profile">PROFILO</string>
     <string name="registrati">REGISTRATI</string>
     <string name="oppure">OPPURE</string>
     <string name="password">PASSWORD</string>
