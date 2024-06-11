@@ -9,21 +9,12 @@
         android:id="@+id/localeHomeFragment"
         android:name="com.example.mapty.LocaleHomeFragment"
         android:label="fragment_locale_home"
-        tools:layout="@layout/fragment_locale_home" >
-        <action
-            android:id="@+id/action_localeHomeFragment_to_localeNewEventoFragment"
-            app:destination="@id/localeNewEventoFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_locale_home" />
     <fragment
         android:id="@+id/localeProfiloFragment"
         android:name="com.example.mapty.LocaleProfiloFragment"
         android:label="fragment_locale_profilo"
         tools:layout="@layout/fragment_locale_profilo" />
-    <fragment
-        android:id="@+id/localeEventiFragment"
-        android:name="com.example.mapty.LocaleEventiFragment"
-        android:label="fragment_locale_eventi"
-        tools:layout="@layout/fragment_locale_eventi" />
     <fragment
         android:id="@+id/localeNewEventoFragment"
         android:name="com.example.mapty.LocaleNewEventoFragment"

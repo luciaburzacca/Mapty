@@ -6,21 +6,28 @@
     tools:context=".LocaleHomeFragment"
     android:background="@color/black">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="LOCALE HOME"
-        android:textSize="100sp"
-        android:textColor="@color/white"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
 
-    <Button
-        android:id="@+id/aggiungi_evento"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="500sp"
-        android:layout_marginEnd="20sp"
-        android:onClick="goNewEvento"
-        android:text="AGGIUNGI EVENTO" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EVENTI FUTURI" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EVENTI PASSATI" />
+    </LinearLayout>
 
 </FrameLayout>

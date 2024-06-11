@@ -7,9 +7,9 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/localeEventiFragment"
-        android:icon="@drawable/round_calendar"
-        android:title="@string/eventi" />
+        android:id="@+id/localeNewEventoFragment"
+        android:icon="@drawable/round_add"
+        android:title="AGGIUNGI" />
 
     <item
         android:id="@+id/localeProfiloFragment"

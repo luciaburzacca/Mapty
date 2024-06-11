@@ -14,12 +14,8 @@ class LocaleHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_locale_home, container, false)
+        return inflater.inflate(R.layout.fragment_locale_home, container, false)
 
-        view.findViewById<Button>(R.id.aggiungi_evento).setOnClickListener {
-            findNavController().navigate(R.id.action_localeHomeFragment_to_localeNewEventoFragment)
-        }
-        return view
     }
 
 

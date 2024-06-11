@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints" >
 
         <LinearLayout
             android:layout_width="150dp"
@@ -28,7 +28,7 @@
                 android:layout_width="145dp"
                 android:gravity="right"
                 android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="17dp"
                 android:text="@string/nome"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"/>
@@ -134,11 +134,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="23dp">
 
             <EditText
                 android:id="@+id/editNomeEvento"
-                android:layout_width="217dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginBottom="15dp"
                 android:background="@color/lila"
@@ -152,55 +152,66 @@
                 android:id="@+id/editdescrizioneEvento"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="17dp"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textAlignment="textStart"
                 tools:ignore="LabelFor,MissingConstraints" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <Spinner
+                android:id="@+id/spinnerTipoEvento"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-
+                android:background="@color/lila"
                 android:layout_marginBottom="15dp"
-                android:hint="@string/SELEZIONA"
-                tools:ignore="MissingConstraints">
-
-                <AutoCompleteTextView
-                    android:id="@+id/lista_item_locale"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/lila"
-                    android:inputType="none"
-                    android:textSize="20sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_gravity="center"/>
 
             <Button
                 android:id="@+id/selezionaMappa"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:text="Seleziona Mappa"
+                android:text="MAPPA"
                 android:layout_gravity="center"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="15dp"
+                app:cornerRadius="0dp"
+                android:background="@color/lila" />
 
             <EditText
-                android:id="@+id/editdataEvento"
+                android:id="@+id/etData"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginBottom="15dp"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
-                android:inputType="date"
-                android:textColor="#FFFFFF"
+                android:inputType="text"
                 android:textSize="20sp"
                 tools:ignore="LabelFor,MissingConstraints"
-                />
+                android:focusable="false"
+                android:clickable="true"/>
+
+            <EditText
+                android:id="@+id/etOraInizio"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:background="@color/lila"
+                android:layout_marginBottom="15dp"/>
+
+            <EditText
+                android:id="@+id/etOraFine"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:background="@color/lila"
+                android:layout_marginBottom="15dp" />
 
             <EditText
                 android:id="@+id/editprezzoEvento"
@@ -232,29 +243,36 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="20dp">
+        app:layout_constraintVertical_bias="0.719">
 
-        <Button
-            android:id="@+id/aggiungeEvento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/aggiunge_evento"
-            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/annullaEvento"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ANNULLA"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="SVUOTA TUTTO"
             android:textSize="15dp"
             tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/aggiungeEvento"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:text="@string/aggiunge_evento"
+            tools:ignore="MissingConstraints" />
+
     </LinearLayout>
 
 
