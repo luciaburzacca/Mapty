@@ -8,139 +8,35 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        tools:ignore="MissingConstraints" >
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp">
+
 
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/nomeEvento"
                 android:layout_width="145dp"
                 android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="17dp"
+                android:layout_height="match_parent"
                 android:text="@string/nome"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"/>
 
-            <TextView
-                android:id="@+id/descrizioneEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="80dp"
-                android:text="@string/descrizione"
-                android:textColor="#FFFFFF"
-                tools:ignore="MissingConstraints"
-                android:textSize="25sp"/>
-
-            <TextView
-                android:id="@+id/tipoEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginEnd="212dp"
-                android:layout_marginBottom="15dp"
-                android:text="@string/tipo"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints,NotSibling"
-                />
-
-            <TextView
-                android:id="@+id/luogoEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
-                android:text="@string/luogo"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/dataEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
-                android:text="@string/data"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints"
-                />
-
-            <TextView
-                android:id="@+id/inizioEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
-                android:text="Ora di inizio:"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints"
-                />
-
-            <TextView
-                android:id="@+id/fineEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
-                android:text="Ora di fine:"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints"
-                />
-
-            <TextView
-                android:id="@+id/prezzoEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
-                android:text="@string/prezzo"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints"
-                />
-
-            <TextView
-                android:id="@+id/contattoEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="35dp"
-                android:text="@string/contatto"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="23dp">
-
             <EditText
                 android:id="@+id/editNomeEvento"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
+                android:layout_height="match_parent"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -148,11 +44,28 @@
                 android:textSize="20sp"
                 tools:ignore="LabelFor,MissingConstraints" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:id="@+id/descrizioneEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="@string/descrizione"
+                android:textColor="#FFFFFF"
+                tools:ignore="MissingConstraints"
+                android:textSize="25sp"/>
+
             <EditText
                 android:id="@+id/editdescrizioneEvento"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginBottom="17dp"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -161,29 +74,84 @@
                 android:textAlignment="textStart"
                 tools:ignore="LabelFor,MissingConstraints" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tipoEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="@string/tipo"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints,NotSibling"
+                />
+
             <Spinner
                 android:id="@+id/spinnerTipoEvento"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/lila"
-                android:layout_marginBottom="15dp"
-                android:layout_gravity="center"/>
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/luogoEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="@string/luogo"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints" />
 
             <Button
                 android:id="@+id/selezionaMappa"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:text="MAPPA"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
-                app:cornerRadius="0dp"
-                android:background="@color/lila" />
+                android:textColor="@color/black"
+                android:background="@color/lila"
+                android:text="MAPPA"
+                app:cornerRadius="0dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dataEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="@string/data"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                />
+
 
             <EditText
                 android:id="@+id/etData"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginBottom="15dp"
+                android:layout_height="match_parent"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -193,43 +161,117 @@
                 android:focusable="false"
                 android:clickable="true"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/inizioEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="Ora inizio: "
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints" />
+
             <EditText
                 android:id="@+id/etOraInizio"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:focusable="false"
                 android:clickable="true"
                 android:textSize="20sp"
-                android:background="@color/lila"
-                android:layout_marginBottom="15dp"/>
+                android:background="@color/lila" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fineEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="Ora fine: "
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                />
 
             <EditText
                 android:id="@+id/etOraFine"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:focusable="false"
                 android:clickable="true"
                 android:textSize="20sp"
                 android:background="@color/lila"
-                android:layout_marginBottom="15dp" />
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/prezzoEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="@string/prezzo"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                />
 
             <EditText
                 android:id="@+id/editprezzoEvento"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal"
                 android:textSize="20sp"
                 tools:ignore="LabelFor,MissingConstraints"
-                android:layout_marginBottom="15dp"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/contattoEvento"
+                android:layout_width="145dp"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="@string/contatto"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
                 />
 
             <EditText
                 android:id="@+id/editcontattoEvento"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/lila"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -239,41 +281,41 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.719">
+            <Button
+                android:id="@+id/annullaEvento"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:text="SVUOTA TUTTO"
+                android:textSize="15dp"
+                tools:ignore="MissingConstraints"
+                app:cornerRadius="10dp"/>
+
+            <Button
+                android:id="@+id/aggiungeEvento"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="@string/aggiunge_evento"
+                tools:ignore="MissingConstraints"
+                app:cornerRadius="10dp"/>
+
+        </LinearLayout>
 
 
-        <Button
-            android:id="@+id/annullaEvento"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:text="SVUOTA TUTTO"
-            android:textSize="15dp"
-            tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/aggiungeEvento"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:text="@string/aggiunge_evento"
-            tools:ignore="MissingConstraints" />
 
     </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

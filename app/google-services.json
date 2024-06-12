@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169655325730",
+    "project_id": "mapty-18668",
+    "storage_bucket": "mapty-18668.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169655325730:android:d930ff07f4b580cfdde67b",
+        "android_client_info": {
+          "package_name": "com.example.mapty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169655325730-r8dnangpooqrvoipa0rkhul9cqmik07a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzLW2n2xlpXZ84qG19kQK2wJiFlWwKvBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169655325730-r8dnangpooqrvoipa0rkhul9cqmik07a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
