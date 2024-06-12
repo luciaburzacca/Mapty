@@ -1,29 +1,30 @@
-package com.example.mapty
+package com.example.mapty.recycler_components
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mapty.R
 
-class MyAdapter(private val listalocali: ArrayList<ItemLocale>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class AdapterEventi(private val listaEventi: ArrayList<ItemEvento>) : RecyclerView.Adapter<AdapterEventi.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nomeLoc: TextView = itemView.findViewById(R.id.locale_preferiti_nome)
+        val nomeEve : TextView = itemView.findViewById(R.id.evento_nome)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_locale, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_evento, parent, false)
         return MyViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = listalocali[position]
-        holder.nomeLoc.text = currentItem.nomeLocale
+        val currentItem = listaEventi[position]
+        holder.nomeEve.text = currentItem.nomeEvento
     }
 
     override fun getItemCount(): Int {
-        return listalocali.size
+        return listaEventi.size
 
     }
 }

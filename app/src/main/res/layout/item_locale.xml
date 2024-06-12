@@ -9,9 +9,10 @@
     android:background="@color/black">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/locale_preferiti_image"
+        android:id="@+id/locale_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_margin="10dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars"
@@ -20,24 +21,36 @@
         app:shapeAppearanceOverlay="@style/RoundCorner"/>
 
     <TextView
-        android:id="@+id/locale_preferiti_nome"
+        android:id="@+id/locale_nome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
         android:text="Nome Locale"
         android:textColor="@color/white"
-        android:textSize="16dp"
+        android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/locale_preferiti_image"
+        app:layout_constraintStart_toEndOf="@+id/locale_image"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/locale_indirizzo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:text="indirizzo Locale"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@+id/locale_image"
+        app:layout_constraintTop_toBottomOf="@id/locale_nome" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locale_preferiti_image" />
+        app:layout_constraintTop_toBottomOf="@+id/locale_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
