@@ -19,6 +19,8 @@ import org.osmdroid.config.Configuration
 
 
 
+
+
 class UtenteActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView

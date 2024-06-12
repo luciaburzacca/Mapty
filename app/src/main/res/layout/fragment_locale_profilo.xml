@@ -8,17 +8,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
             android:text="Nome Locale"
@@ -29,19 +30,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-
+            android:layout_marginBottom="10dp"
             android:clickable="true"
             />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:text="numero stelle media di recensioni"
+            android:textSize="17sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="350dp" />
 
         <Button
             android:id="@+id/bottom_logout_locale"
             android:layout_width="200dp"
             android:layout_height="50sp"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="50sp"
-            android:layout_marginEnd="20sp"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:layout_gravity="center"
             android:onClick="goLogOutLocale"
             android:text="LOG OUT" />
 

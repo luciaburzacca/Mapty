@@ -3,12 +3,202 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrazioneUtenteFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RegistrazioneUtenteFragment"
+    android:background="@color/black">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="UTENTE"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+
+            <Button
+                android:id="@+id/buttonGoRegistrazioneLocale"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="LOCALE"
+                android:textSize="17sp"
+                app:cornerRadius="10dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25sp"
+            android:text="@string/email"
+            android:layout_gravity="left"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/registrazioneEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:layout_marginTop="10sp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginTop="20sp"
+            />
+
+        <EditText
+            android:id="@+id/registrazionePass"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:layout_marginTop="10sp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NOME UTENTE"
+            android:layout_gravity="left"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="20sp"/>
+
+        <EditText
+            android:id="@+id/editTextNomeLocale"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:inputType="text"
+            android:background="@color/white"
+            android:layout_marginTop="10sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="NOME"
+                    android:layout_gravity="left"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20sp"/>
+
+                <EditText
+                    android:id="@+id/editTextNomeUtente"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:background="@color/white"
+                    android:layout_marginTop="10sp"
+                    />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="COGNOME"
+                    android:layout_gravity="left"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20sp"/>
+
+                <EditText
+                    android:id="@+id/editTextCognomeUtente"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:background="@color/white"
+                    android:layout_marginTop="10sp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp">
+
+            <Button
+                android:id="@+id/buttonAnnulla"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ANNULLA"
+                android:textSize="17sp"
+                app:cornerRadius="10dp"/>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/buttonSalvaRegistrazioneUtente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SALVA"
+                android:textSize="17sp"
+                app:cornerRadius="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
