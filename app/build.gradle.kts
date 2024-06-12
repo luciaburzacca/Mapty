@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.play.services.location)
 
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,6 +64,11 @@ dependencies {
     implementation (libs.osmdroid.wms)
     
     implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation (libs.androidx.appcompat.v131)
+    implementation (libs.google.firebase.auth)
+    implementation (libs.firebase.database)
+    implementation (libs.play.services.auth)
 
 
 
