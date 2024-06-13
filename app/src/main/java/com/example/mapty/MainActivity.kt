@@ -129,6 +129,16 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Errore nella ricerca email: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+    fun goUtenteActivity(view: View?) {
+        val intent = Intent(this, UtenteActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun goLocaleActivity(view: View?) {
+        val intent = Intent(this, LocaleActivity::class.java)
+        startActivity(intent)
+    }
 }
 
 
