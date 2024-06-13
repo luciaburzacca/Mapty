@@ -27,7 +27,8 @@
                 android:layout_weight="1"
                 android:text="UTENTE"
                 android:textSize="17sp"
-                app:cornerRadius="10dp"/>
+                app:cornerRadius="10dp"
+                />
 
             <TextView
                 android:id="@+id/textView"
@@ -53,7 +54,7 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/registrazioneEmailAddress"
+            android:id="@+id/editTextEmailLocale"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
@@ -74,7 +75,7 @@
             />
 
         <EditText
-            android:id="@+id/registrazionePass"
+            android:id="@+id/editTextPassLocale"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
@@ -105,7 +106,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="LUOGO"
             android:layout_gravity="left"
             android:textAlignment="gravity"
@@ -113,12 +114,11 @@
             android:textSize="25sp"
             android:layout_marginTop="20sp"/>
 
-        <EditText
-            android:id="@+id/edit"
+        <TextView
+            android:id="@+id/coordinateLocale"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
-            android:inputType="text"
             android:background="@color/white"
             android:layout_marginTop="10sp"
             />
@@ -130,7 +130,7 @@
             android:layout_marginTop="25dp">
 
             <Button
-                android:id="@+id/buttonAnnulla"
+                android:id="@+id/buttonAnnullaLocale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

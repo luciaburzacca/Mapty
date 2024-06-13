@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="UTENTE"
+                android:text="@string/utente"
                 android:textColor="@color/white"
                 android:textSize="25dp" />
 
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="LOCALE"
+                android:text="@string/locale"
                 android:textSize="17sp"
                 app:cornerRadius="10dp"/>
 
@@ -52,7 +52,7 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/registrazioneEmailAddress"
+            android:id="@+id/editTextEmailUtente"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
@@ -63,7 +63,6 @@
             />
 
         <TextView
-            android:id="@+id/textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/password"
@@ -73,7 +72,7 @@
             />
 
         <EditText
-            android:id="@+id/registrazionePass"
+            android:id="@+id/editTextPassUtente"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
@@ -86,16 +85,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NOME UTENTE"
+            android:text="USERNAME"
             android:layout_gravity="left"
             android:textAlignment="gravity"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:layout_marginBottom="15dp"
             android:layout_marginTop="20sp"/>
 
         <EditText
-            android:id="@+id/editTextNomeLocale"
+            android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
@@ -116,7 +114,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:text="NOME"
                     android:layout_gravity="left"
                     android:textAlignment="gravity"
@@ -148,7 +146,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:text="COGNOME"
                     android:layout_gravity="left"
                     android:textAlignment="gravity"
@@ -177,7 +175,7 @@
             android:layout_marginTop="25dp">
 
             <Button
-                android:id="@+id/buttonAnnulla"
+                android:id="@+id/buttonAnnullaUtente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

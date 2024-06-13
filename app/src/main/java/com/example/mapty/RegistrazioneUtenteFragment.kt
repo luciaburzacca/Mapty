@@ -1,33 +1,28 @@
 package com.example.mapty
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegistrazioneUtenteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegistrazioneUtenteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,22 +32,120 @@ class RegistrazioneUtenteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_registrazione_utente, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegistrazioneUtenteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegistrazioneUtenteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        val emailEditText = view.findViewById<EditText>(R.id.editTextEmailUtente)
+        val usernameEditText = view.findViewById<EditText>(R.id.editTextUsername)
+        val nomeEditText = view.findViewById<EditText>(R.id.editTextNomeUtente)
+        val cognomeEditText = view.findViewById<EditText>(R.id.editTextCognomeUtente)
+        val passwordEditText = view.findViewById<EditText>(R.id.editTextPassUtente)
+        val registerButton = view.findViewById<Button>(R.id.buttonSalvaRegistrazioneUtente)
+        val cancelButton = view.findViewById<Button>(R.id.buttonAnnullaUtente)
+        val buttonGoRegistrazioneLocale = view.findViewById<Button>(R.id.buttonGoRegistrazioneLocale)
+
+
+        registerButton.setOnClickListener {
+            val email = emailEditText.text.toString().trim()
+            val username = usernameEditText.text.toString().trim()
+            val nome = nomeEditText.text.toString().trim()
+            val cognome = cognomeEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
+
+            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailEditText.error = "Inserisci un'email valida"
+                emailEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (username.isEmpty() || username.contains(" ")) {
+                usernameEditText.error = "Il nome utente deve essere unico e senza spazi"
+                usernameEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (nome.isEmpty()) {
+                nomeEditText.error = "Inserisci il nome"
+                nomeEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (cognome.isEmpty()) {
+                cognomeEditText.error = "Inserisci il cognome"
+                cognomeEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty() || password.length < 6) {
+                passwordEditText.error = "La password deve essere di almeno 6 caratteri"
+                passwordEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            // Verifica se il nome utente è unico usando Coroutine per operazioni asincrone
+            GlobalScope.launch(Dispatchers.Main) {
+                try {
+                    val result = db.collection("utenti").whereEqualTo("username", username).get().await()
+
+                    if (!result.isEmpty) {
+                        usernameEditText.error = "Sei arrivat* tardi, Nome utente già in uso"
+                        usernameEditText.requestFocus()
+                    } else {
+                        registerUser(email, password, username, nome, cognome)
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Errore: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
+        cancelButton.setOnClickListener {
+            // Torna alla MainActivity
+            activity?.finish() // Chiude il fragment e torna alla MainActivity
+        }
+
+        buttonGoRegistrazioneLocale.setOnClickListener {
+            // Naviga verso RegistrazioneLocaleFragment
+            navigateToFragment(RegistrazioneLocaleFragment())
+        }
+    }
+
+    private fun navigateToFragment(fragment: Fragment) {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragment_container, fragment)
+            ?.addToBackStack(null)
+            ?.commit()
+    }
+
+    private fun registerUser(email: String, password: String, username: String, nome: String, cognome: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    val user = hashMapOf(
+                        "email" to email,
+                        "username" to username,
+                        "nome" to nome,
+                        "cognome" to cognome
+                    )
+
+                    db.collection("utenti").document(auth.currentUser!!.uid)
+                        .set(user)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show()
+                            // Naviga verso UtenteActivity
+                            val intent = Intent(activity, UtenteActivity::class.java)
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(requireContext(), "Errore nel salvataggio dei dati: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(requireContext(), "Errore nella registrazione: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }

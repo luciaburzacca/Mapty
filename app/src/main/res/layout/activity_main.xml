@@ -8,13 +8,13 @@
     tools:context=".MainActivity"
     android:background="@color/black">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.mapty.RegistrazioneFragment"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -69,7 +69,7 @@
             android:textSize="17sp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -89,7 +89,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -99,7 +99,7 @@
             />
 
         <Button
-            android:id="@+id/buttonLogIn"
+            android:id="@+id/buttonAccedi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ACCEDI"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10sp">
+            android:layout_marginTop="10sp" >
 
             <Button
                 android:id="@+id/buttonUtente"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
 
                 android:onClick="goUtenteActivity"
-                android:text="UTENTE"
+                android:text="@string/utente"
                 android:textSize="17sp"
                 app:cornerRadius="10dp" />
 
@@ -128,16 +128,11 @@
                 android:id="@+id/buttonLocale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LOCALE"
+                android:text="@string/locale"
                 android:onClick="goLocaleActivity"
                 android:textSize="17sp"
                 app:cornerRadius="10dp"/>
         </LinearLayout>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/buttonGoogleSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
