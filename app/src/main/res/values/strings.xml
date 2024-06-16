@@ -22,8 +22,8 @@
     <string name="SELEZIONA">Select Item</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="locale">LOCALE</string>
-    <string name="utente">UTENTE</string>
+    <string name="locale">registrazione  LOCALE</string>
+    <string name="utente">registrazione  UTENTE</string>
     <string name="aggiungi">AGGIUNGI</string>
     <string name="accedi">ACCEDI</string>
 

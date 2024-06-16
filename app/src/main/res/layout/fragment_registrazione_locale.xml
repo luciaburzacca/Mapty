@@ -1,115 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RegistrazioneLocaleFragment"
-    android:background="@color/black">
+    android:background="@color/black"
+    tools:context=".RegistrazioneLocaleFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp">
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:text="@string/locale"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
 
-            <Button
-                android:id="@+id/buttonGoRegistrazioneUtente"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="UTENTE"
-                android:textSize="17sp"
-                app:cornerRadius="10dp"
-                />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="LOCALE"
-                android:textSize="25dp"
-                android:textColor="@color/white"
-                android:gravity="center"/>
-
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="inserisci i tuoi dati:"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
 
         <EditText
             android:id="@+id/editTextEmailLocale"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:layout_marginTop="35sp"
             android:ems="10"
+            android:hint="EMAIL"
             android:inputType="textEmailAddress"
-            android:textSize="20sp"
-            android:hint="inserisci EMAIL"
+            android:paddingStart="15dp"
             android:textColor="@color/black"
-            />
+            android:textColorHint="@color/dark_gray"
+            android:textSize="20sp" />
 
 
         <EditText
             android:id="@+id/editTextPassLocale"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="20dp"
             android:background="@color/white"
-            android:layout_marginTop="20sp"
             android:ems="10"
+            android:hint="PASSWORD"
             android:inputType="textEmailAddress"
-            android:textSize="20sp"
-            android:hint="inserisci PASSWORD"
+            android:paddingStart="15dp"
             android:textColor="@color/black"
-            />
+            android:textColorHint="@color/dark_gray"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTextNomeLocale"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
             android:ems="10"
+            android:hint="NOME DEL TUO LOCALE"
             android:inputType="text"
-            android:background="@color/white"
-            android:layout_marginTop="20sp"
-            android:hint="inserisci il NOME DEL TUO LOCALE"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:id="@+id/coordinateLocale"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:background="@color/white"
-            android:layout_marginTop="20sp"
-            android:textSize="20sp"
-            android:hint="seleziona LUOGO"
+            android:paddingStart="15dp"
             android:textColor="@color/black"
-            />
+            android:textColorHint="@color/dark_gray" />
 
         <EditText
             android:id="@+id/editTextNumeroTelefono"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:ems="10"
-            android:inputType="text"
+            android:layout_marginTop="20dp"
             android:background="@color/white"
-            android:layout_marginTop="20sp"
-            android:hint="inserisci NUMERO DI TELEFONO"
-            android:textColor="@color/black"/>
+            android:ems="10"
+            android:hint="NUMERO DI TELEFONO"
+            android:inputType="text"
+            android:paddingStart="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_gray" />
+
+        <TextView
+            android:id="@+id/coordinateLocale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="seleziona LUOGO"
+            android:paddingStart="15dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_gray"
+            android:textSize="20sp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonAnnullaLocale"
@@ -118,7 +119,7 @@
                 android:layout_weight="1"
                 android:text="ANNULLA"
                 android:textSize="17sp"
-                app:cornerRadius="10dp"/>
+                app:cornerRadius="10dp" />
 
             <Space
                 android:layout_width="5dp"
@@ -131,9 +132,26 @@
                 android:layout_weight="1"
                 android:text="SALVA"
                 android:textSize="17sp"
-                app:cornerRadius="10dp"/>
+                app:cornerRadius="10dp" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Sei un nuovo utente?"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/buttonGoRegistrazioneUtente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/utente"
+            android:textSize="17sp"
+            app:cornerRadius="10dp" />
     </LinearLayout>
 
 </FrameLayout>
