@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UtenteVistaEventoFragment"
+    android:background="@color/black"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewNomeEventoUtente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="nome evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewDescrizioneEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="descrizione evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewTipoEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tipo evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewLuogoEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="luogo evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewDataInizioEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="data inizio evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewDataFineEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="data fine evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewPrezzoEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="prezzo evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewNomeLocaleEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nome locale evento"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewNumeroTelefonoEventoUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="numero telefono evento"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</FrameLayout>

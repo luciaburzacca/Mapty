@@ -19,5 +19,14 @@
         android:id="@+id/localeNewEventoFragment"
         android:name="com.example.mapty.LocaleNewEventoFragment"
         android:label="fragment_locale_new_evento"
-        tools:layout="@layout/fragment_locale_new_evento"/>
+        tools:layout="@layout/fragment_locale_new_evento">
+        <action
+            android:id="@+id/action_localeNewEventoFragment_to_localeSelezionaMappaFragment"
+            app:destination="@id/localeSelezionaMappaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/localeSelezionaMappaFragment"
+        android:name="com.example.mapty.LocaleSelezionaMappaFragment"
+        android:label="fragment_locale_seleziona_mappa"
+        tools:layout="@layout/fragment_locale_seleziona_mappa" />
 </navigation>

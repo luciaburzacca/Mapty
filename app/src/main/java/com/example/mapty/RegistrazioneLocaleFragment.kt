@@ -19,6 +19,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 
 class RegistrazioneLocaleFragment : Fragment() {
 
@@ -102,11 +103,12 @@ class RegistrazioneLocaleFragment : Fragment() {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid ?: ""
+                    val geoPoint = GeoPoint(selectedLatitude!!, selectedLongitude!!)
                     val locale = hashMapOf(
                         "email" to email,
                         "nomeLocale" to nomeLocale,
-                        "latitude" to selectedLatitude,
-                        "longitude" to selectedLongitude
+                        "posizioneLocale" to geoPoint,
+                        "numeroTelefono" to numeroTelefono,
                     )
                     db.collection("locali").document(userId).set(locale).addOnSuccessListener {
                         Toast.makeText(requireContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show()
@@ -126,10 +128,9 @@ class RegistrazioneLocaleFragment : Fragment() {
         }
 
         buttonGoRegistrazioneUtente.setOnClickListener {
-            // Naviga verso RegistrazioneLocaleFragment
+            // Naviga verso RegistrazioneUtenteFragment
             navigateToFragment(RegistrazioneUtenteFragment())
         }
-
     }
 
     private fun navigateToFragment(fragment: Fragment) {

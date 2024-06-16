@@ -34,6 +34,9 @@ class LocaleNewEventoFragment : Fragment() {
     private lateinit var editTextOraInizio: EditText
     private lateinit var editTextOraFine: EditText
     private lateinit var editTextPrezzoEvento: EditText
+    private lateinit var coordinateTextView: TextView
+    private var selectedLatitude: Double? = null
+    private var selectedLongitude: Double? = null
     private lateinit var buttonAnnullaEvento: Button
     private lateinit var buttonAggiungiEvento: Button
 
@@ -41,7 +44,7 @@ class LocaleNewEventoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firestore = Firebase.firestore
+        firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
     }
 
@@ -58,6 +61,7 @@ class LocaleNewEventoFragment : Fragment() {
         editTextOraInizio = view.findViewById(R.id.etOraInizio)
         editTextOraFine = view.findViewById(R.id.etOraFine)
         editTextPrezzoEvento = view.findViewById(R.id.editPrezzoEvento)
+        coordinateTextView = view.findViewById(R.id.coordinateEvento)
         buttonAnnullaEvento = view.findViewById(R.id.buttonAnnullaEvento)
         buttonAggiungiEvento = view.findViewById(R.id.buttonAggiungiEvento)
 
@@ -82,8 +86,20 @@ class LocaleNewEventoFragment : Fragment() {
             aggiungiEvento()
         }
 
+        coordinateTextView.setOnClickListener {
+            findNavController().navigate(R.id.action_localeNewEventoFragment_to_localeSelezionaMappaFragment)
+        }
+
+        parentFragmentManager.setFragmentResultListener("location_request", viewLifecycleOwner) { _, result ->
+            selectedLatitude = result.getDouble("latitude")
+            selectedLongitude = result.getDouble("longitude")
+            coordinateTextView.text = "Latitudine: $selectedLatitude, Longitudine: $selectedLongitude"
+        }
+
         // Popola lo spinner con tipi di evento
-        val tipiEvento = arrayOf("Concerto", "Mostra", "Teatro", "Festa", "Altro")
+        val tipiEvento = arrayOf("Bar Party", "Beach Party", "Disco Party", "Films Night",
+            "Karaoke", "Live Music", "Local Parties", "Raggaeton Party", "Slay Party", "Techno", "Thematic Party")
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipiEvento)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTipoEvento.adapter = adapter
@@ -114,7 +130,10 @@ class LocaleNewEventoFragment : Fragment() {
         editTextOraInizio.text.clear()
         editTextOraFine.text.clear()
         editTextPrezzoEvento.text.clear()
+        coordinateTextView.text = ""
         spinnerTipoEvento.setSelection(0)
+        selectedLatitude = null
+        selectedLongitude = null
     }
 
     private fun aggiungiEvento() {
@@ -145,6 +164,11 @@ class LocaleNewEventoFragment : Fragment() {
             return
         }
 
+        if (selectedLatitude == null || selectedLongitude == null) {
+            Toast.makeText(context, "Per favore, seleziona le coordinate dell'evento", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val cal = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
@@ -159,7 +183,6 @@ class LocaleNewEventoFragment : Fragment() {
             dataFine = cal.timeInMillis
         }
 
-        // Cerca nella raccolta "locali" il documento con l'email dell'utente
         firestore.collection("locali").whereEqualTo("email", userEmail).get()
             .addOnSuccessListener { documents ->
                 if (documents.isEmpty) {
@@ -176,30 +199,18 @@ class LocaleNewEventoFragment : Fragment() {
                 }
 
                 val nomeLocale = document.getString("nomeLocale")
-                ///val numeroTelefono = document.getString("numeroTelefono")
-                //val latitude = document.getDouble("latitude")
-                //val longitude = document.getDouble("longitude")
+                val geoPoint = GeoPoint(selectedLatitude!!, selectedLongitude!!)
 
-                // Log per debug
-                Log.d(TAG, "nomeLocale: $nomeLocale")
-                //Log.d(TAG, "numeroTelefono: $numeroTelefono")
-                //Log.d(TAG, "latitude: $latitude")
-                //Log.d(TAG, "longitude: $longitude")
-
-                if (nomeLocale != null
-                    //&& latitude != null && longitude != null && numeroTelefono != null
-                    ) {
+                if (nomeLocale != null) {
                     val evento = hashMapOf(
-                        "nome" to nomeEvento,
+                        "nomeEvento" to nomeEvento,
                         "descrizione" to descrizioneEvento,
                         "tipo" to tipoEvento,
                         "data" to dataInizio,
                         "dataFine" to dataFine,
                         "prezzo" to prezzoEvento,
                         "nomeLocale" to nomeLocale,
-                        //"latitude" to latitude,
-                        //"longitude" to longitude,
-                        //"numeroTelefono" to numeroTelefono
+                        "luogo" to geoPoint
                     )
 
                     firestore.collection("eventos").add(evento)

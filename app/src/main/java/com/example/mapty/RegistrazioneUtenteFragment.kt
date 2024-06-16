@@ -104,8 +104,7 @@ class RegistrazioneUtenteFragment : Fragment() {
 
 
         cancelButton.setOnClickListener {
-            // Torna alla MainActivity
-            activity?.finish() // Chiude il fragment e torna alla MainActivity
+            startActivity(Intent(requireContext(), MainActivity::class.java))
         }
 
         buttonGoRegistrazioneLocale.setOnClickListener {
