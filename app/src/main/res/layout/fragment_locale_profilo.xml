@@ -17,12 +17,12 @@
         android:layout_marginBottom="20dp">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textNomeLocale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
-            android:text="Nome Locale"
+            android:text=""
             android:textSize="30sp"/>
 
         <RatingBar

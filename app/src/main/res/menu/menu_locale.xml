@@ -9,7 +9,7 @@
     <item
         android:id="@+id/localeNewEventoFragment"
         android:icon="@drawable/round_add"
-        android:title="AGGIUNGI" />
+        android:title="@string/aggiungi" />
 
     <item
         android:id="@+id/localeProfiloFragment"

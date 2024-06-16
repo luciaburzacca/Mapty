@@ -27,7 +27,7 @@
             <TextView
                 android:id="@+id/nomeEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
                 android:text="@string/nome"
                 android:textColor="#FFFFFF"
@@ -55,7 +55,7 @@
             <TextView
                 android:id="@+id/descrizioneEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
                 android:text="@string/descrizione"
                 android:textColor="#FFFFFF"
@@ -63,7 +63,7 @@
                 android:textSize="25sp"/>
 
             <EditText
-                android:id="@+id/editdescrizioneEvento"
+                android:id="@+id/editDescrizioneEvento"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@color/lila"
@@ -85,7 +85,7 @@
             <TextView
                 android:id="@+id/tipoEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
                 android:text="@string/tipo"
                 android:textColor="#FFFFFF"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/lila"
-                android:gravity="left"/>
+                android:gravity="start"/>
 
         </LinearLayout>
 
@@ -111,22 +111,23 @@
             <TextView
                 android:id="@+id/luogoEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
                 android:text="@string/luogo"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 tools:ignore="MissingConstraints" />
 
-            <Button
-                android:id="@+id/selezionaMappa"
+            <TextView
+                android:id="@+id/coordinateEvento"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:ems="10"
+                android:background="@color/white"
+                android:textSize="20sp"
+                android:hint="seleziona LUOGO"
                 android:textColor="@color/black"
-                android:background="@color/lila"
-                android:text="MAPPA"
-                app:cornerRadius="0dp" />
+                />
 
         </LinearLayout>
 
@@ -139,7 +140,7 @@
             <TextView
                 android:id="@+id/dataEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
                 android:text="@string/data"
                 android:textColor="#FFFFFF"
@@ -169,16 +170,6 @@
             android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/inizioEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="match_parent"
-                android:text="Ora inizio: "
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints" />
-
             <EditText
                 android:id="@+id/etOraInizio"
                 android:layout_width="match_parent"
@@ -186,7 +177,23 @@
                 android:focusable="false"
                 android:clickable="true"
                 android:textSize="20sp"
-                android:background="@color/lila" />
+                android:background="@color/lila"
+                android:hint="ORA inizio"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"/>
+
+            <EditText
+                android:id="@+id/etOraFine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:background="@color/lila"
+                android:hint="ORA fine"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                />
 
         </LinearLayout>
 
@@ -197,25 +204,42 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/fineEvento"
+                android:id="@+id/nomeLocaleEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
-                android:text="Ora fine: "
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 tools:ignore="MissingConstraints"
+                android:hint="nome locale"
                 />
 
-            <EditText
-                android:id="@+id/etOraFine"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/numeroTelefonoEvento"
+                android:layout_width="145dp"
+                android:gravity="end"
                 android:layout_height="match_parent"
-                android:focusable="false"
-                android:clickable="true"
-                android:textSize="20sp"
-                android:background="@color/lila"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                android:hint="numero telefono"
                 />
+
+            <TextView
+                android:id="@+id/geolocalizzazioneEvento"
+                android:layout_width="145dp"
+                android:gravity="end"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                tools:ignore="MissingConstraints"
+                android:hint="numero telefono"
+                />
+
+
 
         </LinearLayout>
 
@@ -228,7 +252,7 @@
             <TextView
                 android:id="@+id/prezzoEvento"
                 android:layout_width="145dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_height="match_parent"
                 android:text="@string/prezzo"
                 android:textColor="#FFFFFF"
@@ -237,7 +261,7 @@
                 />
 
             <EditText
-                android:id="@+id/editprezzoEvento"
+                android:id="@+id/editPrezzoEvento"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/lila"
@@ -251,61 +275,34 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/contattoEvento"
-                android:layout_width="145dp"
-                android:gravity="right"
-                android:layout_height="match_parent"
-                android:text="@string/contatto"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="MissingConstraints"
-                />
-
-            <EditText
-                android:id="@+id/editcontattoEvento"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/lila"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="phone"
-                android:textSize="20sp"
-                tools:ignore="LabelFor,MissingConstraints" />
-
-        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp">
 
             <Button
-                android:id="@+id/annullaEvento"
-                android:layout_width="wrap_content"
+                android:id="@+id/buttonAnnullaEvento"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
                 android:text="SVUOTA TUTTO"
-                android:textSize="15dp"
-                tools:ignore="MissingConstraints"
+                android:textSize="15sp"
+                tools:ignore="ButtonStyle,MissingConstraints"
                 app:cornerRadius="10dp"/>
 
             <Button
-                android:id="@+id/aggiungeEvento"
-                android:layout_width="wrap_content"
+                android:id="@+id/buttonAggiungiEvento"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:text="@string/aggiunge_evento"
-                tools:ignore="MissingConstraints"
+                android:layout_weight="1"
+                android:text="AGGIUNGI"
+                tools:ignore="ButtonStyle,MissingConstraints"
                 app:cornerRadius="10dp"/>
 
         </LinearLayout>

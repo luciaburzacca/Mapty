@@ -46,6 +46,7 @@ class RegistrazioneLocaleFragment : Fragment() {
         val passwordEditText = view.findViewById<EditText>(R.id.editTextPassLocale)
         val nomeLocaleEditText = view.findViewById<EditText>(R.id.editTextNomeLocale)
         coordinateTextView = view.findViewById(R.id.coordinateLocale)
+        val numeroTelefonoEditText = view.findViewById<EditText>(R.id.editTextNumeroTelefono)
         val registerButton = view.findViewById<Button>(R.id.buttonSalvaRegistrazioneLocale)
         val cancelButton = view.findViewById<Button>(R.id.buttonAnnullaLocale)
         val buttonGoRegistrazioneUtente = view.findViewById<Button>(R.id.buttonGoRegistrazioneUtente)
@@ -67,6 +68,7 @@ class RegistrazioneLocaleFragment : Fragment() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
             val nomeLocale = nomeLocaleEditText.text.toString().trim()
+            val numeroTelefono = numeroTelefonoEditText.text.toString().trim()
 
             if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 emailEditText.error = "Inserisci un'email valida"
@@ -83,6 +85,12 @@ class RegistrazioneLocaleFragment : Fragment() {
             if (nomeLocale.isEmpty()) {
                 nomeLocaleEditText.error = "Inserisci il nome del locale"
                 nomeLocaleEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (numeroTelefono.isEmpty()) {
+                numeroTelefonoEditText.error = "Inserisci un numero di telefono"
+                numeroTelefonoEditText.requestFocus()
                 return@setOnClickListener
             }
 

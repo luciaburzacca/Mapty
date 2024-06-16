@@ -5,59 +5,85 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.recycler_components.AdapterEventi
-import com.example.mapty.recycler_components.AdapterLocali
 import com.example.mapty.recycler_components.ItemEvento
-import com.example.mapty.recycler_components.ItemLocale
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class LocaleHomeFragment : Fragment(R.layout.fragment_locale_home) {
+class LocaleHomeFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var arrayList: ArrayList<ItemEvento>
-    lateinit var nomiEventi: Array<String>
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var eventiAdapter: AdapterEventi
+    private var eventiList: MutableList<ItemEvento> = mutableListOf()
+    private var nomeLocale: String? = null
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-        super.onViewCreated(view, savedInstanceState)
-
-        nomiEventi = arrayOf(
-            "evento 1",
-            "evento 2",
-            "evento 3",
-            "evento 4",
-            "evento 5",
-            "evento 6",
-            "evento 7",
-            "evento 8",
-            "evento 9",
-            "evento 10",
-            "evento 11",
-            "evento 12",
-            "evento 13",
-            "evento 14",
-            "evento 15"
-        )
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_locale_home, container, false)
         recyclerView = view.findViewById(R.id.recycler_view_eventi_locale)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
-
-        arrayList = arrayListOf<ItemEvento>()
-        getDataEventi()
+        eventiAdapter = AdapterEventi(eventiList)
+        recyclerView.adapter = eventiAdapter
+        return view
     }
 
-    private fun getDataEventi() {
-        for(i in nomiEventi.indices){
-            val evento = ItemEvento(nomiEventi[i])
-            arrayList.add(evento)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        recyclerView.adapter = AdapterEventi(arrayList)
+        // Recupera l'email dell'utente corrente
+        val emailUtente = auth.currentUser?.email ?: return
+
+        // Recupera il nome del locale associato all'utente
+        db.collection("locali")
+            .whereEqualTo("email", emailUtente)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    Toast.makeText(context, "Nessun locale associato trovato", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+                val localeDoc = documents.first()
+                nomeLocale = localeDoc.getString("nomeLocale")
+
+                // Carica gli eventi dopo aver recuperato il nome del locale
+                caricaEventi()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Errore nel recupero dei dati del locale", Toast.LENGTH_SHORT).show()
+            }
     }
 
+    private fun caricaEventi() {
+        if (nomeLocale == null) return
 
+        val currentTime = Date()
+
+        db.collection("eventos")
+            .whereEqualTo("nomeLocale", nomeLocale)
+            .whereGreaterThan("dateTimeFine", currentTime)
+            .get()
+            .addOnSuccessListener { documents ->
+                eventiList.clear()
+                for (document in documents) {
+                    val evento = document.toObject(ItemEvento::class.java)
+                    eventiList.add(evento)
+                }
+                eventiAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+            }
+    }
 }

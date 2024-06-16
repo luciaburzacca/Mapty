@@ -7,24 +7,28 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.R
 
-class AdapterEventi(private val listaEventi: ArrayList<ItemEvento>) : RecyclerView.Adapter<AdapterEventi.MyViewHolder>() {
+class AdapterEventi(private val listaEventi: MutableList<ItemEvento>) :  RecyclerView.Adapter<AdapterEventi.EventoViewHolder>() {
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nomeEve : TextView = itemView.findViewById(R.id.evento_nome)
+        class EventoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val tvNomeEvento: TextView = itemView.findViewById(R.id.evento_nome)
+            val tvDataOraInizio: TextView = itemView.findViewById(R.id.evento_data)
+            val tvNomeLocale: TextView = itemView.findViewById(R.id.evento_locale)
+            val tvTipoEvento: TextView = itemView.findViewById(R.id.evento_tag)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder {
+            val itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_evento, parent, false)
+            return EventoViewHolder(itemView)
+        }
+
+        override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
+            val evento = listaEventi[position]
+            holder.tvNomeEvento.text = evento.nomeEvento
+            //holder.tvDataOraInizio.text = evento.dateTimeInizio
+            holder.tvNomeLocale.text = evento.nomeLocale
+            holder.tvTipoEvento.text = evento.tipoEvento
+        }
+
+        override fun getItemCount() = listaEventi.size
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_evento, parent, false)
-        return MyViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = listaEventi[position]
-        holder.nomeEve.text = currentItem.nomeEvento
-    }
-
-    override fun getItemCount(): Int {
-        return listaEventi.size
-
-    }
-}

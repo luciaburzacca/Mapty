@@ -18,5 +18,6 @@
     <fragment
         android:id="@+id/localeNewEventoFragment"
         android:name="com.example.mapty.LocaleNewEventoFragment"
-        android:label="LocaleNewEventoFragment" />
+        android:label="fragment_locale_new_evento"
+        tools:layout="@layout/fragment_locale_new_evento"/>
 </navigation>

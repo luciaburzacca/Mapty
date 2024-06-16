@@ -1,21 +1,16 @@
 package com.example.mapty
 
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import org.osmdroid.api.IMapController
+import com.google.firebase.firestore.FirebaseFirestore
 import org.osmdroid.config.Configuration
-import org.osmdroid.events.MapEventsReceiver
-import org.osmdroid.events.MapListener
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Overlay
 
 class LocaleSelezionaMappaFragment : Fragment() {
 
@@ -23,6 +18,12 @@ class LocaleSelezionaMappaFragment : Fragment() {
     private lateinit var confirmButton: Button
     private lateinit var selectedLocation: GeoPoint
     private lateinit var marker: Marker
+    private lateinit var db: FirebaseFirestore
+
+    private var latitudine: Double? = null
+    private var longitudine: Double? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +36,8 @@ class LocaleSelezionaMappaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        db = FirebaseFirestore.getInstance()
+
         mapView = view.findViewById(R.id.map)
         confirmButton = view.findViewById(R.id.saveButton)
 
@@ -44,13 +47,36 @@ class LocaleSelezionaMappaFragment : Fragment() {
 
         val mapController = mapView.controller
         mapController.setZoom(15.0)
-        val initialLocation = GeoPoint(43.6158, 13.5189) // Centro di Ancona
-        mapController.setCenter(initialLocation)
 
-        selectedLocation = initialLocation
+        // Ottieni il nome del locale dai parametri passati
+        val localeName = arguments?.getString("localeName")
+
+        if (localeName != null) {
+            getLocaleCoordinates(localeName) { geoPoint ->
+                setInitialLocation(geoPoint)
+            }
+        } else {
+            val initialLocation = GeoPoint(43.6158, 13.5189) // Centro di Ancona
+            setInitialLocation(initialLocation)
+        }
+
+        confirmButton.setOnClickListener {
+            val result = Bundle().apply {
+                putDouble("latitude", selectedLocation.latitude)
+                putDouble("longitude", selectedLocation.longitude)
+            }
+            parentFragmentManager.setFragmentResult("location_request", result)
+            parentFragmentManager.popBackStack()
+        }
+    }
+
+    private fun setInitialLocation(geoPoint: GeoPoint) {
+        val mapController = mapView.controller
+        mapController.setCenter(geoPoint)
+        selectedLocation = geoPoint
 
         marker = Marker(mapView)
-        marker.position = initialLocation
+        marker.position = geoPoint
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         mapView.overlays.add(marker)
 
@@ -65,15 +91,25 @@ class LocaleSelezionaMappaFragment : Fragment() {
                 return true
             }
         })
+    }
 
-        confirmButton.setOnClickListener {
-            val result = Bundle().apply {
-                putDouble("latitude", selectedLocation.latitude)
-                putDouble("longitude", selectedLocation.longitude)
+    private fun getLocaleCoordinates(localeName: String, callback: (GeoPoint) -> Unit) {
+        db.collection("locali").whereEqualTo("nomeLocale", localeName).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val latitude = document.getDouble("latitude")
+                    val longitude = document.getDouble("longitude")
+                    if (latitude != null && longitude != null) {
+                        callback(GeoPoint(latitude, longitude))
+                        return@addOnSuccessListener
+                    }
+                }
+                // Se non ci sono risultati o le coordinate non sono valide, usa la posizione predefinita
+                callback(GeoPoint(43.6158, 13.5189)) // Centro di Ancona
             }
-            parentFragmentManager.setFragmentResult("location_request", result)
-            parentFragmentManager.popBackStack()
-        }
+            .addOnFailureListener {
+                callback(GeoPoint(43.6158, 13.5189)) // Centro di Ancona
+            }
     }
 
     private fun updateMarkerPosition() {
@@ -91,4 +127,14 @@ class LocaleSelezionaMappaFragment : Fragment() {
         super.onPause()
         mapView.onPause()
     }
+
+    /*companion object {
+        fun newInstance(): LocaleSelezionaMappaFragment {
+            val fragment = LocaleSelezionaMappaFragment()
+            val args = Bundle()
+            args.putString("localeName", localeName)
+            fragment.arguments = args
+            return fragment
+        }
+    }*/
 }

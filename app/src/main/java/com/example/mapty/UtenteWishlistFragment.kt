@@ -1,16 +1,12 @@
 package com.example.mapty
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.recycler_components.AdapterEventi
-import com.example.mapty.recycler_components.AdapterLocali
 import com.example.mapty.recycler_components.ItemEvento
-import com.example.mapty.recycler_components.ItemLocale
 
 class UtenteWishlistFragment : Fragment(R.layout.fragment_utente_wishlist) {
 
