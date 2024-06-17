@@ -1,56 +1,109 @@
 package com.example.mapty
 
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mapty.databinding.FragmentUtenteListaEventiBinding
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
+import java.util.Date
 
-class UtenteListaEventiFragment : Fragment(R.layout.fragment_utente_lista_eventi) {
+class UtenteListaEventiFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var arrayList: ArrayList<ItemEvento>
-    lateinit var nomiEventi: Array<String>
+    private lateinit var db: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var eventiAdapter: AdapterEventi
+    private var eventiList: MutableList<ItemEvento> = mutableListOf()
+    private lateinit var emptyView: TextView
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-        super.onViewCreated(view, savedInstanceState)
-
-        nomiEventi = arrayOf(
-            "evento 1",
-            "evento 2",
-            "evento 3",
-            "evento 4",
-            "evento 5",
-            "evento 6",
-            "evento 7",
-            "evento 8",
-            "evento 9",
-            "evento 10",
-            "evento 11",
-            "evento 12",
-            "evento 13",
-            "evento 14",
-            "evento 15"
-        )
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_utente_lista_eventi, container, false)
         recyclerView = view.findViewById(R.id.recycler_view_eventi_utente)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
+        eventiAdapter = AdapterEventi(eventiList) { evento ->
+            onEventoClicked(evento)
+        }
+        recyclerView.adapter = eventiAdapter
+        emptyView = view.findViewById(R.id.empty_view)
 
-        arrayList = arrayListOf<ItemEvento>()
-        getDataEventi()
-    }
-
-    private fun getDataEventi() {
-        for(i in nomiEventi.indices){
-            val evento = ItemEvento(nomiEventi[i])
-            arrayList.add(evento)
+        view.findViewById<Button>(R.id.button_indietro).setOnClickListener {
+            findNavController().navigate(R.id.action_utenteListaEventiFragment_to_utenteFiltroEventiFragment)
         }
 
-        recyclerView.adapter = AdapterEventi(arrayList)
+        view.findViewById<Button>(R.id.button_home).setOnClickListener {
+            findNavController().navigate(R.id.action_utenteListaEventiFragment_to_utenteHomeFragment)
+        }
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        db = FirebaseFirestore.getInstance()
+
+        val tipoEvento = arguments?.getString("tipoEvento")
+
+        caricaEventi(tipoEvento)
+    }
+
+    private fun caricaEventi(tipoEvento: String?) {
+        val currentTime = System.currentTimeMillis()
+        val query = if (tipoEvento.isNullOrEmpty()) {
+            db.collection("eventos")
+                .whereGreaterThan("dataFine", currentTime)
+        } else {
+            db.collection("eventos")
+                .whereEqualTo("tipo", tipoEvento)
+                .whereGreaterThan("dataFine", currentTime)
+        }
+
+        query.get()
+            .addOnSuccessListener { documents ->
+                eventiList.clear()
+                for (document in documents) {
+                    val evento = document.toObject(ItemEvento::class.java)
+                    eventiList.add(evento)
+                }
+                eventiAdapter.notifyDataSetChanged()
+                updateEmptyView()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateEmptyView() {
+        if (eventiList.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyView.visibility = View.GONE
+        }
+    }
+
+    private fun onEventoClicked(evento: ItemEvento) {
+        val bundle = bundleOf(
+            "nomeLocale" to evento.nomeLocale,
+            "data" to evento.data,
+            "nomeEvento" to evento.nomeEvento
+        )
+        findNavController().navigate(R.id.action_utenteListaEventiFragment_to_vistaEventoFragment, bundle)
+    }
 }

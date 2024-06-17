@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class AdapterEventi(private val eventiList: List<ItemEvento>) : RecyclerView.Adapter<AdapterEventi.EventoViewHolder>() {
+class AdapterEventi(private val eventiList: List<ItemEvento>, private val onItemClick: (ItemEvento) -> Unit) : RecyclerView.Adapter<AdapterEventi.EventoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_evento, parent, false)
@@ -20,6 +20,9 @@ class AdapterEventi(private val eventiList: List<ItemEvento>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
         val evento = eventiList[position]
         holder.bind(evento)
+        holder.itemView.setOnClickListener {
+            onItemClick(evento)
+        }
     }
 
     override fun getItemCount(): Int = eventiList.size

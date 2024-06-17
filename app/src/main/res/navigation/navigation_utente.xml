@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_utenteListaEventiFragment_to_utenteHomeFragment"
             app:destination="@id/utenteHomeFragment" />
+        <action
+            android:id="@+id/action_utenteListaEventiFragment_to_vistaEventoFragment"
+            app:destination="@id/vistaEventoFragment" />
     </fragment>
 
     <fragment
@@ -86,4 +89,9 @@
             android:name="nomeEvento"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/vistaEventoFragment"
+        android:name="com.example.mapty.VistaEventoFragment"
+        android:label="fragment_vista_evento"
+        tools:layout="@layout/fragment_vista_evento" />
 </navigation>

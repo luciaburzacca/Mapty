@@ -9,7 +9,14 @@
         android:id="@+id/localeHomeFragment"
         android:name="com.example.mapty.LocaleHomeFragment"
         android:label="fragment_locale_home"
-        tools:layout="@layout/fragment_locale_home" />
+        tools:layout="@layout/fragment_locale_home" >
+        <action
+            android:id="@+id/action_localeHomeFragment_to_vistaEventoFragment"
+            app:destination="@id/vistaEventoFragment" />
+        <action
+            android:id="@+id/action_localeHomeFragment_to_localeModificaEvento"
+            app:destination="@id/localeModificaEvento" />
+    </fragment>
     <fragment
         android:id="@+id/localeProfiloFragment"
         android:name="com.example.mapty.LocaleProfiloFragment"
@@ -29,4 +36,14 @@
         android:name="com.example.mapty.LocaleSelezionaMappaFragment"
         android:label="fragment_locale_seleziona_mappa"
         tools:layout="@layout/fragment_locale_seleziona_mappa" />
+    <fragment
+        android:id="@+id/vistaEventoFragment"
+        android:name="com.example.mapty.VistaEventoFragment"
+        android:label="fragment_vista_evento"
+        tools:layout="@layout/fragment_vista_evento" />
+    <fragment
+        android:id="@+id/localeModificaEvento"
+        android:name="com.example.mapty.LocaleModificaEvento"
+        android:label="LocaleModificaEvento"
+        tools:layout="@layout/fragment_locale_modifica_evento"/>
 </navigation>

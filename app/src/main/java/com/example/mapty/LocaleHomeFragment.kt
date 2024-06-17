@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.recycler_components.AdapterEventi
@@ -37,7 +38,9 @@ class LocaleHomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_locale_home, container, false)
         recyclerView = view.findViewById(R.id.recycler_view_eventi_locale)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        eventiAdapter = AdapterEventi(eventiList)
+        eventiAdapter = AdapterEventi(eventiList) { evento ->
+            onEventoClicked(evento)
+        }
         recyclerView.adapter = eventiAdapter
         bottoneFuturi = view.findViewById(R.id.bottone_futuri)
         bottonePassati = view.findViewById(R.id.bottone_passati)
@@ -87,6 +90,7 @@ class LocaleHomeFragment : Fragment() {
             db.collection("eventos")
                 .whereEqualTo("nomeLocale", nomeLocale)
                 .whereGreaterThan("dataFine", currentTime)
+
         } else {
             db.collection("eventos")
                 .whereEqualTo("nomeLocale", nomeLocale)
@@ -117,4 +121,14 @@ class LocaleHomeFragment : Fragment() {
             emptyView.visibility = View.GONE
         }
     }
+
+    private fun onEventoClicked(evento: ItemEvento) {
+        val bundle = Bundle().apply {
+            putString("nomeLocale", evento.nomeLocale)
+            putLong("data", evento.data)
+            putString("nomeEvento", evento.nomeEvento)
+        }
+        findNavController().navigate(R.id.action_localeHomeFragment_to_vistaEventoFragment, bundle)
+    }
 }
+

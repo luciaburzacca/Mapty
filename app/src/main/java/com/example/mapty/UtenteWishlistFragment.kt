@@ -10,7 +10,7 @@ import com.example.mapty.recycler_components.ItemEvento
 
 class UtenteWishlistFragment : Fragment(R.layout.fragment_utente_wishlist) {
 
-    lateinit var recyclerView: RecyclerView
+    /*lateinit var recyclerView: RecyclerView
     lateinit var arrayList: ArrayList<ItemEvento>
     lateinit var nomiEventi: Array<String>
 
@@ -51,6 +51,6 @@ class UtenteWishlistFragment : Fragment(R.layout.fragment_utente_wishlist) {
         }
 
         recyclerView.adapter = AdapterEventi(arrayList)
-    }
+    }*/
 
 }
