@@ -5,3 +5,12 @@ plugins {
     alias(libs.plugins.googleGmsGoogleServices) apply false
 
 }
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        val nav_version = "2.7.7"
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+}

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleGmsGoogleServices)
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -45,17 +46,20 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    //implementation(libs.androidx.navigation.safe.args.gradle.plugin)
+
     implementation(libs.androidx.preference.ktx)
     implementation(libs.play.services.location)
+
+    implementation (libs.firebase.database)
+    implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.firestore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -64,12 +68,9 @@ dependencies {
     implementation (libs.osmdroid.android)
     implementation (libs.osmdroid.geopackage)
     implementation (libs.osmdroid.wms)
-    
-    implementation(libs.androidx.navigation.ui.ktx)
 
     implementation (libs.androidx.appcompat.v131)
-    implementation (libs.google.firebase.auth)
-    implementation (libs.firebase.database)
+
     implementation (libs.play.services.auth)
 
 

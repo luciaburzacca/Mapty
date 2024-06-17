@@ -14,6 +14,7 @@ appcompat = "1.6.1"
 material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+navigationSafeArgsGradlePlugin = "2.7.7"
 osmbonuspack = "6.7.1"
 osmdroidAndroid = "6.1.14"
 osmdroidGeopackage = "6.1.11"
@@ -35,6 +36,7 @@ firebaseFirestoreKtx = "25.0.0"
 [libraries]
 androidx-appcompat-v131 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-database = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabase" }

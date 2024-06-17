@@ -25,10 +25,12 @@
         android:id="@+id/utenteListaEventiFragment"
         android:name="com.example.mapty.UtenteListaEventiFragment"
         android:label="fragment_utente_lista_eventi"
-        tools:layout="@layout/fragment_utente_lista_eventi" />
+        tools:layout="@layout/fragment_utente_lista_eventi" >
         <argument
             android:name="tipoEvento"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/utenteWishlistFragment"
@@ -52,10 +54,7 @@
         tools:layout="@layout/fragment_utente_filtro_eventi" >
         <action
             android:id="@+id/action_utenteFiltroEventiFragment_to_utenteListaEventiFragment"
-            app:destination="@id/utenteListaEventiFragment" >
-            <argument
-                android:name="variabile"
-                app:argType="string" />
+            app:destination="@id/utenteListaEventiFragment" />
 
         <action
             android:id="@+id/action_utenteFiltroEventiFragment_to_utenteHomeFragment"
