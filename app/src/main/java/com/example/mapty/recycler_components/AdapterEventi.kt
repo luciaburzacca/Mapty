@@ -6,29 +6,37 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.R
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class AdapterEventi(private val listaEventi: MutableList<ItemEvento>) :  RecyclerView.Adapter<AdapterEventi.EventoViewHolder>() {
+class AdapterEventi(private val eventiList: List<ItemEvento>) : RecyclerView.Adapter<AdapterEventi.EventoViewHolder>() {
 
-        class EventoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val tvNomeEvento: TextView = itemView.findViewById(R.id.evento_nome)
-            val tvDataOraInizio: TextView = itemView.findViewById(R.id.evento_data)
-            val tvNomeLocale: TextView = itemView.findViewById(R.id.evento_locale)
-            val tvTipoEvento: TextView = itemView.findViewById(R.id.evento_tag)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder {
-            val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_evento, parent, false)
-            return EventoViewHolder(itemView)
-        }
-
-        override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
-            val evento = listaEventi[position]
-            holder.tvNomeEvento.text = evento.nomeEvento
-            //holder.tvDataOraInizio.text = evento.dateTimeInizio
-            holder.tvNomeLocale.text = evento.nomeLocale
-            holder.tvTipoEvento.text = evento.tipoEvento
-        }
-
-        override fun getItemCount() = listaEventi.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_evento, parent, false)
+        return EventoViewHolder(view)
     }
+
+    override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
+        val evento = eventiList[position]
+        holder.bind(evento)
+    }
+
+    override fun getItemCount(): Int = eventiList.size
+
+    class EventoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val nomeEventoTextView: TextView = itemView.findViewById(R.id.evento_nome)
+        private val tipoEventoTextView: TextView = itemView.findViewById(R.id.evento_tag)
+        private val nomeLocaleTextView: TextView = itemView.findViewById(R.id.evento_locale)
+        private val dataEventoTextView: TextView = itemView.findViewById(R.id.evento_data)
+
+        fun bind(evento: ItemEvento) {
+            nomeEventoTextView.text = evento.nomeEvento
+            tipoEventoTextView.text = evento.tipoEvento
+            nomeLocaleTextView.text = evento.nomeLocale
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+            val data = Date(evento.data)
+            dataEventoTextView.text = dateFormat.format(data)
+        }
+    }
+}

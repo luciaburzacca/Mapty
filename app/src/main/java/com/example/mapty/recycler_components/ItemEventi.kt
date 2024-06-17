@@ -7,9 +7,9 @@ data class ItemEvento(
     val nomeEvento: String = "",
     val descrizione: String = "",
     val tipoEvento: String = "",
-    val prezzo: Double = 0.0,
+    val prezzo: String = "0.0",
     val location: GeoPoint? = null,
-    val dateTimeInizio: Date? = null,
-    val dateTimeFine: Date? = null,
+    val data: Long = 0L,
+    val dataFine: Long = 0L,
     val nomeLocale: String = "",
 )

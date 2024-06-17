@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +26,9 @@ class LocaleHomeFragment : Fragment() {
     private lateinit var eventiAdapter: AdapterEventi
     private var eventiList: MutableList<ItemEvento> = mutableListOf()
     private var nomeLocale: String? = null
+    private lateinit var bottoneFuturi: Button
+    private lateinit var bottonePassati: Button
+    private lateinit var emptyView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +39,18 @@ class LocaleHomeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         eventiAdapter = AdapterEventi(eventiList)
         recyclerView.adapter = eventiAdapter
+        bottoneFuturi = view.findViewById(R.id.bottone_futuri)
+        bottonePassati = view.findViewById(R.id.bottone_passati)
+        emptyView = view.findViewById(R.id.empty_view)
+
+        bottoneFuturi.setOnClickListener {
+            caricaEventi(true)
+        }
+
+        bottonePassati.setOnClickListener {
+            caricaEventi(false)
+        }
+
         return view
     }
 
@@ -42,10 +59,8 @@ class LocaleHomeFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Recupera l'email dell'utente corrente
         val emailUtente = auth.currentUser?.email ?: return
 
-        // Recupera il nome del locale associato all'utente
         db.collection("locali")
             .whereEqualTo("email", emailUtente)
             .get()
@@ -57,23 +72,28 @@ class LocaleHomeFragment : Fragment() {
                 val localeDoc = documents.first()
                 nomeLocale = localeDoc.getString("nomeLocale")
 
-                // Carica gli eventi dopo aver recuperato il nome del locale
-                caricaEventi()
+                caricaEventi(true)
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Errore nel recupero dei dati del locale", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun caricaEventi() {
+    private fun caricaEventi(futuri: Boolean) {
         if (nomeLocale == null) return
 
-        val currentTime = Date()
+        val currentTime = System.currentTimeMillis()
+        val query = if (futuri) {
+            db.collection("eventos")
+                .whereEqualTo("nomeLocale", nomeLocale)
+                .whereGreaterThan("dataFine", currentTime)
+        } else {
+            db.collection("eventos")
+                .whereEqualTo("nomeLocale", nomeLocale)
+                .whereLessThan("dataFine", currentTime)
+        }
 
-        db.collection("eventos")
-            .whereEqualTo("nomeLocale", nomeLocale)
-            .whereGreaterThan("dateTimeFine", currentTime)
-            .get()
+        query.get()
             .addOnSuccessListener { documents ->
                 eventiList.clear()
                 for (document in documents) {
@@ -81,9 +101,20 @@ class LocaleHomeFragment : Fragment() {
                     eventiList.add(evento)
                 }
                 eventiAdapter.notifyDataSetChanged()
+                updateEmptyView()
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun updateEmptyView() {
+        if (eventiList.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyView.visibility = View.GONE
+        }
     }
 }
