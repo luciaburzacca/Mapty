@@ -14,9 +14,6 @@
             android:id="@+id/action_utenteHomeFragment_to_utenteFiltroEventiFragment"
             app:destination="@id/utenteFiltroEventiFragment" />
         <action
-            android:id="@+id/action_utenteHomeFragment_to_utenteVistaEventoFragment"
-            app:destination="@id/utenteVistaEventoFragment" />
-        <action
             android:id="@+id/action_utenteHomeFragment_to_utentePaginaLocaleFragment"
             app:destination="@id/utentePaginaLocaleFragment" />
     </fragment>
@@ -45,7 +42,11 @@
         android:id="@+id/utenteWishlistFragment"
         android:name="com.example.mapty.UtenteWishlistFragment"
         android:label="fragment_utente_wishlist"
-        tools:layout="@layout/fragment_utente_wishlist" />
+        tools:layout="@layout/fragment_utente_wishlist" >
+        <action
+            android:id="@+id/action_utenteWishlistFragment_to_vistaEventoFragment"
+            app:destination="@id/vistaEventoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/utenteProfileFragment"
@@ -81,17 +82,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/utenteVistaEventoFragment"
-        android:name="com.example.mapty.UtenteVistaEventoFragment"
-        android:label="fragment_utente_vista_evento"
-        tools:layout="@layout/fragment_utente_vista_evento" >
-        <argument
-            android:name="nomeEvento"
-            app:argType="string" />
-    </fragment>
-    <fragment
         android:id="@+id/vistaEventoFragment"
         android:name="com.example.mapty.VistaEventoFragment"
         android:label="fragment_vista_evento"
-        tools:layout="@layout/fragment_vista_evento" />
+        tools:layout="@layout/fragment_vista_evento" >
+        <action
+            android:id="@+id/action_vistaEventoFragment_to_utentePaginaLocaleFragment"
+            app:destination="@id/utentePaginaLocaleFragment" />
+    </fragment>
 </navigation>

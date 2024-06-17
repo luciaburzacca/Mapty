@@ -1,14 +1,24 @@
 package com.example.mapty
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import com.example.mapty.recycler_components.ItemEvento
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class VistaEventoFragment : Fragment() {
 
@@ -19,6 +29,16 @@ class VistaEventoFragment : Fragment() {
     private lateinit var eventoId: String // L'ID dell'evento corrente
 
     private var isPreferito = false
+
+    private lateinit var textViewNomeEvento: TextView
+    private lateinit var textViewTipoEvento: TextView
+    private lateinit var textViewDataEvento: TextView
+    private lateinit var textViewOraInizioEvento: TextView
+    private lateinit var textViewPrezzoEvento: TextView
+    private lateinit var textViewNomeLocaleEvento: TextView
+    private lateinit var textViewNumeroTelefonoEvento: TextView
+    private lateinit var textViewLuogoEvento: TextView
+    private lateinit var textViewDescrizioneEvento: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,8 +53,18 @@ class VistaEventoFragment : Fragment() {
         // Inizializza views
         cuoreUtenteImageView = view.findViewById(R.id.cuore_utente)
 
-        // Recupera l'ID dell'evento corrente (potrebbe essere passato tramite Safe Args)
-        eventoId = "ID_DEL_TUO_EVENTO"
+        textViewNomeEvento = view.findViewById(R.id.textViewNomeEvento)
+        textViewTipoEvento = view.findViewById(R.id.textViewTipoEvent)
+        textViewDataEvento = view.findViewById(R.id.textViewDataEvento)
+        textViewOraInizioEvento = view.findViewById(R.id.textViewOraInizioEvento)
+        textViewPrezzoEvento = view.findViewById(R.id.textViewPrezzoEvento)
+        textViewNomeLocaleEvento = view.findViewById(R.id.textViewNomeLocaleEvento)
+        textViewNumeroTelefonoEvento = view.findViewById(R.id.textViewNumeroTelefonoEvento)
+        textViewLuogoEvento = view.findViewById(R.id.textViewLuogoEvento)
+        textViewDescrizioneEvento = view.findViewById(R.id.textViewDescrizioneEvento)
+
+        // Recupera l'ID dell'evento corrente dai Safe Args
+        eventoId = arguments?.getString("eventoId") ?: ""
 
         // Verifica se l'utente è autenticato
         val currentUser = auth.currentUser
@@ -75,6 +105,20 @@ class VistaEventoFragment : Fragment() {
 
         // Verifica se l'evento è già nei preferiti e aggiorna l'UI di conseguenza
         verificaEventoPreferito()
+
+        // Carica i dettagli dell'evento
+        caricaDettagliEvento()
+
+        // Click listener per tornare indietro
+        view.findViewById<Button>(R.id.torna_indietro).setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        // Click listener per textViewNomeLocaleEvento
+        textViewNomeLocaleEvento.setOnClickListener {
+            val bundle = bundleOf("nomeLocale" to textViewNomeLocaleEvento.text.toString())
+            findNavController().navigate(R.id.action_vistaEventoFragment_to_utentePaginaLocaleFragment, bundle)
+        }
 
         return view
     }
@@ -135,8 +179,7 @@ class VistaEventoFragment : Fragment() {
             db.collection("utenti")
                 .document(userId)
                 .collection("eventi_preferiti")
-                .document(eventoId)
-                .set(mapOf("idEvento" to eventoId))
+                .add(mapOf("idEvento" to eventoId))
                 .addOnSuccessListener {
                     // Evento aggiunto con successo ai preferiti
                     isPreferito = true
@@ -171,7 +214,48 @@ class VistaEventoFragment : Fragment() {
         }
     }
 
-    companion object {
-        private const val TAG = "VistaEventoFragment"
+    private fun caricaDettagliEvento() {
+        db.collection("eventos").document(eventoId).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val evento = document.toObject(ItemEvento::class.java)
+                    if (evento != null) {
+                        textViewNomeEvento.text = evento.nomeEvento
+                        textViewTipoEvento.text = evento.tipoEvento
+                        textViewDataEvento.text = formatDate(evento.data)
+                        textViewOraInizioEvento.text = formatTime(evento.data)
+                        textViewPrezzoEvento.text = evento.prezzo
+                        textViewNomeLocaleEvento.text = evento.nomeLocale
+                        textViewNumeroTelefonoEvento.text = evento.numeroTelefono.toString()
+                        evento.location?.let { geoPoint ->
+                            textViewLuogoEvento.text = "${geoPoint.latitude}, ${geoPoint.longitude}"
+                        } ?: run {
+                            textViewLuogoEvento.text = "Posizione non disponibile"
+                        }
+                        textViewDescrizioneEvento.text = evento.descrizione
+                    }
+                } else {
+                    Toast.makeText(context, "Evento non trovato", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+            }
     }
+
+    private fun formatDate(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = Date(timestamp)
+        return sdf.format(date)
+    }
+
+    private fun formatTime(timestamp: Long): String {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val date = Date(timestamp)
+        return sdf.format(date)
+    }
+
 }
+
+
+

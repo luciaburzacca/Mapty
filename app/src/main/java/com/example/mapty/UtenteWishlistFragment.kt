@@ -1,56 +1,115 @@
 package com.example.mapty
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
 
-class UtenteWishlistFragment : Fragment(R.layout.fragment_utente_wishlist) {
+class UtenteWishlistFragment : Fragment() {
 
-    /*lateinit var recyclerView: RecyclerView
-    lateinit var arrayList: ArrayList<ItemEvento>
-    lateinit var nomiEventi: Array<String>
+    private lateinit var db: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var eventiAdapter: AdapterEventi
+    private var eventiList: MutableList<ItemEvento> = mutableListOf()
+    private lateinit var emptyView: TextView
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-        super.onViewCreated(view, savedInstanceState)
-
-        nomiEventi = arrayOf(
-            "evento 1",
-            "evento 2",
-            "evento 3",
-            "evento 4",
-            "evento 5",
-            "evento 6",
-            "evento 7",
-            "evento 8",
-            "evento 9",
-            "evento 10",
-            "evento 11",
-            "evento 12",
-            "evento 13",
-            "evento 14",
-            "evento 15"
-        )
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_utente_wishlist, container, false)
         recyclerView = view.findViewById(R.id.recycler_view_eventi_wishlist)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
+        eventiAdapter = AdapterEventi(eventiList) { evento ->
+            onEventoClicked(evento)
+        }
+        recyclerView.adapter = eventiAdapter
+        //emptyView = view.findViewById(R.id.empty_view_wishlist)
 
-        arrayList = arrayListOf<ItemEvento>()
-        getDataEventi()
+
+        return view
     }
 
-    private fun getDataEventi() {
-        for(i in nomiEventi.indices){
-            val evento = ItemEvento(nomiEventi[i])
-            arrayList.add(evento)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        db = FirebaseFirestore.getInstance()
+
+        caricaEventiPreferiti()
+    }
+
+    private fun caricaEventiPreferiti() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+
+            db.collection("utenti")
+                .document(userId)
+                .collection("eventi_preferiti")
+                .get()
+                .addOnSuccessListener { documents ->
+                    val preferitiIds = documents.map { it.id }
+
+                    if (preferitiIds.isEmpty()) {
+                        updateEmptyView(true)
+                    } else {
+                        caricaEventi(preferitiIds)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+                }
         }
+    }
 
-        recyclerView.adapter = AdapterEventi(arrayList)
-    }*/
+    private fun caricaEventi(preferitiIds: List<String>) {
+        val currentTime = System.currentTimeMillis()
+        db.collection("eventos")
+            .whereIn(FieldPath.documentId(), preferitiIds)
+            .whereGreaterThan("dataFine", currentTime)
+            .get()
+            .addOnSuccessListener { documents ->
+                eventiList.clear()
+                for (document in documents) {
+                    val evento = document.toObject(ItemEvento::class.java).apply {
+                        id = document.id  // Set the document ID
+                    }
+                    eventiList.add(evento)
+                }
+                eventiAdapter.notifyDataSetChanged()
+                updateEmptyView(eventiList.isEmpty())
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+            }
+    }
 
+    private fun updateEmptyView(isEmpty: Boolean) {
+        if (isEmpty) {
+            recyclerView.visibility = View.GONE
+            emptyView.text = "Non ci sono ancora eventi a cui si vuole andare"
+            emptyView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyView.visibility = View.GONE
+        }
+    }
+
+    private fun onEventoClicked(evento: ItemEvento) {
+        val bundle = bundleOf("eventoId" to evento.id)
+        findNavController().navigate(R.id.action_utenteWishlistFragment_to_vistaEventoFragment, bundle)
+    }
 }
+

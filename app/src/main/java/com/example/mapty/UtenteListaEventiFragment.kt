@@ -64,7 +64,7 @@ class UtenteListaEventiFragment : Fragment() {
 
     private fun caricaEventi(tipoEvento: String?) {
         val currentTime = System.currentTimeMillis()
-        val query = if (tipoEvento.isNullOrEmpty()) {
+        val query = if (tipoEvento.isNullOrEmpty() || tipoEvento == " ") {
             db.collection("eventos")
                 .whereGreaterThan("dataFine", currentTime)
         } else {
@@ -77,7 +77,9 @@ class UtenteListaEventiFragment : Fragment() {
             .addOnSuccessListener { documents ->
                 eventiList.clear()
                 for (document in documents) {
-                    val evento = document.toObject(ItemEvento::class.java)
+                    val evento = document.toObject(ItemEvento::class.java).apply {
+                        id = document.id  // Set the document ID
+                    }
                     eventiList.add(evento)
                 }
                 eventiAdapter.notifyDataSetChanged()
@@ -99,11 +101,8 @@ class UtenteListaEventiFragment : Fragment() {
     }
 
     private fun onEventoClicked(evento: ItemEvento) {
-        val bundle = bundleOf(
-            "nomeLocale" to evento.nomeLocale,
-            "data" to evento.data,
-            "nomeEvento" to evento.nomeEvento
-        )
+        val bundle = bundleOf("eventoId" to evento.id)
         findNavController().navigate(R.id.action_utenteListaEventiFragment_to_vistaEventoFragment, bundle)
     }
+
 }
