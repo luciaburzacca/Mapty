@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="viola">#89bfdd</color>
+    <color name="viola">#8C4CFF</color>
     <color name="lila">#9999CC</color>
     <color name="dark_gray">#888585</color>
     <color name="colorSelected">#9999CC</color>

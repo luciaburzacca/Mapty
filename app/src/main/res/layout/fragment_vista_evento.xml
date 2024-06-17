@@ -1,175 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     tools:context=".VistaEventoFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="40dp"
-        android:orientation="vertical">
+        android:layout_margin="40dp">
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewNomeEvento"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="NOME EVENTO"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/lila"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewTipoEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="tipo evento"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="30dp"
-                android:layout_height="match_parent" />
-
-            <ImageView
-                android:id="@+id/cuore_utente"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.5"
-                android:src="@drawable/round_favorite_border"
-                android:tint="@color/white"
-                tools:ignore="InvalidId" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="50sp"
-                android:layout_height="50sp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/baseline_calendar_month"
-                android:tint="@color/lila" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewDataEvento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="data evento"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/textViewOraInizioEvento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ora inizio evento"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewPrezzoEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="prezzo evento"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white" />
-
-
-        <TextView
-            android:id="@+id/textViewNomeLocaleEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="NOME LOCALE"
-            android:textColor="@color/lila"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewNumeroTelefonoEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="numero telefono"
-            android:textColor="@color/lila"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/textViewLuogoEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="luogo evento"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:textStyle="italic" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
-
-            <TextView
-                android:id="@+id/textViewDescrizioneEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="descrizione evento"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewNomeEvento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="NOME EVENTO"
+                        android:textAlignment="center"
+                        android:textColor="@color/lila"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewTipoEvent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="tipo evento"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/cuore_utente"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/round_favorite_border"
+                    android:tint="@color/white"
+                    tools:ignore="InvalidId" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/baseline_calendar_month"
+                    android:tint="@color/lila" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewDataEvento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="data evento"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/textViewOraInizioEvento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ora inizio evento"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewPrezzoEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="prezzo evento"
                 android:textColor="@color/white"
-                android:textSize="15dp" />
-        </ScrollView>
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white" />
 
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textViewNomeLocaleEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="NOME LOCALE"
+                android:textColor="@color/lila"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewNumeroTelefonoEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="numero telefono"
+                android:textColor="@color/lila"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/textViewLuogoEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="luogo evento"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:textStyle="italic" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/textViewDescrizioneEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="descrizione evento"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+            </ScrollView>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/torna_indietro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INDIETRO"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>
