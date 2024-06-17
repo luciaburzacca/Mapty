@@ -52,11 +52,13 @@
                 android:layout_height="match_parent" />
 
             <ImageView
+                android:id="@+id/cuore_utente"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="0.5"
                 android:src="@drawable/round_favorite_border"
-                android:tint="@color/white" />
+                android:tint="@color/white"
+                tools:ignore="InvalidId" />
         </LinearLayout>
 
         <TextView

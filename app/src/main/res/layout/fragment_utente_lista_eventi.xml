@@ -19,7 +19,10 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_evento" >
+
+
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -27,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/recycler_view_eventi_utente">
+            app:layout_constraintBottom_toBottomOf="parent"">
 
             <Button
                 android:id="@+id/button_indietro"
@@ -46,6 +49,18 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:text="Nessun evento trovato"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        />
 
 
 </FrameLayout>

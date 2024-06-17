@@ -30,6 +30,12 @@
             android:name="tipoEvento"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_utenteListaEventiFragment_to_utenteFiltroEventiFragment"
+            app:destination="@id/utenteFiltroEventiFragment" />
+        <action
+            android:id="@+id/action_utenteListaEventiFragment_to_utenteHomeFragment"
+            app:destination="@id/utenteHomeFragment" />
     </fragment>
 
     <fragment
