@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
@@ -26,12 +27,76 @@ class UtenteFiltroEventiFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_utente_filtro_eventi, container, false)
+
         view.findViewById<Button>(R.id.buttonTornaHome).setOnClickListener {
             findNavController().navigate(R.id.action_utenteFiltroEventiFragment_to_utenteHomeFragment)
         }
 
+        val imageButtonAll = view.findViewById<ImageButton>(R.id.imageButtonAll)
+        val imageButtonBar = view.findViewById<ImageButton>(R.id.imageButtonBar)
+        val imageButtonBeach = view.findViewById<ImageButton>(R.id.imageButtonBeach)
+        val imageButtonDisco = view.findViewById<ImageButton>(R.id.imageButtonDisco)
+        val imageButtonFilm = view.findViewById<ImageButton>(R.id.imageButtonFilm)
+        val imageButtonKaraoke = view.findViewById<ImageButton>(R.id.imageButtonKaraoke)
+        val imageButtonLive = view.findViewById<ImageButton>(R.id.imageButtonLive)
+        val imageButtonLocal = view.findViewById<ImageButton>(R.id.imageButtonLocal)
+        val imageButtonRaggaeton = view.findViewById<ImageButton>(R.id.imageButtonReggaeton)
+        val imageButtonSlay = view.findViewById<ImageButton>(R.id.imageButtonSlay)
+        val imageButtonTechno = view.findViewById<ImageButton>(R.id.imageButtonTechno)
+        val imageButtonthematic = view.findViewById<ImageButton>(R.id.imageButtonThematic)
 
-        searchView = view.findViewById(R.id.search_view_filtro)
+        imageButtonAll.setOnClickListener {
+            findNavController().navigate(R.id.action_utenteFiltroEventiFragment_to_utenteListaEventiFragment)
+        }
+
+        imageButtonBar.setOnClickListener {
+            val action = UtenteFiltroEventiFragmentDirections.actionUtenteFiltroEventiFragmentToUtenteListaEventiFragment("variabile1")
+            findNavController().navigate(action)
+        }
+
+        imageButtonBeach.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile1") // Passa "variabile1" al fragment successivo
+        }
+
+        imageButtonDisco.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile2") // Passa "variabile2" al fragment successivo
+        }
+
+        imageButtonFilm.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile1") // Passa "variabile1" al fragment successivo
+        }
+
+        imageButtonKaraoke.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile2") // Passa "variabile2" al fragment successivo
+        }
+
+        imageButtonLive.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile1") // Passa "variabile1" al fragment successivo
+        }
+
+        imageButtonLocal.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile2") // Passa "variabile2" al fragment successivo
+        }
+
+        imageButtonRaggaeton.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile1") // Passa "variabile1" al fragment successivo
+        }
+
+        imageButtonSlay.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile2") // Passa "variabile2" al fragment successivo
+        }
+
+        imageButtonTechno.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile1") // Passa "variabile1" al fragment successivo
+        }
+
+        imageButtonthematic.setOnClickListener {
+            navigateToUtenteListaEventiFragment("variabile2") // Passa "variabile2" al fragment successivo
+        }
+
+
+
+        /*searchView = view.findViewById(R.id.search_view_filtro)
         suggestionsListView = view.findViewById(R.id.suggestions_list_view)
         db = FirebaseFirestore.getInstance()
 
@@ -64,12 +129,12 @@ class UtenteFiltroEventiFragment : Fragment() {
                 //val action = SearchFragmentDirections.actionSearchFragmentToUtenteVistaEventoFragment(selectedSuggestion)
                 //findNavController().navigate(action)
             }
-        }
+        }*/
 
         return view
     }
 
-    private fun performSearch(query: String) {
+    /*private fun performSearch(query: String) {
         // Perform search if needed
     }
 
@@ -108,5 +173,5 @@ class UtenteFiltroEventiFragment : Fragment() {
                 }
                 searchAdapter.notifyDataSetChanged()
             }
-    }
+    }*/
 }

@@ -1,157 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".UtenteListaEventiFragment">
+    tools:context=".UtenteListaEventiFragment"
+    android:padding="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:columnCount="4"
-                android:rowCount="3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/all" />
-
-
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/bar" />
-
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/beach" />
-
-                <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/disco" />
-
-                <ImageButton
-                    android:id="@+id/imageButton5"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/film" />
-
-                <ImageButton
-                    android:id="@+id/imageButton6"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/karaoke" />
-
-                <ImageButton
-                    android:id="@+id/imageButton7"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/live" />
-
-                <ImageButton
-                    android:id="@+id/imageButton8"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/local" />
-
-                <ImageButton
-                    android:id="@+id/imageButton9"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/reggaeton" />
-
-                <ImageButton
-                    android:id="@+id/imageButton10"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/reggaeton" />
-
-                <ImageButton
-                    android:id="@+id/imageButton11"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/reggaeton" />
-
-                <ImageButton
-                    android:id="@+id/imageButton12"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/black"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/reggaeton" />
-            </GridLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_eventi_utente"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+            app:layout_constraintTop_toTopOf="parent" >
 
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_view_eventi_utente">
+
+            <Button
+                android:id="@+id/button_indietro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="INDIETRO" />
+
+            <Button
+                android:id="@+id/button_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="HOME"
+                />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

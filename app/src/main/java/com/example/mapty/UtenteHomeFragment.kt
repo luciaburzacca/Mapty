@@ -107,8 +107,8 @@ class UtenteHomeFragment : Fragment() {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     // Check if the end date of the event has not passed
-                    val dataFineTimestamp = document.getTimestamp("dataFine")
-                    if (dataFineTimestamp != null && dataFineTimestamp.seconds > System.currentTimeMillis() / 1000) {
+                    val dataFineMillis = document.getLong("dataFine") // Assuming dataFine is stored as a long in milliseconds
+                    if (dataFineMillis != null && dataFineMillis > System.currentTimeMillis()) {
                         // Event end date has not passed, read GeoPoint of the location
                         val firebaseGeoPoint = document.getGeoPoint("luogo")
                         if (firebaseGeoPoint != null) {
