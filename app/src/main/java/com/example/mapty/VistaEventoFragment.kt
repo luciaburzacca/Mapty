@@ -26,7 +26,7 @@ class VistaEventoFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
 
     private lateinit var cuoreUtenteImageView: ImageView
-    private lateinit var eventoId: String // L'ID dell'evento corrente
+    private lateinit var eventoId: String
 
     private var isPreferito = false
 
@@ -46,11 +46,9 @@ class VistaEventoFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_vista_evento, container, false)
 
-        // Inizializza Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Inizializza views
         cuoreUtenteImageView = view.findViewById(R.id.cuore_utente)
 
         textViewNomeEvento = view.findViewById(R.id.textViewNomeEvento)
@@ -63,64 +61,83 @@ class VistaEventoFragment : Fragment() {
         textViewLuogoEvento = view.findViewById(R.id.textViewLuogoEvento)
         textViewDescrizioneEvento = view.findViewById(R.id.textViewDescrizioneEvento)
 
-        // Recupera l'ID dell'evento corrente dai Safe Args
+
         eventoId = arguments?.getString("eventoId") ?: ""
 
-        // Verifica se l'utente è autenticato
+
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val emailUtente = currentUser.email
 
             if (emailUtente != null) {
-                // Verifica se l'utente è un locale
+
                 db.collection("locali")
                     .whereEqualTo("email", emailUtente)
                     .get()
                     .addOnSuccessListener { documents ->
                         if (!documents.isEmpty) {
-                            // L'utente è un locale, nascondi l'ImageView cuore_utente
+
                             cuoreUtenteImageView.visibility = View.GONE
                         } else {
-                            // L'utente non è un locale, verifica se è un utente normale
+
                             verificaUtenteNormale(emailUtente)
                         }
                     }
                     .addOnFailureListener { exception ->
                         Log.e(TAG, "Errore nel recupero dei dati del locale", exception)
-                        // Gestione dell'errore
                     }
             }
         }
 
-        // Click listener per l'ImageView cuore_utente
         cuoreUtenteImageView.setOnClickListener {
             if (isPreferito) {
-                // Rimuovi l'evento dai preferiti
+
                 rimuoviEventoPreferito()
             } else {
-                // Aggiungi l'evento ai preferiti
+
                 aggiungiEventoPreferito()
             }
         }
 
-        // Verifica se l'evento è già nei preferiti e aggiorna l'UI di conseguenza
-        verificaEventoPreferito()
-
-        // Carica i dettagli dell'evento
         caricaDettagliEvento()
 
-        // Click listener per tornare indietro
         view.findViewById<Button>(R.id.torna_indietro).setOnClickListener {
             findNavController().navigateUp()
         }
 
-        // Click listener per textViewNomeLocaleEvento
+
         textViewNomeLocaleEvento.setOnClickListener {
-            val bundle = bundleOf("nomeLocale" to textViewNomeLocaleEvento.text.toString())
-            findNavController().navigate(R.id.action_vistaEventoFragment_to_utentePaginaLocaleFragment, bundle)
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                val emailUtente = currentUser.email
+                if (emailUtente != null) {
+                    db.collection("locali")
+                        .whereEqualTo("email", emailUtente)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            if (documents.isEmpty) {
+
+                                val bundle = bundleOf("nomeLocale" to textViewNomeLocaleEvento.text.toString())
+                                findNavController().navigate(R.id.action_vistaEventoFragment_to_utentePaginaLocaleFragment, bundle)
+                            } else {
+
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e(TAG, "Errore nel verificare il tipo di utente", exception)
+                        }
+                }
+            }
         }
 
+
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        verificaEventoPreferito()
     }
 
     private fun verificaUtenteNormale(emailUtente: String) {
@@ -129,16 +146,16 @@ class VistaEventoFragment : Fragment() {
             .get()
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
-                    // L'utente è un utente normale, mostra l'ImageView cuore_utente con il bordo vuoto
+
                     cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
                     cuoreUtenteImageView.visibility = View.VISIBLE
                 } else {
-                    // L'utente non è neanche un utente normale, potrebbe essere gestito di conseguenza
+
                 }
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Errore nel recupero dei dati dell'utente", exception)
-                // Gestione dell'errore
+
             }
     }
 
@@ -156,17 +173,15 @@ class VistaEventoFragment : Fragment() {
                     isPreferito = documentSnapshot.exists()
 
                     if (isPreferito) {
-                        // Mostra l'ImageView cuore_utente con il cuore pieno
-                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite)
+                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite) //cuore pieno
                     } else {
-                        // Mostra l'ImageView cuore_utente con il bordo vuoto
-                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
+                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border) //cuore bordi
                     }
                     cuoreUtenteImageView.visibility = View.VISIBLE
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Errore nel verificare se l'evento è nei preferiti", exception)
-                    // Gestione dell'errore
+
                 }
         }
     }
@@ -179,15 +194,15 @@ class VistaEventoFragment : Fragment() {
             db.collection("utenti")
                 .document(userId)
                 .collection("eventi_preferiti")
-                .add(mapOf("idEvento" to eventoId))
+                .document(eventoId) // Use the eventId as the document ID for consistency
+                .set(mapOf("idEvento" to eventoId))
                 .addOnSuccessListener {
-                    // Evento aggiunto con successo ai preferiti
+
                     isPreferito = true
                     cuoreUtenteImageView.setImageResource(R.drawable.round_favorite)
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Errore nell'aggiungere l'evento ai preferiti", exception)
-                    // Gestione dell'errore
                 }
         }
     }
@@ -203,13 +218,12 @@ class VistaEventoFragment : Fragment() {
                 .document(eventoId)
                 .delete()
                 .addOnSuccessListener {
-                    // Evento rimosso con successo dai preferiti
+
                     isPreferito = false
                     cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Errore nella rimozione dell'evento dai preferiti", exception)
-                    // Gestione dell'errore
                 }
         }
     }
@@ -224,24 +238,32 @@ class VistaEventoFragment : Fragment() {
                         textViewTipoEvento.text = evento.tipoEvento
                         textViewDataEvento.text = formatDate(evento.data)
                         textViewOraInizioEvento.text = formatTime(evento.data)
-                        textViewPrezzoEvento.text = evento.prezzo
+                        textViewPrezzoEvento.text = "${evento.prezzo}€"
                         textViewNomeLocaleEvento.text = evento.nomeLocale
                         textViewNumeroTelefonoEvento.text = evento.numeroTelefono.toString()
-                        evento.location?.let { geoPoint ->
-                            textViewLuogoEvento.text = "${geoPoint.latitude}, ${geoPoint.longitude}"
-                        } ?: run {
+
+                        // Check and handle the GeoPoint field
+                        if (evento.location != null) {
+                            val geoPoint = evento.location
+                            textViewLuogoEvento.text = "${geoPoint?.latitude}, ${geoPoint?.longitude}"
+                        } else {
                             textViewLuogoEvento.text = "Posizione non disponibile"
                         }
+
                         textViewDescrizioneEvento.text = evento.descrizione
+                    } else {
+                        Toast.makeText(context, "Evento non trovato", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Evento non trovato", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Documento non trovato", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Errore nel recupero dei dati: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 
     private fun formatDate(timestamp: Long): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -256,6 +278,5 @@ class VistaEventoFragment : Fragment() {
     }
 
 }
-
 
 

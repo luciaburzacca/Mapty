@@ -199,6 +199,7 @@ class LocaleNewEventoFragment : Fragment() {
                 }
 
                 val nomeLocale = document.getString("nomeLocale")
+                val numeroTelefono = document.getString("numeroTelefono")
                 val geoPoint = GeoPoint(selectedLatitude!!, selectedLongitude!!)
 
                 if (nomeLocale != null) {
@@ -210,6 +211,7 @@ class LocaleNewEventoFragment : Fragment() {
                         "dataFine" to dataFine,
                         "prezzo" to prezzoEvento,
                         "nomeLocale" to nomeLocale,
+                        "numeroTelefono" to numeroTelefono,
                         "luogo" to geoPoint
                     )
 
@@ -232,4 +234,5 @@ class LocaleNewEventoFragment : Fragment() {
                 Log.e(TAG, "Errore durante il recupero del locale", e)
             }
     }
+
 }

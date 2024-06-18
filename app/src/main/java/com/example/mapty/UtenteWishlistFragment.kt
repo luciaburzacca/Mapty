@@ -37,8 +37,7 @@ class UtenteWishlistFragment : Fragment() {
             onEventoClicked(evento)
         }
         recyclerView.adapter = eventiAdapter
-        //emptyView = view.findViewById(R.id.empty_view_wishlist)
-
+        emptyView = view.findViewById(R.id.empty_view_wishlist)
 
         return view
     }
@@ -53,32 +52,51 @@ class UtenteWishlistFragment : Fragment() {
     private fun caricaEventiPreferiti() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
-            val userId = currentUser.uid
+            val userEmail = currentUser.email
 
-            db.collection("utenti")
-                .document(userId)
-                .collection("eventi_preferiti")
-                .get()
-                .addOnSuccessListener { documents ->
-                    val preferitiIds = documents.map { it.id }
+            if (userEmail != null) {
+                db.collection("utenti")
+                    .whereEqualTo("email", userEmail)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (documents.isEmpty) {
+                            updateEmptyView(true)
+                        } else {
+                            val userId = documents.first().id
+                            db.collection("utenti")
+                                .document(userId)
+                                .collection("Eventi_preferiti")
+                                .get()
+                                .addOnSuccessListener { preferitiDocuments ->
+                                    val preferitiIds = preferitiDocuments.map { it.getString("idEvento") }
 
-                    if (preferitiIds.isEmpty()) {
-                        updateEmptyView(true)
-                    } else {
-                        caricaEventi(preferitiIds)
+                                    if (preferitiIds.isEmpty()) {
+                                        updateEmptyView(true)
+                                    } else {
+                                        caricaEventi(preferitiIds)
+                                    }
+                                }
+                                .addOnFailureListener { exception ->
+                                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+                                }
+                        }
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
-                }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                updateEmptyView(true)
+            }
+        } else {
+            updateEmptyView(true)
         }
     }
 
-    private fun caricaEventi(preferitiIds: List<String>) {
+    private fun caricaEventi(preferitiIds: List<String?>) {
         val currentTime = System.currentTimeMillis()
         db.collection("eventos")
-            .whereIn(FieldPath.documentId(), preferitiIds)
-            .whereGreaterThan("dataFine", currentTime)
+            .whereIn(FieldPath.documentId(), preferitiIds.filterNotNull())
+            .whereGreaterThan("data", currentTime)
             .get()
             .addOnSuccessListener { documents ->
                 eventiList.clear()
@@ -99,7 +117,6 @@ class UtenteWishlistFragment : Fragment() {
     private fun updateEmptyView(isEmpty: Boolean) {
         if (isEmpty) {
             recyclerView.visibility = View.GONE
-            emptyView.text = "Non ci sono ancora eventi a cui si vuole andare"
             emptyView.visibility = View.VISIBLE
         } else {
             recyclerView.visibility = View.VISIBLE
@@ -112,4 +129,5 @@ class UtenteWishlistFragment : Fragment() {
         findNavController().navigate(R.id.action_utenteWishlistFragment_to_vistaEventoFragment, bundle)
     }
 }
+
 

@@ -45,5 +45,9 @@
         android:id="@+id/localeModificaEvento"
         android:name="com.example.mapty.LocaleModificaEvento"
         android:label="LocaleModificaEvento"
-        tools:layout="@layout/fragment_locale_modifica_evento"/>
+        tools:layout="@layout/fragment_locale_modifica_evento">
+        <action
+            android:id="@+id/action_localeModificaEvento_to_localeSelezionaMappaFragment"
+            app:destination="@id/localeSelezionaMappaFragment" />
+    </fragment>
 </navigation>

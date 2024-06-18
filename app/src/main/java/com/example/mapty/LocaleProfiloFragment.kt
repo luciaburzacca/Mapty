@@ -26,11 +26,6 @@ class LocaleProfiloFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_locale_profilo, container, false)
     }
 
-    /*fun goLogOutLocale(view: View) {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }*/
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

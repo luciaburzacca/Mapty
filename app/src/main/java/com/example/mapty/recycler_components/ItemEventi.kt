@@ -12,8 +12,8 @@ data class ItemEvento(
     val location: GeoPoint? = null,
     val data: Long = 0L,
     val dataFine: Long = 0L,
-    val nomeLocale: String = "",
-    val numeroTelefono: Long = 0L,
+    val nomeLocale: String? = "",
+    val numeroTelefono: String = "",
 ) {
 
 }

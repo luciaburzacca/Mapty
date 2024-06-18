@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -90,7 +91,6 @@ class LocaleHomeFragment : Fragment() {
             db.collection("eventos")
                 .whereEqualTo("nomeLocale", nomeLocale)
                 .whereGreaterThan("dataFine", currentTime)
-
         } else {
             db.collection("eventos")
                 .whereEqualTo("nomeLocale", nomeLocale)
@@ -102,6 +102,7 @@ class LocaleHomeFragment : Fragment() {
                 eventiList.clear()
                 for (document in documents) {
                     val evento = document.toObject(ItemEvento::class.java)
+                    evento.id = document.id
                     eventiList.add(evento)
                 }
                 eventiAdapter.notifyDataSetChanged()
@@ -111,6 +112,7 @@ class LocaleHomeFragment : Fragment() {
                 Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun updateEmptyView() {
         if (eventiList.isEmpty()) {
@@ -123,12 +125,18 @@ class LocaleHomeFragment : Fragment() {
     }
 
     private fun onEventoClicked(evento: ItemEvento) {
-        val bundle = Bundle().apply {
-            putString("nomeLocale", evento.nomeLocale)
-            putLong("data", evento.data)
-            putString("nomeEvento", evento.nomeEvento)
+        val currentTime = System.currentTimeMillis()
+
+        if (evento.dataFine < currentTime) {
+            // Evento passato: naviga verso VistaEventoFragment
+            val bundle = bundleOf("eventoId" to evento.id)
+            findNavController().navigate(R.id.action_localeHomeFragment_to_vistaEventoFragment, bundle)
+        } else {
+            // Evento futuro: naviga verso LocaleModificaEventoFragment
+            val bundle = bundleOf("eventoId" to evento.id)
+            findNavController().navigate(R.id.action_localeHomeFragment_to_localeModificaEvento, bundle)
         }
-        findNavController().navigate(R.id.action_localeHomeFragment_to_vistaEventoFragment, bundle)
     }
+
 }
 

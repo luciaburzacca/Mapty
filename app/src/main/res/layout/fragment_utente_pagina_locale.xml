@@ -36,7 +36,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/textViewPosizione"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -138,12 +138,12 @@
             android:background="@color/white" />
 
         <Button
-            android:id="@+id/buttonRitornaHome"
+            android:id="@+id/buttonRitornaIndietro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="TORNA A HOME"
+            android:text="TORNA INDIETRO"
             app:cornerRadius="10dp" />
 
 
