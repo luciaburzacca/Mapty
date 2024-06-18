@@ -19,18 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/utente"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:text="@string/nuovo_utente"
+            android:textColor="@color/lila"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="inserisci i tuoi dati:"
+            android:text="@string/dati_personali"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTextEmailUtente"
@@ -39,12 +39,14 @@
             android:layout_marginTop="10dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="EMAIL"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="emailAddress" />
 
         <EditText
             android:id="@+id/editTextPassUtente"
@@ -53,12 +55,14 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="PASSWORD"
-            android:inputType="textEmailAddress"
+            android:hint="@string/password"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="password"
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/editTextUsername"
@@ -67,12 +71,14 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="USERNAME"
-            android:inputType="textEmailAddress"
+            android:hint="@string/reg_user"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="username"
+            android:inputType="text" />
 
 
         <EditText
@@ -82,12 +88,14 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="NOME"
-            android:inputType="textEmailAddress"
+            android:hint="@string/reg_nome"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="name"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/editTextCognomeUtente"
@@ -96,12 +104,14 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="COGNOME"
-            android:inputType="textEmailAddress"
+            android:hint="@string/reg_cognome"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:inputType="text"
+            android:importantForAutofill="no" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,21 +124,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ANNULLA"
-                android:textSize="17sp"
+                android:text="@string/annulla"
                 app:cornerRadius="10dp" />
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp" />
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
 
             <Button
                 android:id="@+id/buttonSalvaRegistrazioneUtente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SALVA"
-                android:textSize="17sp"
+                android:text="@string/salva"
                 app:cornerRadius="10dp" />
         </LinearLayout>
 
@@ -137,16 +145,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Sei gestore di un locale?"
+            android:text="@string/sei_locale"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
         <Button
             android:id="@+id/buttonGoRegistrazioneLocale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/locale"
-            android:textSize="17sp"
+            android:text="@string/nuovo_locale"
             app:cornerRadius="10dp" />
     </LinearLayout>
 

@@ -37,7 +37,7 @@
                         android:text="NOME EVENTO"
                         android:textAlignment="center"
                         android:textColor="@color/lila"
-                        android:textSize="30dp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -48,7 +48,7 @@
                         android:text="tipo evento"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
                         android:textStyle="italic" />
 
                 </LinearLayout>
@@ -63,8 +63,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="0.5"
                     android:src="@drawable/round_favorite_border"
-                    android:tint="@color/white"
-                    tools:ignore="InvalidId" />
+                    app:tint="@color/white" />
             </LinearLayout>
 
             <TextView
@@ -85,7 +84,7 @@
                     android:layout_height="50sp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/baseline_calendar_month"
-                    android:tint="@color/lila" />
+                    app:tint="@color/lila" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -99,7 +98,7 @@
                         android:text="data evento"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/textViewOraInizioEvento"
@@ -108,7 +107,7 @@
                         android:text="ora inizio evento"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -123,7 +122,7 @@
                 android:paddingStart="10dp"
                 android:text="prezzo evento"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -140,7 +139,7 @@
                 android:layout_marginTop="10dp"
                 android:text="NOME LOCALE"
                 android:textColor="@color/lila"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -149,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:text="numero telefono"
                 android:textColor="@color/lila"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textViewLuogoEvento"
@@ -157,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:text="luogo evento"
                 android:textColor="@color/white"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="italic" />
 
             <ScrollView
@@ -172,7 +171,7 @@
                     android:padding="10dp"
                     android:text="descrizione evento"
                     android:textColor="@color/white"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
             </ScrollView>
 
 
@@ -182,7 +181,7 @@
             android:id="@+id/torna_indietro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="INDIETRO"
+            android:text="@string/indietro"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 

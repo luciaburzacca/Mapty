@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Nessun evento è stato messo in whislist"
+            android:text="@string/warning_wishlist_vuota"
             android:textColor="@color/white"
            android:visibility="gone"
             android:textSize="20sp"

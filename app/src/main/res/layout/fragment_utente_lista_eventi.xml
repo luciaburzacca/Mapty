@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Nessun evento trovato"
+            android:text="@string/warning_nessun_evento"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:visibility="gone"
@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="INDIETRO"
+                    android:text="@string/indietro"
                     app:cornerRadius="10dp" />
 
                 <Space
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="HOME"
+                    android:text="@string/home"
                     app:cornerRadius="10dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
