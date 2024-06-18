@@ -18,6 +18,7 @@ import com.example.mapty.recycler_components.ItemLocale
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.firestore
 
 class UtenteProfileFragment : Fragment() {
@@ -27,12 +28,16 @@ class UtenteProfileFragment : Fragment() {
 
     private lateinit var textViewUsername: TextView
     private lateinit var textViewNomeCognome: TextView
+    private lateinit var recyclerViewLocaliPreferiti: RecyclerView
+    private lateinit var adapterLocali: AdapterLocali
+    private var localiPreferitiList: MutableList<ItemLocale> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         firestore = Firebase.firestore
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +46,10 @@ class UtenteProfileFragment : Fragment() {
 
         textViewUsername = view.findViewById(R.id.profile_username)
         textViewNomeCognome = view.findViewById(R.id.profile_name)
+        recyclerViewLocaliPreferiti = view.findViewById(R.id.recycler_view_locali_preferiti)
+
+        adapterLocali = AdapterLocali(localiPreferitiList)
+        recyclerViewLocaliPreferiti.adapter = adapterLocali
 
         return view
     }
@@ -48,18 +57,8 @@ class UtenteProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val buttonLogoutUtente = view.findViewById<Button>(R.id.buttone_logout)
-
-        buttonLogoutUtente.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Recupera l'ID dell'utente corrente
         val currentUser = auth.currentUser
         currentUser?.uid?.let { userId ->
-            // Recupera i dati dell'utente dalla collezione 'utenti'
             firestore.collection("utenti").document(userId)
                 .get()
                 .addOnSuccessListener { document ->
@@ -68,7 +67,6 @@ class UtenteProfileFragment : Fragment() {
                         val nome = document.getString("nome") ?: ""
                         val cognome = document.getString("cognome") ?: ""
 
-                        // Aggiorna l'UI con i dati recuperati
                         textViewUsername.text = username
                         textViewNomeCognome.text = "$nome $cognome"
                     } else {
@@ -79,61 +77,37 @@ class UtenteProfileFragment : Fragment() {
                     Log.d("UtenteProfileFragment", "get failed with ", exception)
                     Toast.makeText(context, "Errore nel recupero dei dati utente", Toast.LENGTH_SHORT).show()
                 }
+
+            firestore.collection("utenti").document(userId)
+                .collection("locali_preferiti")
+                .get()
+                .addOnSuccessListener { documents ->
+                    localiPreferitiList.clear()
+                    for (document in documents) {
+                        val localeId = document.getString("idLocale") ?: ""
+                        firestore.collection("locali").document(localeId)
+                            .get()
+                            .addOnSuccessListener { localeDocument ->
+                                if (localeDocument != null) {
+                                    val nomeLocale = localeDocument.getString("nomeLocale") ?: ""
+                                    val posizioneLocale = localeDocument.getGeoPoint("posizioneLocale")
+                                        ?: GeoPoint(0.0, 0.0)
+                                    val itemLocale = ItemLocale(nomeLocale, posizioneLocale)
+                                    localiPreferitiList.add(itemLocale)
+                                    adapterLocali.notifyDataSetChanged()
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d("UtenteProfileFragment", "Errore nel recupero del locale", exception)
+                            }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti", exception)
+                }
         }
     }
-
-    /*lateinit var recyclerView: RecyclerView
-    lateinit var arrayList: ArrayList<ItemLocale>
-    lateinit var nomiLocali: Array<String>
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-        super.onViewCreated(view, savedInstanceState)
-
-        nomiLocali = arrayOf(
-            "locale 1",
-            "locale 2",
-            "locale 3",
-            "locale 4",
-            "locale 5",
-            "locale 6",
-            "locale 7",
-            "locale 8",
-            "locale 9",
-            "locale 10",
-            "locale 11",
-            "locale 12",
-            "locale 13",
-            "locale 14",
-            "locale 15"
-        )
-
-        recyclerView = view.findViewById(R.id.recycler_view_locali_preferiti)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
-
-        arrayList = arrayListOf<ItemLocale>()
-        getDataLocali()
-
-        // Trova il bottone e imposta il listener del click
-        val buttonProva = view.findViewById<Button>(R.id.prova)
-        buttonProva.setOnClickListener {
-            findNavController().navigate(R.id.action_utenteProfileFragment_to_utentePaginaLocaleFragment)
-        }
-
-        val buttonLogoutUtente = view.findViewById<Button>(R.id.buttone_logout)
-
-        buttonLogoutUtente.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    private fun getDataLocali() {
-        for(i in nomiLocali.indices){
-            val locale = ItemLocale(nomiLocali[i])
-            arrayList.add(locale)
-        }
-
-        recyclerView.adapter = AdapterLocali(arrayList)
-    }*/
 }
+
+
+

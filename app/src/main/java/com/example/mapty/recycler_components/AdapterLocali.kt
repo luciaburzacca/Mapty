@@ -7,24 +7,33 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.R
 
-class AdapterLocali(private val listalocali: ArrayList<ItemLocale>) : RecyclerView.Adapter<AdapterLocali.MyViewHolder>() {
+class AdapterLocali(private val localiList: List<ItemLocale>) :
+    RecyclerView.Adapter<AdapterLocali.LocaleViewHolder>() {
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nomeLoc: TextView = itemView.findViewById(R.id.locale_nome)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocaleViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_locale, parent, false)
+        return LocaleViewHolder(itemView)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_locale, parent, false)
-        return MyViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = listalocali[position]
-        holder.nomeLoc.text = currentItem.nomeLocale
+    override fun onBindViewHolder(holder: LocaleViewHolder, position: Int) {
+        val locale = localiList[position]
+        holder.bind(locale)
     }
 
     override fun getItemCount(): Int {
-        return listalocali.size
+        return localiList.size
+    }
 
+    class LocaleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textViewNomeLocale: TextView = itemView.findViewById(R.id.locale_nome)
+        private val textViewPosizione: TextView = itemView.findViewById(R.id.locale_indirizzo)
+
+        fun bind(locale: ItemLocale) {
+            textViewNomeLocale.text = locale.nomeLocale
+            textViewPosizione.text =
+                "Latitudine: ${locale.posizioneLocale?.latitude}, Longitudine: ${locale.posizioneLocale?.longitude}"
+        }
     }
 }
+

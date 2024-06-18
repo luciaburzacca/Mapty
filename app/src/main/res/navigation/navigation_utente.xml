@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_utenteHomeFragment_to_utenteFiltroEventiFragment"
             app:destination="@id/utenteFiltroEventiFragment" />
-        <action
-            android:id="@+id/action_utenteHomeFragment_to_utentePaginaLocaleFragment"
-            app:destination="@id/utentePaginaLocaleFragment" />
     </fragment>
 
     <fragment
@@ -24,7 +21,7 @@
         android:label="fragment_utente_lista_eventi"
         tools:layout="@layout/fragment_utente_lista_eventi" >
         <argument
-            android:name="tipoEvento"
+            android:name="tipo"
             app:argType="string"
             app:nullable="true" />
         <action
@@ -79,6 +76,9 @@
         <argument
             android:name="nomeLocale"
             app:argType="string" />
+        <action
+            android:id="@+id/action_utentePaginaLocaleFragment_to_vistaEventoFragment"
+            app:destination="@id/vistaEventoFragment" />
     </fragment>
 
     <fragment
