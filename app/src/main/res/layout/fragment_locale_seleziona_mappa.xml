@@ -11,8 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="40dp">
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -34,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="40dp"
             android:text="SALVA"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
