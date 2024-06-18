@@ -1,213 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UtenteFiltroEventiFragment"
-    android:background="@color/black">
+    android:background="@color/black"
+    tools:context=".UtenteFiltroEventiFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
-        tools:ignore="UselessParent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view_filtro"
+        <TextView
+            android:id="@+id/textview"
             android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30sp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:queryHint="Cerca evento o locale" />
+            android:layout_height="wrap_content"
+            android:text="SCEGLI IL TIPO DI EVENTO:"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ListView
-            android:id="@+id/suggestions_list_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonTornaHome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="15dp">
-
-
-            <TableRow
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="20dp">
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
                     android:id="@+id/imageButtonAll"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/all" />
+                    android:src="@drawable/all"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonBar"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/bar" />
+                    android:src="@drawable/bar"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonBeach"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonAll"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonBeach"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/beach" />
-            </TableRow>
+                    android:src="@drawable/beach"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonBar"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <TableRow
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
                 <ImageButton
                     android:id="@+id/imageButtonDisco"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
                     android:src="@drawable/disco"
-                    />
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonFilm"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonFilm"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/film" />
+                    android:src="@drawable/film"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonKaraoke"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonDisco"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonKaraoke"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/karaoke" />
-            </TableRow>
+                    android:src="@drawable/karaoke"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonFilm"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <TableRow
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout6"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp"
-                >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
                 <ImageButton
                     android:id="@+id/imageButtonLive"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/live" />
+                    android:src="@drawable/live"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonLocal"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonLocal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/local" />
+                    android:src="@drawable/local"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonReggaeton"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonLive"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonReggaeton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/reggaeton" />
-            </TableRow>
+                    android:src="@drawable/reggaeton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonLocal"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TableRow
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout7"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
                 <ImageButton
                     android:id="@+id/imageButtonSlay"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/slay" />
+                    android:src="@drawable/slay"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonTechno"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonTechno"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/techno" />
+                    android:src="@drawable/techno"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButtonThematic"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonSlay"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/imageButtonThematic"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:background="@color/black"
                     android:importantForAccessibility="no"
                     android:scaleType="centerInside"
-                    android:src="@drawable/thematic" />
-            </TableRow>
+                    android:src="@drawable/thematic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageButtonTechno"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </TableLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <Button
             android:id="@+id/buttonTornaHome"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="TORNA A HOME"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"/>
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

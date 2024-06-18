@@ -48,10 +48,6 @@ class UtenteProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val buttonProva = view.findViewById<Button>(R.id.prova)
-        buttonProva.setOnClickListener {
-            findNavController().navigate(R.id.action_utenteProfileFragment_to_utentePaginaLocaleFragment)
-        }
 
         val buttonLogoutUtente = view.findViewById<Button>(R.id.buttone_logout)
 
