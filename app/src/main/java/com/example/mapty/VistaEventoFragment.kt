@@ -235,7 +235,7 @@ class VistaEventoFragment : Fragment() {
                     val evento = document.toObject(ItemEvento::class.java)
                     if (evento != null) {
                         textViewNomeEvento.text = evento.nomeEvento
-                        textViewTipoEvento.text = evento.tipoEvento
+                        textViewTipoEvento.text = evento.tipo
                         textViewDataEvento.text = formatDate(evento.data)
                         textViewOraInizioEvento.text = formatTime(evento.data)
                         textViewPrezzoEvento.text = "${evento.prezzo}€"

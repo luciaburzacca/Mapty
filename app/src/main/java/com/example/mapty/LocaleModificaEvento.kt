@@ -15,6 +15,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,7 +25,6 @@ import java.util.Locale
 
 class LocaleModificaEvento : Fragment() {
 
-    // Variabili di classe
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var editNomeEvento: EditText
@@ -34,22 +34,30 @@ class LocaleModificaEvento : Fragment() {
     private lateinit var etOraInizio: EditText
     private lateinit var etOraFine: EditText
     private lateinit var editPrezzoEvento: EditText
-    private lateinit var editNomeLocale: EditText
-    private lateinit var editNumeroTelefono: EditText
+
     private lateinit var coordinateEvento: TextView
     private lateinit var buttonAnnulla: Button
     private lateinit var buttonEliminaEvento: Button
     private lateinit var buttonModifica: Button
 
     private lateinit var eventoId: String
-    private var nomeLocaleOriginale: String = ""
-    private var numeroTelefonoOriginale: String = ""
+    private var nomeLocale: String = ""
+    private var numeroTelefono: String = ""
+    private var latitudine: Double? = null
+    private var longitudine: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         eventoId = arguments?.getString("eventoId") ?: ""
+
+        // Imposta il listener per i risultati dei frammenti
+        setFragmentResultListener("mapSelectionRequestKey") { requestKey, bundle ->
+            latitudine = bundle.getDouble("latitudine")
+            longitudine = bundle.getDouble("longitudine")
+            coordinateEvento.text = "$latitudine, $longitudine"
+        }
     }
 
     override fun onCreateView(
@@ -58,7 +66,6 @@ class LocaleModificaEvento : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_locale_modifica_evento, container, false)
 
-        // Inizializzazione dei componenti UI
         editNomeEvento = view.findViewById(R.id.editNomeEvento)
         editDescrizioneEvento = view.findViewById(R.id.editDescrizioneEvento)
         spinnerTipoEvento = view.findViewById(R.id.spinnerTipoEvento)
@@ -95,7 +102,7 @@ class LocaleModificaEvento : Fragment() {
         }
 
         coordinateEvento.setOnClickListener {
-            navigateToMapSelection()
+            findNavController().navigate(R.id.action_localeModificaEvento_to_localeSelezionaMappaFragment)
         }
 
         etData.setOnClickListener {
@@ -126,15 +133,14 @@ class LocaleModificaEvento : Fragment() {
                     etOraInizio.setText(formatTime(document.getLong("data")))
                     etOraFine.setText(formatTime(document.getLong("dataFine")))
                     editPrezzoEvento.setText(document.getString("prezzo"))
-                    editNomeLocale.setText(document.getString("nomeLocale"))
-                    editNumeroTelefono.setText(document.getString("numeroTelefono"))
 
-                    // Salvataggio originale di nomeLocale e numeroTelefono
-                    nomeLocaleOriginale = document.getString("nomeLocale") ?: ""
-                    numeroTelefonoOriginale = document.getString("numeroTelefono") ?: ""
+                    nomeLocale = document.getString("nomeLocale") ?: ""
+                    numeroTelefono = document.getString("numeroTelefono") ?: ""
 
                     // Popolare coordinateEvento con latitudine e longitudine
-                    coordinateEvento.text = "${document.getDouble("latitudine")}, ${document.getDouble("longitudine")}"
+                    latitudine = document.getDouble("latitudine")
+                    longitudine = document.getDouble("longitudine")
+                    coordinateEvento.text = "$latitudine, $longitudine"
 
                 } else {
                     Toast.makeText(context, "Evento non trovato", Toast.LENGTH_SHORT).show()
@@ -156,12 +162,8 @@ class LocaleModificaEvento : Fragment() {
         val oraInizio = etOraInizio.text.toString().trim()
         val oraFine = etOraFine.text.toString().trim()
         val prezzoEvento = editPrezzoEvento.text.toString().trim()
-        val nomeLocale = editNomeLocale.text.toString().trim()
-        val numeroTelefono = editNumeroTelefono.text.toString().trim()
-        val coordinate = coordinateEvento.text.toString().trim() // Gestire latitudine e longitudine
 
-        // Validazione dei campi di input
-        if (nomeEvento.isEmpty() || descrizioneEvento.isEmpty() || data.isEmpty() || oraInizio.isEmpty() || oraFine.isEmpty() || prezzoEvento.isEmpty() || nomeLocale.isEmpty() || numeroTelefono.isEmpty() || coordinate.isEmpty()) {
+        if (nomeEvento.isEmpty() || descrizioneEvento.isEmpty() || data.isEmpty() || oraInizio.isEmpty() || oraFine.isEmpty() || prezzoEvento.isEmpty() || nomeLocale.isEmpty() || numeroTelefono.isEmpty() || latitudine == null || longitudine == null) {
             Toast.makeText(context, "Per favore, completa tutti i campi", Toast.LENGTH_SHORT).show()
             return
         }
@@ -191,7 +193,8 @@ class LocaleModificaEvento : Fragment() {
             "prezzo" to prezzoEvento.toDouble(),
             "nomeLocale" to nomeLocale,
             "numeroTelefono" to numeroTelefono,
-            // Aggiungere altri campi se necessario
+            "latitudine" to latitudine,
+            "longitudine" to longitudine
         )
 
         firestore.collection("eventos").document(eventoId)
@@ -229,11 +232,6 @@ class LocaleModificaEvento : Fragment() {
                 Log.e("LocaleModificaEvento", "Errore durante l'eliminazione dell'evento", e)
             }
     }
-
-    private fun navigateToMapSelection() {
-        findNavController().navigate(R.id.action_localeModificaEvento_to_localeSelezionaMappaFragment)
-    }
-
 
     private fun showDatePickerDialog(editText: EditText) {
         val cal = Calendar.getInstance()
@@ -282,6 +280,8 @@ class LocaleModificaEvento : Fragment() {
         return 0
     }
 }
+
+
 
 
 

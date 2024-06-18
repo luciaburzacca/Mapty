@@ -57,19 +57,19 @@ class UtenteListaEventiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         db = FirebaseFirestore.getInstance()
 
-        val tipoEvento = arguments?.getString("tipoEvento")
+        val tipoEvento = arguments?.getString("tipo")
 
         caricaEventi(tipoEvento)
     }
 
-    private fun caricaEventi(tipoEvento: String?) {
+    private fun caricaEventi(tipo: String?) {
         val currentTime = System.currentTimeMillis()
-        val query = if (tipoEvento.isNullOrEmpty() || tipoEvento == " ") {
+        val query = if (tipo.isNullOrEmpty() || tipo == " ") {
             db.collection("eventos")
                 .whereGreaterThan("dataFine", currentTime)
         } else {
             db.collection("eventos")
-                .whereEqualTo("tipo", tipoEvento)
+                .whereEqualTo("tipo", tipo)
                 .whereGreaterThan("dataFine", currentTime)
         }
 

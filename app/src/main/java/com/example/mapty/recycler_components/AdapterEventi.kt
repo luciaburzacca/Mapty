@@ -35,7 +35,7 @@ class AdapterEventi(private val eventiList: List<ItemEvento>, private val onItem
 
         fun bind(evento: ItemEvento) {
             nomeEventoTextView.text = evento.nomeEvento
-            tipoEventoTextView.text = evento.tipoEvento
+            tipoEventoTextView.text = evento.tipo
             nomeLocaleTextView.text = evento.nomeLocale
             val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
             val data = Date(evento.data)
