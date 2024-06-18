@@ -1,195 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
-        
+        android:layout_marginTop="40dp">
 
         <TextView
+            android:id="@+id/textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="crea un NUOVO EVENTO"
             android:gravity="center"
+            android:text="crea un NUOVO EVENTO"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editNomeEvento"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/lila"
-            android:ems="10"
-            android:hint="NOME"
-            android:paddingStart="15dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayout">
 
-        <EditText
-            android:id="@+id/editDescrizioneEvento"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/editNomeEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/lila"
+                    android:ems="10"
+                    android:hint="NOME"
+                    android:paddingStart="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/editDescrizioneEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/lila"
+                    android:ems="10"
+                    android:hint="DESCRIZIONE"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:paddingStart="15dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tipoEvento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Tipo evento:"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTipoEvento"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/lila"
+                        android:gravity="start" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/coordinateEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/lila"
+                    android:ems="10"
+                    android:hint="seleziona LUOGO"
+                    android:paddingStart="15dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/etData"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/lila"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="DATA"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etOraInizio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@color/lila"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="ORA inizio"
+                        android:paddingStart="15dp"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etOraFine"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@color/lila"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="ORA fine"
+                        android:paddingStart="15dp"
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editPrezzoEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/lila"
+                    android:ems="10"
+                    android:hint="PREZZO"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="15dp"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/lila"
-            android:ems="10"
-            android:hint="DESCRIZIONE"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:paddingStart="15dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/tipoEvento"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="10dp"
-                android:text="Tipo evento:"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-
-            <Spinner
-                android:id="@+id/spinnerTipoEvento"
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/lila"
-                android:gravity="start" />
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/coordinateEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/lila"
-            android:ems="10"
-            android:hint="seleziona LUOGO"
-            android:paddingStart="15dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/etData"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/lila"
-            android:clickable="true"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="DATA"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:paddingStart="15dp"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/etOraInizio"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:background="@color/lila"
-                android:clickable="true"
-                android:focusable="false"
-                android:hint="ORA inizio"
-                android:paddingStart="15dp"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/etOraFine"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:background="@color/lila"
-                android:clickable="true"
-                android:focusable="false"
-                android:hint="ORA fine"
-                android:paddingStart="15dp"
-                android:textSize="20sp" />
-
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/editPrezzoEvento"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/lila"
-            android:ems="10"
-            android:hint="PREZZO"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:paddingStart="15dp"
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/buttonAnnullaEvento"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="SVUOTA TUTTO"
-                app:cornerRadius="10dp" />
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider">
 
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="match_parent" />
+                <Button
+                    android:id="@+id/buttonAnnullaEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SVUOTA TUTTO"
+                    app:cornerRadius="10dp" />
 
-            <Button
-                android:id="@+id/buttonAggiungiEvento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="AGGIUNGI"
-                app:cornerRadius="10dp" />
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/buttonAggiungiEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="AGGIUNGI"
+                    app:cornerRadius="10dp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
