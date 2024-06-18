@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="40dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
 
         <TextView
@@ -19,18 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/locale"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:text="@string/nuovo_locale"
+            android:textColor="@color/lila"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="inserisci i tuoi dati:"
+            android:text="@string/dati_personali"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
 
         <EditText
@@ -40,12 +41,14 @@
             android:layout_marginTop="10dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="EMAIL"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="emailAddress" />
 
 
         <EditText
@@ -55,12 +58,14 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="PASSWORD"
+            android:hint="@string/password"
             android:inputType="textEmailAddress"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="password" />
 
         <EditText
             android:id="@+id/editTextNomeLocale"
@@ -69,11 +74,13 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="NOME DEL TUO LOCALE"
+            android:hint="@string/reg_locale"
             android:inputType="text"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/dark_gray" />
+            android:textColorHint="@color/dark_gray"
+            android:autofillHints="name" />
 
         <EditText
             android:id="@+id/editTextNumeroTelefono"
@@ -82,11 +89,13 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="NUMERO DI TELEFONO"
+            android:hint="@string/reg_contatto"
             android:inputType="text"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/dark_gray" />
+            android:textColorHint="@color/dark_gray"
+            android:autofillHints="phone" />
 
         <TextView
             android:id="@+id/coordinateLocale"
@@ -95,8 +104,9 @@
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="seleziona LUOGO"
+            android:hint="@string/luogo"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:textColor="@color/black"
@@ -115,21 +125,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ANNULLA"
-                android:textSize="17sp"
+                android:text="@string/annulla"
                 app:cornerRadius="10dp" />
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="5dp" />
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
 
             <Button
                 android:id="@+id/buttonSalvaRegistrazioneLocale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SALVA"
-                android:textSize="17sp"
+                android:text="@string/salva"
                 app:cornerRadius="10dp" />
         </LinearLayout>
 
@@ -138,17 +146,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Sei un nuovo utente?"
+            android:text="@string/sei_utente"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/buttonGoRegistrazioneUtente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/utente"
-            android:textSize="17sp"
+            android:text="@string/nuovo_utente"
             app:cornerRadius="10dp" />
     </LinearLayout>
 

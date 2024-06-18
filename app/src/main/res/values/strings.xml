@@ -1,30 +1,85 @@
 <resources>
-    <string name="app_name">Mapty</string>
+    <string name="app_name">MAPTY</string>
 
-    <string name="descrizione">Descrizione: </string>
-    <string name="nome">Nome: </string>
-    <string name="tipo">Tipo: </string>
-    <string name="luogo">Luogo: </string>
-    <string name="data">Data: </string>
-    <string name="prezzo">Prezzo: </string>
-    <string name="contatto">Contatto: </string>
-    <string name="aggiunge_evento">AGGIUNGI EVENTO </string>
+    <!-- stringhe nella main activity-->
+    <string name="login">LOGIN</string>
+
+    <string name="accedi">ACCEDI</string>
+    <string name="oppure">OPPURE</string>
+    <string name="registrati">REGISTRATI</string>
+
+    <!-- info registrazione -->
+    <string name="dati_personali">inserisci i tuoi dati:</string>
+    <string name="nuovo_locale">registrazione  LOCALE</string>
+    <string name="nuovo_utente">registrazione  UTENTE</string>
+    <string name="sei_utente">Sei un nuovo Utente?</string>
+    <string name="sei_locale">Sei gestore di un Locale?</string>
+
+    <string name="email">EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="reg_user">USERNAME</string>
+    <string name="reg_nome">NOME</string>
+    <string name="reg_cognome">COGNOME</string>
+    <string name="reg_locale">NOME LOCALE</string>
+    <string name="reg_contatto">NUMERO DI TELEFONO</string>
+
+    <!-- info utente -->
+    <string name="userneme">Username</string>
+    <string name="nome">Nome </string>
+    <string name="cognome">Cognome</string>
+
+    <!-- info locale -->
+    <string name="nome_locale">Nome Locale</string>
+    <string name="luogo">Seleziona Luogo </string>
+    <string name="contatto">Contatto </string>
+
+    <!-- info evento -->
+    <string name="nome_evento">Nome Evento</string>
+    <string name="descrizione">Descrizione </string>
+    <string name="tipo">Tipo Evento:</string>
+    <string name="data">Data </string>
+    <string name="ora_inizio">Ora Inizio</string>
+    <string name="ora_fine">Ora Fine</string>
+    <string name="prezzo">Prezzo </string>
+
+    <!-- stringhe menu -->
+    <string name="aggiungi_evento">AGGIUNGI EVENTO </string>
     <string name="home">HOME</string>
     <string name="wishlist">WISHLIST</string>
     <string name="profile">PROFILO</string>
-    <string name="registrati">REGISTRATI</string>
-    <string name="oppure">OPPURE</string>
-    <string name="password">PASSWORD</string>
-    <string name="email">EMAIL</string>
-    <string name="login">LOGIN</string>
-    <string name="mapty">MAPTY</string>
 
-    <string name="SELEZIONA">Select Item</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="locale">registrazione  LOCALE</string>
-    <string name="utente">registrazione  UTENTE</string>
+    <!-- stringhe pulsanti e testi-->
+    <string name="indietro">INDIETRO</string>
+    <string name="logout">LOGOUT</string>
+
+    <string name="scegli">SCEGLI IL TIPO DI EVENTO</string>
+
+    <string name="rating_label">numero stelle media di recensioni</string>
+
+    <string name="eventi">EVENTI</string>
+    <string name="passati">PASSATI</string>
+    <string name="futuri">FUTURI</string>
+
+    <string name="warning_nessun_evento">nessun evento trovato</string>
+    <string name="warning_wishlist_vuota">nessun evento è stato inserito in wishlist</string>
+    <string name="warningo_likelist_vuota">nessun locale è stato inserito tra i preferiti</string>
+
+    <string name="nuovo_evento">crea un NUOVO EVENTO</string>
     <string name="aggiungi">AGGIUNGI</string>
-    <string name="accedi">ACCEDI</string>
+    <string name="svuota">SVUOTA TUTTO</string>
+
+    <string name="modifica_evento">modifica EVENTO</string>
+    <string name="modifica">MODIFICA</string>
+    <string name="elimina">ELIMINA</string>
+    <string name="annulla">ANNULLA</string>
+    <string name="salva">SALVA</string>
+
+    <string name="foto">FOTO</string>
+
+
+    <string name="seleziona">Select Item</string>
+
+
+
 
 </resources>

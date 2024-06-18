@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Nome Locale"
             android:textColor="@color/lila"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_marginStart="10dp"
             android:text="indirizzo Locale"
             android:textColor="@color/white"
-            android:textSize="15dp"/>
+            android:textSize="15sp"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -6,12 +6,6 @@
     </style>
 
     <style name="Theme.Mapty" parent="Base.Theme.Mapty" />
-    
-    <style name="RoundCorner" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">20dp</item>
-        <item name="color">@color/black</item>
-    </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/white</item>

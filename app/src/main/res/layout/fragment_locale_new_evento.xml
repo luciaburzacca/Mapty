@@ -12,17 +12,18 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="crea un NUOVO EVENTO"
+            android:text="@string/nuovo_evento"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
 
 
         <EditText
@@ -32,11 +33,14 @@
             android:layout_marginTop="30dp"
             android:background="@color/lila"
             android:ems="10"
-            android:hint="NOME"
+            android:hint="@string/nome"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="name"
+            android:inputType="text" />
 
 
         <EditText
@@ -46,13 +50,15 @@
             android:layout_marginTop="20dp"
             android:background="@color/lila"
             android:ems="10"
-            android:hint="DESCRIZIONE"
+            android:hint="@string/descrizione"
             android:importantForAutofill="no"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:inputType="text" />
 
 
         <LinearLayout
@@ -68,9 +74,9 @@
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
-                android:text="Tipo evento:"
+                android:text="@string/tipo"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/spinnerTipoEvento"
@@ -88,8 +94,9 @@
             android:layout_marginTop="20dp"
             android:background="@color/lila"
             android:ems="10"
-            android:hint="seleziona LUOGO"
+            android:hint="@string/luogo"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:textColor="@color/black"
@@ -104,12 +111,13 @@
             android:clickable="true"
             android:ems="10"
             android:focusable="false"
-            android:hint="DATA"
+            android:hint="@string/data"
             android:importantForAutofill="no"
             android:inputType="text"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -126,10 +134,12 @@
                 android:background="@color/lila"
                 android:clickable="true"
                 android:focusable="false"
-                android:hint="ORA inizio"
+                android:hint="@string/ora_inizio"
                 android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="All" />
 
             <EditText
                 android:id="@+id/etOraFine"
@@ -140,10 +150,12 @@
                 android:background="@color/lila"
                 android:clickable="true"
                 android:focusable="false"
-                android:hint="ORA fine"
+                android:hint="@string/ora_fine"
                 android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="All" />
 
 
         </LinearLayout>
@@ -155,10 +167,11 @@
             android:layout_marginTop="20dp"
             android:background="@color/lila"
             android:ems="10"
-            android:hint="PREZZO"
+            android:hint="@string/prezzo"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -182,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SVUOTA TUTTO"
+                android:text="@string/svuota"
                 app:cornerRadius="10dp" />
 
             <Space
@@ -195,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="AGGIUNGI"
+                android:text="@string/aggiungi"
                 app:cornerRadius="10dp" />
 
         </LinearLayout>
