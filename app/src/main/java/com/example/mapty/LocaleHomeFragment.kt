@@ -39,9 +39,11 @@ class LocaleHomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_locale_home, container, false)
         recyclerView = view.findViewById(R.id.recycler_view_eventi_locale)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        eventiAdapter = AdapterEventi(eventiList) { evento ->
-            onEventoClicked(evento)
-        }
+        eventiAdapter = AdapterEventi(eventiList,
+            onItemClick = { evento ->
+                onEventoClicked(evento)
+            }
+        )
         recyclerView.adapter = eventiAdapter
         bottoneFuturi = view.findViewById(R.id.bottone_futuri)
         bottonePassati = view.findViewById(R.id.bottone_passati)

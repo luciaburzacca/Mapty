@@ -107,7 +107,7 @@ class LocaleNewEventoFragment : Fragment() {
         spinnerTipoEvento.adapter = adapter
 
         editTextDescrizioneEvento.filters = arrayOf(InputFilter.LengthFilter(150))
-        editTextDescrizioneEvento.setLines(5)
+        editTextDescrizioneEvento.setLines(3)
 
         return view
     }

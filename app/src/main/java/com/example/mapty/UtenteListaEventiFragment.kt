@@ -37,9 +37,11 @@ class UtenteListaEventiFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_utente_lista_eventi, container, false)
         recyclerView = view.findViewById(R.id.recycler_view_eventi_utente)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        eventiAdapter = AdapterEventi(eventiList) { evento ->
-            onEventoClicked(evento)
-        }
+        eventiAdapter = AdapterEventi(eventiList,
+            onItemClick = { evento ->
+                onEventoClicked(evento)
+            }
+        )
         recyclerView.adapter = eventiAdapter
         emptyView = view.findViewById(R.id.empty_view)
 
