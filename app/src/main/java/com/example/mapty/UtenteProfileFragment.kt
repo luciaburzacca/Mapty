@@ -14,16 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mapty.recycler_components.AdapterLocali
-import com.example.mapty.recycler_components.ItemEvento
-import com.example.mapty.recycler_components.ItemLocale
 import com.google.android.gms.tasks.Tasks
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.mapty.recycler_components.AdapterLocali
+import com.example.mapty.recycler_components.ItemLocale
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.firestore.firestore
 
 class UtenteProfileFragment : Fragment() {
 
@@ -41,7 +38,7 @@ class UtenteProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-        firestore = Firebase.firestore
+        firestore = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(
@@ -55,27 +52,29 @@ class UtenteProfileFragment : Fragment() {
         recyclerViewLocaliPreferiti = view.findViewById(R.id.recycler_view_locali_preferiti)
         recyclerViewLocaliPreferiti.layoutManager = LinearLayoutManager(context)
         adapterLocali = AdapterLocali(localiList) { itemLocale ->
-            //onLocaleClicked(itemLocale)
+            onLocaleClicked(itemLocale)
         }
         recyclerViewLocaliPreferiti.adapter = adapterLocali
         emptyView = view.findViewById(R.id.empty_view_utente_profilo)
 
+        val buttonLogoutUtente = view.findViewById<Button>(R.id.buttone_logout)
+
+        buttonLogoutUtente.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+
         return view
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val buttonLogoutUtente = view.findViewById<Button>(R.id.buttone_logout)
-
-        buttonLogoutUtente.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-        }
-
         val currentUser = auth.currentUser
         currentUser?.uid?.let { userId ->
+            // Recupera i dati utente
             firestore.collection("utenti").document(userId)
                 .get()
                 .addOnSuccessListener { document ->
@@ -85,18 +84,14 @@ class UtenteProfileFragment : Fragment() {
                         val cognome = document.getString("cognome") ?: ""
 
                         textViewUsername.text = username
-                        textViewNomeCognome.text = "$nome $cognome"
+                        "$nome $cognome".also { textViewNomeCognome.text = it }
                     } else {
                         Log.d("UtenteProfileFragment", "No such document")
                     }
                 }
                 .addOnFailureListener { exception ->
                     Log.d("UtenteProfileFragment", "get failed with ", exception)
-                    Toast.makeText(
-                        context,
-                        "Errore nel recupero dei dati utente",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(context, "Errore nel recupero dei dati utente", Toast.LENGTH_SHORT).show()
                 }
 
             firestore.collection("utenti").document(userId)
@@ -108,14 +103,14 @@ class UtenteProfileFragment : Fragment() {
                         val localeRef = document.getDocumentReference("localeRef")
                         localeRef?.get() ?: Tasks.forResult(null)
                     }
-                    /*Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
+                    Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
                         .addOnSuccessListener { localeDocuments ->
-                            for (localeDocument in localeDocuments) {
-                                if (localeDocument != null) {
+                            for ((index, localeDocument) in localeDocuments.withIndex()) {
+                                if (localeDocument.exists()) {
                                     val nomeLocale = localeDocument.getString("nomeLocale") ?: ""
                                     val posizioneLocale = localeDocument.getGeoPoint("posizioneLocale") ?: GeoPoint(0.0, 0.0)
                                     val localeId = localeDocument.id
-                                    val itemLocale = ItemLocale(nomeLocale, posizioneLocale, localeId)
+                                    val itemLocale = ItemLocale(localeId, nomeLocale, posizioneLocale)
                                     localiList.add(itemLocale)
                                 }
                             }
@@ -125,7 +120,7 @@ class UtenteProfileFragment : Fragment() {
                         .addOnFailureListener { exception ->
                             Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti", exception)
                             updateEmptyViewVisibility()
-                        }*/
+                        }
                 }
                 .addOnFailureListener { exception ->
                     Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti", exception)
@@ -145,9 +140,8 @@ class UtenteProfileFragment : Fragment() {
     }
 
     private fun onLocaleClicked(itemLocale: ItemLocale) {
-        val bundle = bundleOf("nomeLocale" to itemLocale.nomeLocale)
+        val bundle = bundleOf("localeId" to itemLocale.localeId)
         findNavController().navigate(R.id.action_utenteProfileFragment_to_utentePaginaLocaleFragment, bundle)
     }
 }
-
 
