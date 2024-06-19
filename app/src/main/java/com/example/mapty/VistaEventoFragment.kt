@@ -173,31 +173,36 @@ class VistaEventoFragment : Fragment() {
                     isPreferito = documentSnapshot.exists()
 
                     if (isPreferito) {
-                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite) //cuore pieno
+                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite)
                     } else {
-                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border) //cuore bordi
+                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
                     }
                     cuoreUtenteImageView.visibility = View.VISIBLE
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Errore nel verificare se l'evento è nei preferiti", exception)
-
                 }
         }
     }
+
 
     private fun aggiungiEventoPreferito() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val userId = currentUser.uid
 
+            val eventoRef = db.collection("eventos").document(eventoId)
+
+            val eventoPreferito = hashMapOf(
+                "eventoRef" to eventoRef
+            )
+
             db.collection("utenti")
                 .document(userId)
                 .collection("eventi_preferiti")
-                .document(eventoId) // Use the eventId as the document ID for consistency
-                .set(mapOf("idEvento" to eventoId))
+                .document(eventoId)
+                .set(eventoPreferito)
                 .addOnSuccessListener {
-
                     isPreferito = true
                     cuoreUtenteImageView.setImageResource(R.drawable.round_favorite)
                 }
@@ -206,6 +211,7 @@ class VistaEventoFragment : Fragment() {
                 }
         }
     }
+
 
     private fun rimuoviEventoPreferito() {
         val currentUser = auth.currentUser
@@ -218,7 +224,6 @@ class VistaEventoFragment : Fragment() {
                 .document(eventoId)
                 .delete()
                 .addOnSuccessListener {
-
                     isPreferito = false
                     cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
                 }
@@ -227,6 +232,7 @@ class VistaEventoFragment : Fragment() {
                 }
         }
     }
+
 
     private fun caricaDettagliEvento() {
         db.collection("eventos").document(eventoId).get()

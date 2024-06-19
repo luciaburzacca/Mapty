@@ -1,6 +1,7 @@
 package com.example.mapty
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,23 +15,36 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 class UtenteWishlistFragment : Fragment() {
 
-    /*private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var eventiAdapter: AdapterEventi
     private var eventiList: MutableList<ItemEvento> = mutableListOf()
     private lateinit var emptyView: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        firestore = Firebase.firestore
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_utente_wishlist, container, false)
+
         recyclerView = view.findViewById(R.id.recycler_view_eventi_wishlist)
         recyclerView.layoutManager = LinearLayoutManager(context)
         eventiAdapter = AdapterEventi(eventiList) { evento ->
@@ -44,74 +58,54 @@ class UtenteWishlistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        db = FirebaseFirestore.getInstance()
 
         caricaEventiPreferiti()
     }
 
     private fun caricaEventiPreferiti() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            val userEmail = currentUser.email
+        val currentUser = auth.currentUser
+        currentUser?.uid?.let { userId ->
+            firestore.collection("utenti").document(userId)
+                .collection("eventi_preferiti")
+                .get()
+                .addOnSuccessListener { preferitiDocuments ->
+                    if (preferitiDocuments.isEmpty) {
+                        updateEmptyView(true)
+                        return@addOnSuccessListener
+                    }
 
-            if (userEmail != null) {
-                db.collection("utenti")
-                    .whereEqualTo("email", userEmail)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        if (documents.isEmpty) {
-                            updateEmptyView(true)
-                        } else {
-                            val userId = documents.first().id
-                            db.collection("utenti")
-                                .document(userId)
-                                .collection("eventi_preferiti")
-                                .get()
-                                .addOnSuccessListener { preferitiDocuments ->
-                                    val preferitiIds = preferitiDocuments.mapNotNull { it.getString("idEvento") }
+                    val eventiFutures = preferitiDocuments.documents.map { document ->
+                        val eventoRef = document.getDocumentReference("eventoRef")
+                        eventoRef?.get()
+                    }
 
-                                    if (preferitiIds.isEmpty()) {
-                                        updateEmptyView(true)
-                                    } else {
-                                        caricaEventi(preferitiIds)
-                                    }
+                    Tasks.whenAllSuccess<DocumentSnapshot>(eventiFutures)
+                        .addOnSuccessListener { eventoDocuments ->
+                            val currentTime = System.currentTimeMillis()
+                            eventiList.clear()
+                            for (eventoDocument in eventoDocuments) {
+                                val evento = eventoDocument.toObject(ItemEvento::class.java)?.apply {
+                                    id = eventoDocument.id
                                 }
-                                .addOnFailureListener { exception ->
-                                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+                                if (evento != null && evento.dataFine > currentTime) {
+                                    eventiList.add(evento)
                                 }
+                            }
+                            eventiAdapter.notifyDataSetChanged()
+                            updateEmptyView(eventiList.isEmpty())
                         }
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
-                    }
-            } else {
-                updateEmptyView(true)
-            }
-        } else {
-            updateEmptyView(true)
-        }
-    }
-
-    private fun caricaEventi(preferitiIds: List<String>) {
-        val currentTime = System.currentTimeMillis()
-        db.collection("eventos")
-            .whereIn(FieldPath.documentId(), preferitiIds)
-            .whereGreaterThan("dataFine", currentTime)
-            .get()
-            .addOnSuccessListener { documents ->
-                eventiList.clear()
-                for (document in documents) {
-                    val evento = document.toObject(ItemEvento::class.java).apply {
-                        id = document.id  // Set the document ID
-                    }
-                    eventiList.add(evento)
+                        .addOnFailureListener { exception ->
+                            Log.d("UtenteWishlistFragment", "Errore nel recupero degli eventi", exception)
+                            Toast.makeText(context, "Errore nel recupero degli eventi", Toast.LENGTH_SHORT).show()
+                            updateEmptyView(true)
+                        }
                 }
-                eventiAdapter.notifyDataSetChanged()
-                updateEmptyView(eventiList.isEmpty())
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { exception ->
+                    Log.d("UtenteWishlistFragment", "Errore nel recupero dei dati", exception)
+                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
+                    updateEmptyView(true)
+                }
+        } ?: updateEmptyView(true)
     }
 
     private fun updateEmptyView(isEmpty: Boolean) {
@@ -127,122 +121,10 @@ class UtenteWishlistFragment : Fragment() {
     private fun onEventoClicked(evento: ItemEvento) {
         val bundle = bundleOf("eventoId" to evento.id)
         findNavController().navigate(R.id.action_utenteWishlistFragment_to_vistaEventoFragment, bundle)
-    }*/
-
-        private lateinit var db: FirebaseFirestore
-        private lateinit var recyclerView: RecyclerView
-        private lateinit var eventiAdapter: AdapterEventi
-        private var eventiList: MutableList<ItemEvento> = mutableListOf()
-        private lateinit var emptyView: TextView
-
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            val view = inflater.inflate(R.layout.fragment_utente_wishlist, container, false)
-            recyclerView = view.findViewById(R.id.recycler_view_eventi_wishlist)
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            eventiAdapter = AdapterEventi(eventiList) { evento ->
-                onEventoClicked(evento)
-            }
-            recyclerView.adapter = eventiAdapter
-            emptyView = view.findViewById(R.id.empty_view_wishlist)
-
-            return view
-        }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            db = FirebaseFirestore.getInstance()
-
-            caricaEventiPreferiti()
-        }
-
-    private fun caricaEventiPreferiti() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            val userEmail = currentUser.email
-
-            if (userEmail != null) {
-                db.collection("utenti")
-                    .whereEqualTo("email", userEmail)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        if (documents.isEmpty) {
-                            updateEmptyView(true)
-                        } else {
-                            val userId = documents.first().id
-                            db.collection("utenti")
-                                .document(userId)
-                                .collection("eventi_preferiti")
-                                .get()
-                                .addOnSuccessListener { preferitiDocuments ->
-                                    val preferitiIds = preferitiDocuments.documents.mapNotNull {
-                                        it.getString("idEvento")
-                                    }
-
-                                    if (preferitiIds.isEmpty()) {
-                                        updateEmptyView(true)
-                                    } else {
-                                        caricaEventi(preferitiIds)
-                                    }
-                                }
-                                .addOnFailureListener { exception ->
-                                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
-                                }
-                        }
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
-                    }
-            } else {
-                updateEmptyView(true)
-            }
-        } else {
-            updateEmptyView(true)
-        }
     }
-
-        private fun caricaEventi(preferitiIds: List<String>) {
-            val currentTime = System.currentTimeMillis()
-            db.collection("eventos")
-                .whereIn(FieldPath.documentId(), preferitiIds)
-                .whereGreaterThan("dataFine", currentTime)
-                .get()
-                .addOnSuccessListener { documents ->
-                    eventiList.clear()
-                    for (document in documents) {
-                        val evento = document.toObject(ItemEvento::class.java).apply {
-                            id = document.id  // Set the document ID
-                        }
-                        eventiList.add(evento)
-                    }
-                    eventiAdapter.notifyDataSetChanged()
-                    updateEmptyView(eventiList.isEmpty())
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(context, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show()
-                }
-        }
-
-
-    private fun updateEmptyView(isEmpty: Boolean) {
-            if (isEmpty) {
-                recyclerView.visibility = View.GONE
-                emptyView.visibility = View.VISIBLE
-            } else {
-                recyclerView.visibility = View.VISIBLE
-                emptyView.visibility = View.GONE
-            }
-        }
-
-        private fun onEventoClicked(evento: ItemEvento) {
-            val bundle = bundleOf("eventoId" to evento.id)
-            findNavController().navigate(R.id.action_utenteWishlistFragment_to_vistaEventoFragment, bundle)
-        }
-
-
 }
+
+
 
 
 

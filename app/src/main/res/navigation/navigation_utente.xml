@@ -74,7 +74,7 @@
         android:label="fragment_utente_pagina_locale"
         tools:layout="@layout/fragment_utente_pagina_locale" >
         <argument
-            android:name="nomeLocale"
+            android:name="localeId"
             app:argType="string" />
         <action
             android:id="@+id/action_utentePaginaLocaleFragment_to_vistaEventoFragment"
