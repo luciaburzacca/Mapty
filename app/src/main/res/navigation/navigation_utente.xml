@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_utenteHomeFragment_to_utenteFiltroEventiFragment"
             app:destination="@id/utenteFiltroEventiFragment" />
+        <action
+            android:id="@+id/action_utenteHomeFragment_to_vistaEventoFragment"
+            app:destination="@id/vistaEventoFragment" />
     </fragment>
 
     <fragment

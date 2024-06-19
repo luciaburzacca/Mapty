@@ -1,10 +1,13 @@
 package com.example.mapty
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import org.osmdroid.config.Configuration
@@ -22,8 +25,6 @@ class LocaleSelezionaMappaFragment : Fragment() {
 
     private var latitudine: Double? = null
     private var longitudine: Double? = null
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +78,11 @@ class LocaleSelezionaMappaFragment : Fragment() {
 
         marker = Marker(mapView)
         marker.position = geoPoint
+
+        // Resize the marker icon
+        val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64) // Adjust the width and height as needed
+        marker.icon = BitmapDrawable(resources, resizedIcon)
+
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         mapView.overlays.add(marker)
 
@@ -116,6 +122,12 @@ class LocaleSelezionaMappaFragment : Fragment() {
         selectedLocation = mapView.mapCenter as GeoPoint
         marker.position = selectedLocation
         mapView.invalidate()
+    }
+
+    private fun getResizedBitmap(drawableId: Int, width: Int, height: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(requireContext(), drawableId)
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        return Bitmap.createScaledBitmap(bitmap, width, height, false)
     }
 
     override fun onResume() {

@@ -3,6 +3,8 @@ package com.example.mapty
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.health.connect.datatypes.ExerciseRoute
 import android.location.Location
 import android.os.Bundle
@@ -20,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.findNavController
 
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
@@ -111,11 +114,14 @@ class UtenteHomeFragment : Fragment() {
                     if (dataFineMillis != null && dataFineMillis > System.currentTimeMillis()) {
                         // Event end date has not passed, read GeoPoint of the location
                         val firebaseGeoPoint = document.getGeoPoint("luogo")
+                        val nomeEvento = document.getString("nomeEvento") ?: ""
+                        val eventoId = document.id
+
                         if (firebaseGeoPoint != null) {
                             // Convert Firebase GeoPoint to OSMDroid GeoPoint
                             val osmGeoPoint = org.osmdroid.util.GeoPoint(firebaseGeoPoint.latitude, firebaseGeoPoint.longitude)
                             // Add a marker to the map
-                            addMarkerToMap(osmGeoPoint)
+                            addMarkerToMap(osmGeoPoint, nomeEvento, eventoId)
                         }
                     }
                 }
@@ -125,11 +131,27 @@ class UtenteHomeFragment : Fragment() {
             }
     }
 
-    private fun addMarkerToMap(geoPoint: GeoPoint) {
+    private fun getResizedBitmap(drawableId: Int, width: Int, height: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(requireContext(), drawableId)
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        return Bitmap.createScaledBitmap(bitmap, width, height, false)
+    }
+
+    private fun addMarkerToMap(geoPoint: GeoPoint, nomeEvento: String, eventoId: String) {
         val marker = Marker(mapView)
         marker.position = geoPoint
-        marker.title = "Event Location"
+        marker.title = nomeEvento
+
+        // Resize the marker icon
+        val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64) // Adjust the width and height as needed
+        marker.icon = BitmapDrawable(resources, resizedIcon)
+
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        marker.setOnMarkerClickListener { _, _ ->
+            val bundle = bundleOf("eventoId" to eventoId)
+            findNavController().navigate(R.id.action_utenteHomeFragment_to_vistaEventoFragment, bundle)
+            true
+        }
         mapView.overlays.add(marker)
         mapView.invalidate() // Refresh the map view
     }
@@ -152,3 +174,4 @@ class UtenteHomeFragment : Fragment() {
         mapView.onDetach()
     }
 }
+

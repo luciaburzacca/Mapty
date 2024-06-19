@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.text.InputFilter
 import android.util.Log
 import android.util.Patterns
 import android.widget.*
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.firestore
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -104,6 +106,9 @@ class LocaleNewEventoFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTipoEvento.adapter = adapter
 
+        editTextDescrizioneEvento.filters = arrayOf(InputFilter.LengthFilter(150))
+        editTextDescrizioneEvento.setLines(5)
+
         return view
     }
 
@@ -112,7 +117,9 @@ class LocaleNewEventoFragment : Fragment() {
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             editText.setText(String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year))
         }
-        DatePickerDialog(requireContext(), dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
+        val datePickerDialog = DatePickerDialog(requireContext(), dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))
+        datePickerDialog.datePicker.minDate = cal.timeInMillis
+        datePickerDialog.show()
     }
 
     private fun showTimePickerDialog(editText: EditText) {
@@ -169,10 +176,22 @@ class LocaleNewEventoFragment : Fragment() {
             return
         }
 
-        val cal = Calendar.getInstance()
+        val currentDate = Calendar.getInstance().time
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val eventDate: Date?
+        try {
+            eventDate = sdf.parse("$data $oraInizio")
+            if (eventDate != null && eventDate.before(currentDate)) {
+                Toast.makeText(context, "La data dell'evento non può essere nel passato", Toast.LENGTH_SHORT).show()
+                return
+            }
+        } catch (e: ParseException) {
+            Toast.makeText(context, "Formato data o ora non valido", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        cal.time = sdf.parse("$data $oraInizio")!!
+        val cal = Calendar.getInstance()
+        cal.time = eventDate!!
         val dataInizio = cal.timeInMillis
 
         cal.time = sdf.parse("$data $oraFine")!!
@@ -236,3 +255,4 @@ class LocaleNewEventoFragment : Fragment() {
     }
 
 }
+

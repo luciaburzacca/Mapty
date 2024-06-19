@@ -55,7 +55,7 @@ class UtenteProfileFragment : Fragment() {
         recyclerViewLocaliPreferiti = view.findViewById(R.id.recycler_view_locali_preferiti)
         recyclerViewLocaliPreferiti.layoutManager = LinearLayoutManager(context)
         adapterLocali = AdapterLocali(localiList) { itemLocale ->
-            onLocaleClicked(itemLocale)
+            //onLocaleClicked(itemLocale)
         }
         recyclerViewLocaliPreferiti.adapter = adapterLocali
         emptyView = view.findViewById(R.id.empty_view_utente_profilo)
@@ -108,7 +108,7 @@ class UtenteProfileFragment : Fragment() {
                         val localeRef = document.getDocumentReference("localeRef")
                         localeRef?.get() ?: Tasks.forResult(null)
                     }
-                    Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
+                    /*Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
                         .addOnSuccessListener { localeDocuments ->
                             for (localeDocument in localeDocuments) {
                                 if (localeDocument != null) {
@@ -125,7 +125,7 @@ class UtenteProfileFragment : Fragment() {
                         .addOnFailureListener { exception ->
                             Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti", exception)
                             updateEmptyViewVisibility()
-                        }
+                        }*/
                 }
                 .addOnFailureListener { exception ->
                     Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti", exception)
