@@ -9,8 +9,9 @@ data class ItemEvento(
         val tipo: String = "",
         val prezzo: String = "",
         val location: GeoPoint? = null,
-        val data: Long = 0L,
-        val dataFine: Long = 0L,
+        val data: Long = 0,
+        val dataFine: Long = 0,
         val nomeLocale: String? = "",
         val numeroTelefono: String = "",
-    )
+        var showCameraIcon: Boolean = false
+)

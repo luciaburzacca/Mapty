@@ -61,7 +61,7 @@
             android:inputType="textMultiLine"
             android:gravity="top|start"
             android:maxLength="150"
-            android:maxLines="5"/>
+            android:maxLines="3"/>
 
 
         <LinearLayout
