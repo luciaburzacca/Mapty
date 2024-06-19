@@ -58,7 +58,10 @@
             android:paddingBottom="6dp"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:inputType="text" />
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
+            android:maxLength="150"
+            android:maxLines="5"/>
 
 
         <LinearLayout
