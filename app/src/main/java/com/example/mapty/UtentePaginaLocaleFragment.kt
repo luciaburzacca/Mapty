@@ -58,9 +58,11 @@ class UtentePaginaLocaleFragment : Fragment() {
         imageViewStella = view.findViewById(R.id.imageViewStella)
         recyclerViewEventi = view.findViewById(R.id.recycler_view_locale)
         recyclerViewEventi.layoutManager = LinearLayoutManager(context)
-        eventiAdapter = AdapterEventi(eventiList) { evento ->
+        eventiAdapter = AdapterEventi(eventiList,
+        onItemClick = { evento ->
             onEventoClicked(evento)
         }
+        )
         recyclerViewEventi.adapter = eventiAdapter
 
         textViewMediaStelle = view.findViewById(R.id.textViewMediaStelle)
