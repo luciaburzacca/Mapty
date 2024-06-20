@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.mapty.MainActivity
+import com.example.mapty.registrazione_login.MainActivity
 import com.example.mapty.R
 import com.example.mapty.recycler_components.AdapterFoto
 import com.example.mapty.recycler_components.ItemFoto

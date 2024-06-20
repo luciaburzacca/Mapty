@@ -29,11 +29,11 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".UtenteActivity"
+            android:name=".utente.UtenteActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".registrazione_login.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

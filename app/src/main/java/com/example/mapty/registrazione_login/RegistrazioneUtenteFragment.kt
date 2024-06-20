@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.registrazione_login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
+import com.example.mapty.R
+import com.example.mapty.utente.UtenteActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers

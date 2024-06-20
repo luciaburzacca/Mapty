@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/utenteHomeFragment"
-        android:name="com.example.mapty.UtenteHomeFragment"
+        android:name="com.example.mapty.utente.UtenteHomeFragment"
         android:label="fragment_utente_home"
         tools:layout="@layout/fragment_utente_home" >
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/utenteListaEventiFragment"
-        android:name="com.example.mapty.UtenteListaEventiFragment"
+        android:name="com.example.mapty.utente.UtenteListaEventiFragment"
         android:label="fragment_utente_lista_eventi"
         tools:layout="@layout/fragment_utente_lista_eventi" >
         <argument
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/utenteWishlistFragment"
-        android:name="com.example.mapty.UtenteWishlistFragment"
+        android:name="com.example.mapty.utente.UtenteWishlistFragment"
         android:label="fragment_utente_wishlist"
         tools:layout="@layout/fragment_utente_wishlist" >
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/utenteProfileFragment"
-        android:name="com.example.mapty.UtenteProfileFragment"
+        android:name="com.example.mapty.utente.UtenteProfileFragment"
         android:label="fragment_utente_profile"
         tools:layout="@layout/fragment_utente_profile" >
         <action
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/utenteFiltroEventiFragment"
-        android:name="com.example.mapty.UtenteFiltroEventiFragment"
+        android:name="com.example.mapty.utente.UtenteFiltroEventiFragment"
         android:label="fragment_utente_filtro_eventi"
         tools:layout="@layout/fragment_utente_filtro_eventi" >
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/utentePaginaLocaleFragment"
-        android:name="com.example.mapty.UtentePaginaLocaleFragment"
+        android:name="com.example.mapty.utente.UtentePaginaLocaleFragment"
         android:label="fragment_utente_pagina_locale"
         tools:layout="@layout/fragment_utente_pagina_locale" >
         <argument
@@ -86,7 +86,7 @@
 
     <fragment
         android:id="@+id/vistaEventoFragment"
-        android:name="com.example.mapty.VistaEventoFragment"
+        android:name="com.example.mapty.evento.VistaEventoFragment"
         android:label="fragment_vista_evento"
         tools:layout="@layout/fragment_vista_evento" >
         <action

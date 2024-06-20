@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.evento
 
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import android.location.Location.distanceBetween
 import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -20,21 +19,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
-import android.health.connect.datatypes.ExerciseRoute
-import android.location.Location
 import android.provider.MediaStore
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.mapty.R
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream

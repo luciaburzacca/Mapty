@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.utente
 
 import android.os.Bundle
 import android.widget.Button

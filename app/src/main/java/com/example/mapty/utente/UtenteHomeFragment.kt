@@ -1,7 +1,6 @@
-package com.example.mapty
+package com.example.mapty.utente
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -17,20 +16,17 @@ import com.google.android.material.snackbar.Snackbar
 import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mapty.R
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.MapView
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-
 
 
 class UtenteHomeFragment : Fragment() {

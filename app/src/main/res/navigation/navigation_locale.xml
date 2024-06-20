@@ -38,7 +38,7 @@
         tools:layout="@layout/fragment_locale_seleziona_mappa" />
     <fragment
         android:id="@+id/vistaEventoFragment"
-        android:name="com.example.mapty.VistaEventoFragment"
+        android:name="com.example.mapty.evento.VistaEventoFragment"
         android:label="fragment_vista_evento"
         tools:layout="@layout/fragment_vista_evento" />
     <fragment

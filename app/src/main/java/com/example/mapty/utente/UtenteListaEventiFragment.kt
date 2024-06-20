@@ -1,7 +1,6 @@
-package com.example.mapty
+package com.example.mapty.utente
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -11,16 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mapty.databinding.FragmentUtenteListaEventiBinding
+import com.example.mapty.R
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Calendar
-import java.util.Date
 
 class UtenteListaEventiFragment : Fragment() {
 

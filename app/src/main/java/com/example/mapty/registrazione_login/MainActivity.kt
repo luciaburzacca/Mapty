@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.registrazione_login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.mapty.R
+import com.example.mapty.utente.UtenteActivity
 import com.example.mapty.locale.LocaleActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

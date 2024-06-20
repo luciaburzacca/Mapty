@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.utente
 
 import android.os.Bundle
 import android.util.Log
@@ -13,13 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mapty.R
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 class UtenteWishlistFragment : Fragment() {

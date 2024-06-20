@@ -1,6 +1,5 @@
-package com.example.mapty
+package com.example.mapty.utente
 
-import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -10,25 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.mapty.R
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.AdapterFoto
 import com.example.mapty.recycler_components.ItemEvento
 import com.example.mapty.recycler_components.ItemFoto
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Calendar
 import java.util.Locale
 
 

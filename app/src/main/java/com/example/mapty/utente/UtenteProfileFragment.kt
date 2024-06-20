@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.utente
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,12 +14,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mapty.R
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.mapty.recycler_components.AdapterLocali
 import com.example.mapty.recycler_components.ItemLocale
+import com.example.mapty.registrazione_login.MainActivity
 import com.google.firebase.firestore.GeoPoint
 
 class UtenteProfileFragment : Fragment() {
