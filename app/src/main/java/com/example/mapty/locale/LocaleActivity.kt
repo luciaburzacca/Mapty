@@ -1,13 +1,11 @@
-package com.example.mapty
+package com.example.mapty.locale
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.mapty.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class LocaleActivity : AppCompatActivity() {

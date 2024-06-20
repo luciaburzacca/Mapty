@@ -9,10 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import com.example.mapty.locale.LocaleActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 

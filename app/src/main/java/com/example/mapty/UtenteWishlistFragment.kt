@@ -22,7 +22,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-
 class UtenteWishlistFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
@@ -74,9 +73,18 @@ class UtenteWishlistFragment : Fragment() {
                         return@addOnSuccessListener
                     }
 
-                    val eventiFutures = preferitiDocuments.documents.map { document ->
+                    val eventiFutures = preferitiDocuments.documents.mapNotNull { document ->
                         val eventoRef = document.getDocumentReference("eventoRef")
-                        eventoRef?.get()
+                        eventoRef?.let {
+                            it.get().addOnFailureListener { exception ->
+                                Log.d("UtenteWishlistFragment", "Errore nel recupero dell'evento", exception)
+                            }
+                        }
+                    }
+
+                    if (eventiFutures.isEmpty()) {
+                        updateEmptyView(true)
+                        return@addOnSuccessListener
                     }
 
                     Tasks.whenAllSuccess<DocumentSnapshot>(eventiFutures)
@@ -123,9 +131,5 @@ class UtenteWishlistFragment : Fragment() {
         findNavController().navigate(R.id.action_utenteWishlistFragment_to_vistaEventoFragment, bundle)
     }
 }
-
-
-
-
 
 

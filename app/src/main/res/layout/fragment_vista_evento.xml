@@ -62,10 +62,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.5"
-
+                    android:src="@drawable/round_favorite_border"
                     app:tint="@color/white"
-                    tools:ignore="InvalidId"
-                    android:visibility="gone"
                     />
             </LinearLayout>
 

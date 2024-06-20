@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.locale
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.mapty.R
 import com.google.firebase.firestore.FirebaseFirestore
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
@@ -46,7 +47,6 @@ class LocaleSelezionaMappaFragment : Fragment() {
         val mapController = mapView.controller
         mapController.setZoom(15.0)
 
-        // Ottieni il nome del locale dai parametri passati
         val localeName = arguments?.getString("localeName")
 
         if (localeName != null) {

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/localeHomeFragment"
-        android:name="com.example.mapty.LocaleHomeFragment"
+        android:name="com.example.mapty.locale.LocaleHomeFragment"
         android:label="fragment_locale_home"
         tools:layout="@layout/fragment_locale_home" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/localeProfiloFragment"
-        android:name="com.example.mapty.LocaleProfiloFragment"
+        android:name="com.example.mapty.locale.LocaleProfiloFragment"
         android:label="fragment_locale_profilo"
         tools:layout="@layout/fragment_locale_profilo" />
     <fragment
         android:id="@+id/localeNewEventoFragment"
-        android:name="com.example.mapty.LocaleNewEventoFragment"
+        android:name="com.example.mapty.locale.LocaleNewEventoFragment"
         android:label="fragment_locale_new_evento"
         tools:layout="@layout/fragment_locale_new_evento">
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/localeSelezionaMappaFragment"
-        android:name="com.example.mapty.LocaleSelezionaMappaFragment"
+        android:name="com.example.mapty.locale.LocaleSelezionaMappaFragment"
         android:label="fragment_locale_seleziona_mappa"
         tools:layout="@layout/fragment_locale_seleziona_mappa" />
     <fragment
@@ -43,7 +43,7 @@
         tools:layout="@layout/fragment_vista_evento" />
     <fragment
         android:id="@+id/localeModificaEvento"
-        android:name="com.example.mapty.LocaleModificaEvento"
+        android:name="com.example.mapty.locale.LocaleModificaEvento"
         android:label="LocaleModificaEvento"
         tools:layout="@layout/fragment_locale_modifica_evento">
         <action

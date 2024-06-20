@@ -74,7 +74,6 @@ class UtenteProfileFragment : Fragment() {
 
         val currentUser = auth.currentUser
         currentUser?.uid?.let { userId ->
-            // Recupera i dati utente
             firestore.collection("utenti").document(userId)
                 .get()
                 .addOnSuccessListener { document ->
@@ -112,6 +111,8 @@ class UtenteProfileFragment : Fragment() {
                                     val localeId = localeDocument.id
                                     val itemLocale = ItemLocale(localeId, nomeLocale, posizioneLocale)
                                     localiList.add(itemLocale)
+                                } else {
+                                    Log.d("UtenteProfileFragment", "Il documento del locale preferito $index non esiste")
                                 }
                             }
                             adapterLocali.notifyDataSetChanged()
@@ -123,7 +124,7 @@ class UtenteProfileFragment : Fragment() {
                         }
                 }
                 .addOnFailureListener { exception ->
-                    Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti", exception)
+                    Log.d("UtenteProfileFragment", "Errore nel recupero dei locali preferiti dell'utente", exception)
                     updateEmptyViewVisibility()
                 }
         }

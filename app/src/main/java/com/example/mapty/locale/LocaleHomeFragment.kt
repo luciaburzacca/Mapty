@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.locale
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,13 +12,11 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mapty.R
 import com.example.mapty.recycler_components.AdapterEventi
 import com.example.mapty.recycler_components.ItemEvento
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class LocaleHomeFragment : Fragment() {
 

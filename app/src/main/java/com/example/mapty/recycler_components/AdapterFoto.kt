@@ -1,40 +1,47 @@
 package com.example.mapty.recycler_components
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mapty.R
 
-class AdapterFoto(
-    private val fotoList: List<ItemFoto>,
-    private val onItemClick: (ItemFoto) -> Unit
-) : RecyclerView.Adapter<AdapterFoto.FotoViewHolder>() {
+class AdapterFoto(private val fotoList: List<ItemFoto>, private val onItemClick: (ItemFoto) -> Unit) :
+    RecyclerView.Adapter<AdapterFoto.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FotoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_foto, parent, false)
-        return FotoViewHolder(view)
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val imageViewFoto: ImageView = itemView.findViewById(R.id.imageView)
+
+        fun bind(itemFoto: ItemFoto) {
+            Glide.with(itemView.context)
+                .load(itemFoto.url)
+                .centerCrop()
+                .into(imageViewFoto)
+
+            // Handle click event
+            itemView.setOnClickListener {
+                onItemClick(itemFoto)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: FotoViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_foto, parent, false)
+        val size = parent.measuredWidth / 3 // Divide per 3 per una griglia a 3 colonne
+        view.layoutParams.width = size
+        view.layoutParams.height = size
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemFoto = fotoList[position]
-
-        Glide.with(holder.itemView.context)
-            .load(itemFoto.url)
-            .error(R.drawable.img_2 )
-            .into(holder.imageView)
-
-        holder.itemView.setOnClickListener {
-            onItemClick(itemFoto)
-        }
+        holder.bind(itemFoto)
     }
 
     override fun getItemCount(): Int {
         return fotoList.size
     }
-
-    inner class FotoViewHolder(itemView: android.view.View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
-    }
 }
+

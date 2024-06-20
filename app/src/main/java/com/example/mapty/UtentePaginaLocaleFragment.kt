@@ -47,7 +47,7 @@ class UtentePaginaLocaleFragment : Fragment() {
     private lateinit var buttonShowListaEventiLocale: TextView
     private lateinit var buttonShowFotoLocale: TextView
     private var eventiList: MutableList<ItemEvento> = mutableListOf()
-    private var valore: Float = 0.0f
+    private var voto: Float = 0.0f
     private lateinit var localeId: String
     private var isPreferito = false
 
@@ -86,8 +86,8 @@ class UtentePaginaLocaleFragment : Fragment() {
         }
 
         ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
-            valore = rating
-            salvaVotoLocale(valore)
+            voto = rating
+            salvaVotoLocale(voto)
         }
 
         imageViewStella.setOnClickListener {
@@ -99,7 +99,15 @@ class UtentePaginaLocaleFragment : Fragment() {
         }
 
         buttonShowFotoLocale.setOnClickListener {
+            buttonShowFotoLocale.setBackgroundResource(R.color.lila)
+            buttonShowListaEventiLocale.setBackgroundResource(R.color.dark_gray)
             caricaFotoLocale()
+        }
+
+        buttonShowListaEventiLocale.setOnClickListener {
+            buttonShowListaEventiLocale.setBackgroundResource(android.R.color.background_light)
+            buttonShowFotoLocale.setBackgroundResource(android.R.color.background_light)
+            caricaEventiLocale()
         }
 
 
@@ -148,7 +156,7 @@ class UtentePaginaLocaleFragment : Fragment() {
             val userId = currentUser.uid
 
             val votoUtente = hashMapOf(
-                "valore" to valoreVoto.toDouble()
+                "voto" to valoreVoto.toDouble()
             )
 
             db.collection("locali")
@@ -309,7 +317,7 @@ class UtentePaginaLocaleFragment : Fragment() {
 
                     if (conteggioVoti > 0) {
                         val mediaVoti = totaleVoti / conteggioVoti
-                        textViewMediaStelle.text = String.format(Locale.getDefault(), "%.1f", mediaVoti)
+                        textViewMediaStelle.text = String.format(Locale.getDefault(), "%.1f media dei voti", mediaVoti)
                     } else {
                         textViewMediaStelle.text = "Non ci sono ancora voti"
                     }
@@ -364,7 +372,10 @@ class UtentePaginaLocaleFragment : Fragment() {
         val imageViewFullScreen = dialogView.findViewById<ImageView>(R.id.viewFoto)
         val usernameTextView = dialogView.findViewById<TextView>(R.id.textViewUsername)
 
-        Glide.with(this).load(itemFoto.url).into(imageViewFullScreen)
+        Glide.with(requireContext())
+            .load(itemFoto.url)
+            .into(imageViewFullScreen)
+
         usernameTextView.text = itemFoto.nomeUtente
 
         val dialog = AlertDialog.Builder(requireContext())

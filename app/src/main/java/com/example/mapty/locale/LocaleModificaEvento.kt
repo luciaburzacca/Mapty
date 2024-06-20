@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.locale
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import com.example.mapty.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint

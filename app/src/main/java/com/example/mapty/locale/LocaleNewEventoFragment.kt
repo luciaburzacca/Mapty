@@ -1,4 +1,4 @@
-package com.example.mapty
+package com.example.mapty.locale
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,19 +8,14 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.text.InputFilter
 import android.util.Log
-import android.util.Patterns
 import android.widget.*
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.google.firebase.Firebase
+import com.example.mapty.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.firestore.firestore
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
