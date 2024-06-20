@@ -29,7 +29,6 @@ class RegistrazioneUtenteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_registrazione_utente, container, false)
     }
 
@@ -86,7 +85,7 @@ class RegistrazioneUtenteFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Verifica se il nome utente è unico usando Coroutine per operazioni asincrone
+            // Verifica se il nome utente è unico usando Coroutine
             GlobalScope.launch(Dispatchers.Main) {
                 try {
                     val result = db.collection("utenti").whereEqualTo("username", username).get().await()

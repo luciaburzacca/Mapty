@@ -75,7 +75,7 @@ class UtenteListaEventiFragment : Fragment() {
                 eventiList.clear()
                 for (document in documents) {
                     val evento = document.toObject(ItemEvento::class.java).apply {
-                        id = document.id  // Set the document ID
+                        id = document.id
                     }
                     eventiList.add(evento)
                 }

@@ -121,7 +121,6 @@ class VistaEventoFragment : Fragment() {
             }
         }
 
-        // Inizializza il LocationManager
         locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         caricaDettagliEvento { evento ->
@@ -179,7 +178,6 @@ class VistaEventoFragment : Fragment() {
         val geoPoint = evento.luogo ?: GeoPoint(0.0, 0.0)
         textViewLuogoEvento.text = "Latitudine: ${geoPoint.latitude}, \nLongitudine: ${geoPoint.longitude}"
 
-        // Salva la posizione dell'evento per un uso futuro
         userLocation = geoPoint
     }
 
@@ -372,8 +370,6 @@ class VistaEventoFragment : Fragment() {
                 REQUEST_LOCATION_PERMISSION
             )
         } else {
-            // Permesso già concesso
-            // Puoi aggiungere qui la logica per utilizzare la posizione dell'utente
         }
     }
 

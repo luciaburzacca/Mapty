@@ -40,19 +40,19 @@ class UtenteHomeFragment : Fragment() {
     private lateinit var eventiAdapter: AdapterEventi
     private var eventiList: MutableList<ItemEvento> = mutableListOf()
 
-    // Define the center GeoPoint for Piazza Cavour, Ancona
-    private val centerPoint = GeoPoint(43.6167, 13.5186) // Replace with actual coordinates of Piazza Cavour
+    // Definisce Piazza Cavour come centro del GeoPoint
+    private val centerPoint = GeoPoint(43.6167, 13.5186)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Initialize osmdroid configuration
+
         Configuration.getInstance().load(
             requireActivity().applicationContext,
             androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireActivity().applicationContext)
         )
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        // Initialize Firebase Firestore
+
         db = FirebaseFirestore.getInstance()
     }
 
@@ -88,7 +88,7 @@ class UtenteHomeFragment : Fragment() {
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.setMultiTouchControls(true)
 
-        // Set the view of the map and zoom to Piazza Cavour
+
         mapView.controller.setCenter(centerPoint)
         mapView.controller.setZoom(15.0)
     }
@@ -98,18 +98,18 @@ class UtenteHomeFragment : Fragment() {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    // Check if the end date of the event has not passed
-                    val dataFineMillis = document.getLong("dataFine") // Assuming dataFine is stored as a long in milliseconds
+
+                    val dataFineMillis = document.getLong("dataFine")
                     if (dataFineMillis != null && dataFineMillis > System.currentTimeMillis()) {
-                        // Event end date has not passed, read GeoPoint of the location
+
                         val firebaseGeoPoint = document.getGeoPoint("luogo")
                         val nomeEvento = document.getString("nomeEvento") ?: ""
                         val eventoId = document.id
 
                         if (firebaseGeoPoint != null) {
-                            // Convert Firebase GeoPoint to OSMDroid GeoPoint
+
                             val osmGeoPoint = org.osmdroid.util.GeoPoint(firebaseGeoPoint.latitude, firebaseGeoPoint.longitude)
-                            // Add a marker to the map
+
                             addMarkerToMap(osmGeoPoint, nomeEvento, eventoId)
                         }
                     }
@@ -131,8 +131,8 @@ class UtenteHomeFragment : Fragment() {
         marker.position = geoPoint
         marker.title = nomeEvento
 
-        // Resize the marker icon
-        val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64) // Adjust the width and height as needed
+
+        val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64)
         marker.icon = BitmapDrawable(resources, resizedIcon)
 
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
@@ -142,7 +142,7 @@ class UtenteHomeFragment : Fragment() {
             true
         }
         mapView.overlays.add(marker)
-        mapView.invalidate() // Refresh the map view
+        mapView.invalidate()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -159,7 +159,7 @@ class UtenteHomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Release resources when the fragment is destroyed
+
         mapView.onDetach()
     }
 }

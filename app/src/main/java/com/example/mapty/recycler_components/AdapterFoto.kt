@@ -20,7 +20,6 @@ class AdapterFoto(private val fotoList: List<ItemFoto>, private val onItemClick:
                 .centerCrop()
                 .into(imageViewFoto)
 
-            // Handle click event
             itemView.setOnClickListener {
                 onItemClick(itemFoto)
             }

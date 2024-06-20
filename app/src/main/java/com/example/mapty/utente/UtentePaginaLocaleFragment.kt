@@ -339,7 +339,7 @@ class UtentePaginaLocaleFragment : Fragment() {
                 val fotoList = mutableListOf<ItemFoto>()
                 for (document in documents) {
                     val url = document.getString("url") ?: ""
-                    val itemFoto = ItemFoto(url, "Nome Utente") // Assicurati di ottenere il nome utente dal documento se necessario
+                    val itemFoto = ItemFoto(url, "Nome Utente")
                     fotoList.add(itemFoto)
                 }
 

@@ -82,7 +82,7 @@ class LocaleProfiloFragment : Fragment() {
                     val localeId = document.id
 
                     calcolaMediaVoti(localeId)
-                    caricaFotoLocale(localeId) // Call to load photos as well
+                    caricaFotoLocale(localeId)
                     break
                 }
             }
@@ -142,7 +142,7 @@ class LocaleProfiloFragment : Fragment() {
                 val fotoList = mutableListOf<ItemFoto>()
                 for (document in documents) {
                     val url = document.getString("url") ?: ""
-                    val itemFoto = ItemFoto(url, "Nome Utente") // Replace with actual user name retrieval if needed
+                    val itemFoto = ItemFoto(url, "Nome Utente")
                     fotoList.add(itemFoto)
                 }
 
