@@ -62,7 +62,6 @@ class LocaleNewEventoFragment : Fragment() {
         buttonAnnullaEvento = view.findViewById(R.id.buttonAnnullaEvento)
         buttonAggiungiEvento = view.findViewById(R.id.buttonAggiungiEvento)
 
-        // Set DatePicker and TimePicker dialogs
         editTextData.setOnClickListener {
             showDatePickerDialog(editTextData)
         }
@@ -93,7 +92,6 @@ class LocaleNewEventoFragment : Fragment() {
             coordinateTextView.text = "Latitudine: $selectedLatitude, Longitudine: $selectedLongitude"
         }
 
-        // Popola lo spinner con tipi di evento
         val tipiEvento = arrayOf("Bar Party", "Beach Party", "Disco Party", "Films Night",
             "Karaoke", "Live Music", "Local Parties", "Raggaeton Party", "Slay Party", "Techno", "Thematic Party")
 

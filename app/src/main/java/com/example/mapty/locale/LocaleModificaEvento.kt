@@ -252,7 +252,6 @@ class LocaleModificaEvento : Fragment() {
         TimePickerDialog(requireContext(), timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
-    // Metodo per formattare la data
     private fun formatDate(milliseconds: Long?): String {
         if (milliseconds == null) return ""
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -261,7 +260,6 @@ class LocaleModificaEvento : Fragment() {
         return sdf.format(calendar.time)
     }
 
-    // Metodo per formattare l'ora
     private fun formatTime(milliseconds: Long?): String {
         if (milliseconds == null) return ""
         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -270,7 +268,6 @@ class LocaleModificaEvento : Fragment() {
         return sdf.format(calendar.time)
     }
 
-    // Metodo per ottenere l'indice dell'elemento selezionato nello Spinner
     private fun getSpinnerIndex(spinner: Spinner, item: String?): Int {
         val adapter = spinner.adapter
         if (adapter != null) {

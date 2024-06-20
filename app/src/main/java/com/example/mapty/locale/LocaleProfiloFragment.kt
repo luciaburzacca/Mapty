@@ -101,6 +101,7 @@ class LocaleProfiloFragment : Fragment() {
                 var conteggioVoti = 0
 
                 for (document in documents) {
+                    Log.d("Document", "Document data: ${document.data}")
                     val valoreVoto = document.getDouble("valore")
                     if (valoreVoto != null) {
                         totaleVoti += valoreVoto
@@ -110,9 +111,11 @@ class LocaleProfiloFragment : Fragment() {
 
                 if (conteggioVoti > 0) {
                     val mediaVoti = totaleVoti / conteggioVoti
+                    Log.d("MediaVoti", "Media voti: $mediaVoti")
                     textViewMediaStelleLocale.text =
                         String.format(Locale.getDefault(), "%.1f media dei voti", mediaVoti)
                 } else {
+                    Log.d("MediaVoti", "Nessun voto trovato")
                     textViewMediaStelleLocale.text = "Non ci sono ancora voti"
                 }
             }

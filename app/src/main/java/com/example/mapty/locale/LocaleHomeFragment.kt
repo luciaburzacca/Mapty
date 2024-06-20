@@ -128,11 +128,9 @@ class LocaleHomeFragment : Fragment() {
         val currentTime = System.currentTimeMillis()
 
         if (evento.dataFine < currentTime) {
-            // Evento passato: naviga verso VistaEventoFragment
             val bundle = bundleOf("eventoId" to evento.id)
             findNavController().navigate(R.id.action_localeHomeFragment_to_vistaEventoFragment, bundle)
         } else {
-            // Evento futuro: naviga verso LocaleModificaEventoFragment
             val bundle = bundleOf("eventoId" to evento.id)
             findNavController().navigate(R.id.action_localeHomeFragment_to_localeModificaEvento, bundle)
         }

@@ -77,7 +77,6 @@ class LocaleSelezionaMappaFragment : Fragment() {
         marker = Marker(mapView)
         marker.position = geoPoint
 
-        // Resize the marker icon
         val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64)
         marker.icon = BitmapDrawable(resources, resizedIcon)
 
@@ -108,10 +107,10 @@ class LocaleSelezionaMappaFragment : Fragment() {
                         return@addOnSuccessListener
                     }
                 }
-                callback(GeoPoint(43.6158, 13.5189)) // Centro di Ancona
+                callback(GeoPoint(43.6158, 13.5189)) // Piazza Cavour
             }
             .addOnFailureListener {
-                callback(GeoPoint(43.6158, 13.5189)) // Centro di Ancona
+                callback(GeoPoint(43.6158, 13.5189))
             }
     }
 
