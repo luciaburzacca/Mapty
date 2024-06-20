@@ -1,9 +1,8 @@
 package com.example.mapty
 
-import android.content.ContentValues.TAG
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,28 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.location.Location.distanceBetween
+import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.mapty.recycler_components.ItemEvento
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import android.Manifest
+import android.content.ContentValues.TAG
+import android.health.connect.datatypes.ExerciseRoute
+import android.location.Location
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.LocationServices
+import java.util.*
 
 class VistaEventoFragment : Fragment() {
 
@@ -29,6 +42,7 @@ class VistaEventoFragment : Fragment() {
     private lateinit var eventoId: String
 
     private var isPreferito = false
+    private var isUtenteLocale = false
 
     private lateinit var textViewNomeEvento: TextView
     private lateinit var textViewTipoEvento: TextView
@@ -40,6 +54,13 @@ class VistaEventoFragment : Fragment() {
     private lateinit var textViewLuogoEvento: TextView
     private lateinit var textViewDescrizioneEvento: TextView
 
+    private lateinit var fabCamera: FloatingActionButton
+    private lateinit var tornaIndietroButton: Button
+
+    private var userLocation: GeoPoint? = null
+
+    private val REQUEST_LOCATION_PERMISSION = 1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +71,8 @@ class VistaEventoFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         cuoreUtenteImageView = view.findViewById(R.id.cuore_utente)
+        fabCamera = view.findViewById(R.id.camera_fab)
+        tornaIndietroButton = view.findViewById(R.id.torna_indietro)
 
         textViewNomeEvento = view.findViewById(R.id.textViewNomeEvento)
         textViewTipoEvento = view.findViewById(R.id.textViewTipoEvent)
@@ -61,50 +84,11 @@ class VistaEventoFragment : Fragment() {
         textViewLuogoEvento = view.findViewById(R.id.textViewLuogoEvento)
         textViewDescrizioneEvento = view.findViewById(R.id.textViewDescrizioneEvento)
 
-
         eventoId = arguments?.getString("eventoId") ?: ""
 
-
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val emailUtente = currentUser.email
-
-            if (emailUtente != null) {
-
-                db.collection("locali")
-                    .whereEqualTo("email", emailUtente)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        if (!documents.isEmpty) {
-
-                            cuoreUtenteImageView.visibility = View.GONE
-                        } else {
-
-                            verificaUtenteNormale(emailUtente)
-                        }
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.e(TAG, "Errore nel recupero dei dati del locale", exception)
-                    }
-            }
+        tornaIndietroButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
-
-        cuoreUtenteImageView.setOnClickListener {
-            if (isPreferito) {
-
-                rimuoviEventoPreferito()
-            } else {
-
-                aggiungiEventoPreferito()
-            }
-        }
-
-        caricaDettagliEvento()
-
-        view.findViewById<Button>(R.id.torna_indietro).setOnClickListener {
-            findNavController().navigateUp()
-        }
-
 
         textViewNomeLocaleEvento.setOnClickListener {
             val currentUser = auth.currentUser
@@ -116,11 +100,10 @@ class VistaEventoFragment : Fragment() {
                         .get()
                         .addOnSuccessListener { documents ->
                             if (documents.isEmpty) {
-
                                 val bundle = bundleOf("nomeLocale" to textViewNomeLocaleEvento.text.toString())
                                 findNavController().navigate(R.id.action_vistaEventoFragment_to_utentePaginaLocaleFragment, bundle)
                             } else {
-
+                                // Do nothing if the user is a locale
                             }
                         }
                         .addOnFailureListener { exception ->
@@ -130,78 +113,119 @@ class VistaEventoFragment : Fragment() {
             }
         }
 
+        caricaDettagliEvento { evento ->
+            evento?.let {
+                textViewNomeEvento.text = it.nomeEvento
+                textViewTipoEvento.text = it.tipo
+                textViewDataEvento.text = formatDate(it.data)
+                textViewOraInizioEvento.text = formatTime(it.data)
+                textViewPrezzoEvento.text = "${it.prezzo}€"
+                textViewNomeLocaleEvento.text = it.nomeLocale
+                textViewNumeroTelefonoEvento.text = it.numeroTelefono
+                textViewDescrizioneEvento.text = it.descrizione
+
+                val geoPoint = it.luogo ?: GeoPoint(0.0, 0.0)
+                textViewLuogoEvento.text = "Latitudine: ${geoPoint.latitude}, \n" +
+                        "Longitudine: ${geoPoint.longitude}"
+
+                verificaUtenteLocale {
+                    if (!isUtenteLocale) {
+                        // Verifica la posizione e la data
+                        getUserLocation {
+                            checkProximityAndDate(it.data, it.dataFine, geoPoint)
+                        }
+                    }
+                }
+            }
+        }
+
+        cuoreUtenteImageView.setOnClickListener {
+            if (!isUtenteLocale) {
+                if (isPreferito) {
+                    rimuoviEventoPreferito()
+                } else {
+                    aggiungiEventoPreferito()
+                }
+            }
+        }
 
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        verificaEventoPreferito()
-    }
-
-    private fun verificaUtenteNormale(emailUtente: String) {
-        db.collection("utenti")
-            .whereEqualTo("email", emailUtente)
-            .get()
-            .addOnSuccessListener { documents ->
-                if (!documents.isEmpty) {
-
-                    cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
-                    cuoreUtenteImageView.visibility = View.VISIBLE
-                } else {
-
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.e(TAG, "Errore nel recupero dei dati dell'utente", exception)
-
-            }
-    }
-
-    private fun verificaEventoPreferito() {
+    private fun verificaUtenteLocale(onComplete: () -> Unit) {
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val userId = currentUser.uid
-
-            db.collection("utenti")
-                .document(userId)
-                .collection("eventi_preferiti")
-                .document(eventoId)
-                .get()
-                .addOnSuccessListener { documentSnapshot ->
-                    isPreferito = documentSnapshot.exists()
-
-                    if (isPreferito) {
-                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite)
-                    } else {
-                        cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
+            val emailUtente = currentUser.email
+            if (emailUtente != null) {
+                db.collection("locali")
+                    .whereEqualTo("email", emailUtente)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        isUtenteLocale = !documents.isEmpty
+                        if (!isUtenteLocale) {
+                            cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
+                        }
+                        onComplete()
                     }
-                    cuoreUtenteImageView.visibility = View.VISIBLE
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, "Errore nel verificare se l'evento è nei preferiti", exception)
-                }
+                    .addOnFailureListener { exception ->
+                        Log.e(TAG, "Errore nel verificare il tipo di utente", exception)
+                        onComplete()
+                    }
+            } else {
+                onComplete()
+            }
+        } else {
+            onComplete()
         }
     }
 
+    private fun caricaDettagliEvento(onEventoCaricato: (ItemEvento?) -> Unit) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val document = db.collection("eventos").document(eventoId).get().await()
+
+                if (document != null && document.exists()) {
+                    val evento = document.toObject(ItemEvento::class.java)
+                    if (evento != null) {
+                        onEventoCaricato(evento)
+                    } else {
+                        Toast.makeText(requireContext(), "Evento non trovato", Toast.LENGTH_SHORT).show()
+                        onEventoCaricato(null)
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Documento non trovato", Toast.LENGTH_SHORT).show()
+                    onEventoCaricato(null)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Errore nel recupero dei dati: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "Errore nel recupero dei dati", e)
+                onEventoCaricato(null)
+            }
+        }
+    }
+
+    private fun formatDate(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = Date(timestamp)
+        return sdf.format(date)
+    }
+
+    private fun formatTime(timestamp: Long): String {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val date = Date(timestamp)
+        return sdf.format(date)
+    }
 
     private fun aggiungiEventoPreferito() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val userId = currentUser.uid
 
-            val eventoRef = db.collection("eventos").document(eventoId)
-
-            val eventoPreferito = hashMapOf(
-                "eventoRef" to eventoRef
-            )
-
             db.collection("utenti")
                 .document(userId)
                 .collection("eventi_preferiti")
-                .document(eventoId)
-                .set(eventoPreferito)
+                .document(eventoId) // Use the eventId as the document ID for consistency
+                .set(mapOf("idEvento" to eventoId))
                 .addOnSuccessListener {
                     isPreferito = true
                     cuoreUtenteImageView.setImageResource(R.drawable.round_favorite)
@@ -211,7 +235,6 @@ class VistaEventoFragment : Fragment() {
                 }
         }
     }
-
 
     private fun rimuoviEventoPreferito() {
         val currentUser = auth.currentUser
@@ -233,56 +256,60 @@ class VistaEventoFragment : Fragment() {
         }
     }
 
-
-    private fun caricaDettagliEvento() {
-        db.collection("eventos").document(eventoId).get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val evento = document.toObject(ItemEvento::class.java)
-                    if (evento != null) {
-                        textViewNomeEvento.text = evento.nomeEvento
-                        textViewTipoEvento.text = evento.tipo
-                        textViewDataEvento.text = formatDate(evento.data)
-                        textViewOraInizioEvento.text = formatTime(evento.data)
-                        textViewPrezzoEvento.text = "${evento.prezzo}€"
-                        textViewNomeLocaleEvento.text = evento.nomeLocale
-                        textViewNumeroTelefonoEvento.text = evento.numeroTelefono.toString()
-
-                        // Check and handle the GeoPoint field
-                        if (evento.location != null) {
-                            val geoPoint = evento.location
-                            textViewLuogoEvento.text = "${geoPoint?.latitude}, ${geoPoint?.longitude}"
-                        } else {
-                            textViewLuogoEvento.text = "Posizione non disponibile"
-                        }
-
-                        textViewDescrizioneEvento.text = evento.descrizione
-                    } else {
-                        Toast.makeText(context, "Evento non trovato", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(context, "Documento non trovato", Toast.LENGTH_SHORT).show()
+    private fun getUserLocation(onLocationObtained: () -> Unit) {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
+            )
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    userLocation = GeoPoint(location.latitude, location.longitude)
                 }
+                onLocationObtained()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, "Errore nel recupero dei dati: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "Errore nell'ottenere la posizione dell'utente", exception)
+                onLocationObtained()
             }
     }
 
-
-
-    private fun formatDate(timestamp: Long): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val date = Date(timestamp)
-        return sdf.format(date)
+    private fun calculateDistance(point1: GeoPoint, point2: GeoPoint): Float {
+        val results = FloatArray(1)
+        Location.distanceBetween(
+            point1.latitude, point1.longitude,
+            point2.latitude, point2.longitude,
+            results
+        )
+        return results[0]
     }
 
-    private fun formatTime(timestamp: Long): String {
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val date = Date(timestamp)
-        return sdf.format(date)
-    }
+    private fun checkProximityAndDate(eventStartDate: Long, eventEndDate: Long, eventLocation: GeoPoint) {
+        val currentDate = System.currentTimeMillis()
 
+        if (currentDate in eventStartDate..eventEndDate) {
+            fabCamera.show()
+        } else {
+            fabCamera.hide()
+        }
+
+        userLocation?.let {
+            val distance = calculateDistance(it, eventLocation)
+            if (distance <= 5) {
+            }
+        }
+    }
 }
-
 
