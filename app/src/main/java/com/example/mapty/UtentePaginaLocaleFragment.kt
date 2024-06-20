@@ -1,5 +1,6 @@
 package com.example.mapty
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -13,13 +14,18 @@ import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mapty.recycler_components.AdapterEventi
+import com.example.mapty.recycler_components.AdapterFoto
 import com.example.mapty.recycler_components.ItemEvento
+import com.example.mapty.recycler_components.ItemFoto
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
@@ -38,6 +44,8 @@ class UtentePaginaLocaleFragment : Fragment() {
     private lateinit var textViewMediaStelle: TextView
     private lateinit var recyclerViewEventi: RecyclerView
     private lateinit var eventiAdapter: AdapterEventi
+    private lateinit var buttonShowListaEventiLocale: TextView
+    private lateinit var buttonShowFotoLocale: TextView
     private var eventiList: MutableList<ItemEvento> = mutableListOf()
     private var valore: Float = 0.0f
     private lateinit var localeId: String
@@ -58,6 +66,8 @@ class UtentePaginaLocaleFragment : Fragment() {
         imageViewStella = view.findViewById(R.id.imageViewStella)
         recyclerViewEventi = view.findViewById(R.id.recycler_view_locale)
         recyclerViewEventi.layoutManager = LinearLayoutManager(context)
+        buttonShowListaEventiLocale = view.findViewById(R.id.buttonShowListaEventiLocale)
+        buttonShowFotoLocale = view.findViewById(R.id.buttonShowFotoLocale)
         eventiAdapter = AdapterEventi(eventiList,
         onItemClick = { evento ->
             onEventoClicked(evento)
@@ -87,6 +97,11 @@ class UtentePaginaLocaleFragment : Fragment() {
                 aggiungiLocalePreferito()
             }
         }
+
+        buttonShowFotoLocale.setOnClickListener {
+            caricaFotoLocale()
+        }
+
 
         return view
     }
@@ -310,10 +325,54 @@ class UtentePaginaLocaleFragment : Fragment() {
         val bundle = bundleOf("eventoId" to evento.id)
         findNavController().navigate(R.id.action_utentePaginaLocaleFragment_to_vistaEventoFragment, bundle)
     }
+    private fun caricaFotoLocale() {
+        db.collection("locali")
+            .document(localeId)
+            .collection("foto")
+            .get()
+            .addOnSuccessListener { documents ->
+                val fotoList = mutableListOf<ItemFoto>()
+                for (document in documents) {
+                    val url = document.getString("url") ?: ""
+                    val itemFoto = ItemFoto(url, "Nome Utente") // Assicurati di ottenere il nome utente dal documento se necessario
+                    fotoList.add(itemFoto)
+                }
+
+                if (fotoList.isEmpty()) {
+                    Toast.makeText(context, "Non ci sono ancora foto per questo locale", Toast.LENGTH_SHORT).show()
+                } else {
+                    mostraFotoInRecyclerView(fotoList)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Errore nel recupero delle foto del locale", exception)
+                Toast.makeText(context, "Errore nel recupero delle foto del locale", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun mostraFotoInRecyclerView(fotoList: List<ItemFoto>) {
+        recyclerViewEventi.layoutManager = GridLayoutManager(context, 3)
+        val adapterFoto = AdapterFoto(fotoList) { itemFoto ->
+            mostraFotoSchermoIntero(itemFoto)
+        }
+        recyclerViewEventi.adapter = adapterFoto
+    }
+
+
+    private fun mostraFotoSchermoIntero(itemFoto: ItemFoto) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_foto_locale, null)
+        val imageViewFullScreen = dialogView.findViewById<ImageView>(R.id.viewFoto)
+        val usernameTextView = dialogView.findViewById<TextView>(R.id.textViewUsername)
+
+        Glide.with(this).load(itemFoto.url).into(imageViewFullScreen)
+        usernameTextView.text = itemFoto.nomeUtente
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        dialog.show()
+    }
 
 }
-
-
-
-
 

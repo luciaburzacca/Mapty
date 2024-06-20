@@ -57,7 +57,10 @@
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:gravity="top|start"
+            android:maxLength="150"
+            android:maxLines="3"/>
 
         <LinearLayout
             android:layout_width="match_parent"

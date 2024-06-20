@@ -6,29 +6,34 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mapty.R
+import com.google.firebase.firestore.GeoPoint
 
 class AdapterLocali(
     private val localiList: List<ItemLocale>,
-    private val onItemClick: (String) -> Unit
+    private val onItemClick: (ItemLocale) -> Unit
 ) : RecyclerView.Adapter<AdapterLocali.LocaleViewHolder>() {
 
     inner class LocaleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nomeLocale: TextView = itemView.findViewById(R.id.locale_nome)
-        val Posizione: TextView = itemView.findViewById(R.id.locale_indirizzo)
-
+        val posizione: TextView = itemView.findViewById(R.id.locale_indirizzo)
 
         fun bind(locale: ItemLocale) {
             nomeLocale.text = locale.nomeLocale
-            "Latitudine: ${locale.posizioneLocale?.latitude}, Longitudine: ${locale.posizioneLocale?.longitude}".also { Posizione.text = it }
+            if (locale.posizioneLocale != null) {
+                val latitudine = locale.posizioneLocale.latitude
+                val longitudine = locale.posizioneLocale.longitude
+                posizione.text = "Latitudine: $latitudine, Longitudine: $longitudine"
+            } else {
+                posizione.text = "Posizione non disponibile"
+            }
             itemView.setOnClickListener {
-                onItemClick(locale.localeId)
+                onItemClick(locale)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocaleViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_locale, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_locale, parent, false)
         return LocaleViewHolder(view)
     }
 
@@ -40,5 +45,6 @@ class AdapterLocali(
         return localiList.size
     }
 }
+
 
 

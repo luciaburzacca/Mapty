@@ -74,6 +74,12 @@ dependencies {
 
     implementation (libs.play.services.auth)
 
+    implementation (libs.kotlinx.coroutines.play.services)
+    implementation (libs.kotlinx.coroutines.core)
+
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
 
 
 }

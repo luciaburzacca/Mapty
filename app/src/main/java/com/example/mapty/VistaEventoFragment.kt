@@ -26,24 +26,35 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import android.Manifest
+import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Intent
+import android.graphics.Bitmap
 import android.health.connect.datatypes.ExerciseRoute
 import android.location.Location
+import android.provider.MediaStore
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class VistaEventoFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
 
-    private lateinit var cuoreUtenteImageView: ImageView
     private lateinit var eventoId: String
 
     private var isPreferito = false
     private var isUtenteLocale = false
 
+    private lateinit var userLocation: GeoPoint
+    private var fotoCaricata = false
+
+    private lateinit var cuoreUtenteImageView: ImageView
     private lateinit var textViewNomeEvento: TextView
     private lateinit var textViewTipoEvento: TextView
     private lateinit var textViewDataEvento: TextView
@@ -53,13 +64,12 @@ class VistaEventoFragment : Fragment() {
     private lateinit var textViewNumeroTelefonoEvento: TextView
     private lateinit var textViewLuogoEvento: TextView
     private lateinit var textViewDescrizioneEvento: TextView
-
     private lateinit var fabCamera: FloatingActionButton
     private lateinit var tornaIndietroButton: Button
 
-    private var userLocation: GeoPoint? = null
-
     private val REQUEST_LOCATION_PERMISSION = 1
+    private val REQUEST_IMAGE_CAPTURE = 2
+    private val REQUEST_CAMERA_PERMISSION = 3
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +79,7 @@ class VistaEventoFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         cuoreUtenteImageView = view.findViewById(R.id.cuore_utente)
         fabCamera = view.findViewById(R.id.camera_fab)
@@ -115,27 +126,8 @@ class VistaEventoFragment : Fragment() {
 
         caricaDettagliEvento { evento ->
             evento?.let {
-                textViewNomeEvento.text = it.nomeEvento
-                textViewTipoEvento.text = it.tipo
-                textViewDataEvento.text = formatDate(it.data)
-                textViewOraInizioEvento.text = formatTime(it.data)
-                textViewPrezzoEvento.text = "${it.prezzo}€"
-                textViewNomeLocaleEvento.text = it.nomeLocale
-                textViewNumeroTelefonoEvento.text = it.numeroTelefono
-                textViewDescrizioneEvento.text = it.descrizione
-
-                val geoPoint = it.luogo ?: GeoPoint(0.0, 0.0)
-                textViewLuogoEvento.text = "Latitudine: ${geoPoint.latitude}, \n" +
-                        "Longitudine: ${geoPoint.longitude}"
-
-                verificaUtenteLocale {
-                    if (!isUtenteLocale) {
-                        // Verifica la posizione e la data
-                        getUserLocation {
-                            checkProximityAndDate(it.data, it.dataFine, geoPoint)
-                        }
-                    }
-                }
+                updateUI(it)
+                verificaUtenteLocale()
             }
         }
 
@@ -149,10 +141,45 @@ class VistaEventoFragment : Fragment() {
             }
         }
 
+        if (!loadFabState()) {
+            fabCamera.hide()
+        }
+
+        fabCamera.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_CAMERA_PERMISSION
+                )
+            } else {
+                openCamera()
+            }
+        }
+
         return view
     }
 
-    private fun verificaUtenteLocale(onComplete: () -> Unit) {
+    private fun updateUI(evento: ItemEvento) {
+        textViewNomeEvento.text = evento.nomeEvento
+        textViewTipoEvento.text = evento.tipo
+        textViewDataEvento.text = formatDate(evento.data)
+        textViewOraInizioEvento.text = formatTime(evento.data)
+        textViewPrezzoEvento.text = "${evento.prezzo}€"
+        textViewNomeLocaleEvento.text = evento.nomeLocale
+        textViewNumeroTelefonoEvento.text = evento.numeroTelefono
+        textViewDescrizioneEvento.text = evento.descrizione
+
+        val geoPoint = evento.luogo ?: GeoPoint(0.0, 0.0)
+        textViewLuogoEvento.text = "Latitudine: ${geoPoint.latitude}, \n" +
+                "Longitudine: ${geoPoint.longitude}"
+    }
+
+    private fun verificaUtenteLocale() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val emailUtente = currentUser.email
@@ -165,43 +192,30 @@ class VistaEventoFragment : Fragment() {
                         if (!isUtenteLocale) {
                             cuoreUtenteImageView.setImageResource(R.drawable.round_favorite_border)
                         }
-                        onComplete()
                     }
                     .addOnFailureListener { exception ->
                         Log.e(TAG, "Errore nel verificare il tipo di utente", exception)
-                        onComplete()
                     }
-            } else {
-                onComplete()
             }
-        } else {
-            onComplete()
         }
     }
 
     private fun caricaDettagliEvento(onEventoCaricato: (ItemEvento?) -> Unit) {
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val document = db.collection("eventos").document(eventoId).get().await()
-
+        db.collection("eventos").document(eventoId)
+            .get()
+            .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val evento = document.toObject(ItemEvento::class.java)
-                    if (evento != null) {
-                        onEventoCaricato(evento)
-                    } else {
-                        Toast.makeText(requireContext(), "Evento non trovato", Toast.LENGTH_SHORT).show()
-                        onEventoCaricato(null)
-                    }
+                    onEventoCaricato(evento)
                 } else {
-                    Toast.makeText(requireContext(), "Documento non trovato", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Documento non trovato")
                     onEventoCaricato(null)
                 }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Errore nel recupero dei dati: ${e.message}", Toast.LENGTH_SHORT).show()
-                Log.e(TAG, "Errore nel recupero dei dati", e)
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Errore nel caricamento dell'evento", exception)
                 onEventoCaricato(null)
             }
-        }
     }
 
     private fun formatDate(timestamp: Long): String {
@@ -256,6 +270,156 @@ class VistaEventoFragment : Fragment() {
         }
     }
 
+    private fun openCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as? Bitmap
+            if (imageBitmap != null) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (::storage.isInitialized) {
+                        getUsernameAndUploadImage(imageBitmap)
+                    } else {
+                        Toast.makeText(requireContext(), "Errore: Firebase Storage non è inizializzato", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Errore: Immagine non catturata correttamente", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getUsernameAndUploadImage(bitmap: Bitmap) {
+        getUsernameFromFirestore { username ->
+            if (username != null) {
+                uploadImageToFirebase(bitmap, username)
+            } else {
+                Toast.makeText(requireContext(), "Username non disponibile", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getUsernameFromFirestore(onUsernameObtained: (String?) -> Unit) {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val emailUtente = currentUser.email
+            if (emailUtente != null) {
+                db.collection("utenti")
+                    .whereEqualTo("email", emailUtente)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            val username = documents.documents[0].getString("username")
+                            onUsernameObtained(username)
+                        } else {
+                            Log.e(TAG, "Documento utente non trovato per l'utente autenticato")
+                            onUsernameObtained(null)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e(TAG, "Errore nel cercare l'utente", exception)
+                        onUsernameObtained(null)
+                    }
+            } else {
+                Log.e(TAG, "Email utente non disponibile")
+                onUsernameObtained(null)
+            }
+        } else {
+            Log.e(TAG, "Utente non autenticato")
+            onUsernameObtained(null)
+        }
+    }
+
+    private fun uploadImageToFirebase(bitmap: Bitmap, username: String) {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        val storageRef = storage.reference
+        val imageRef = storageRef.child("images/${UUID.randomUUID()}.jpg")
+
+        val uploadTask = imageRef.putBytes(data)
+        uploadTask.addOnSuccessListener {
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                saveImageReference(uri.toString(), username)
+            }
+        }.addOnFailureListener { exception ->
+            Log.e(TAG, "Errore nel caricamento della foto", exception)
+            Toast.makeText(requireContext(), "Errore nel caricamento della foto", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveImageReference(imageUrl: String, username: String) {
+        val nomeLocale = textViewNomeLocaleEvento.text.toString()
+
+        val photoData = hashMapOf(
+            "url" to imageUrl,
+            "nomeUtente" to username
+        )
+
+        db.collection("locali")
+            .whereEqualTo("nomeLocale", nomeLocale)
+            .get()
+            .addOnSuccessListener { localeDocuments ->
+                if (!localeDocuments.isEmpty) {
+                    val localeDocument = localeDocuments.documents[0]
+                    db.collection("locali")
+                        .document(localeDocument.id)
+                        .collection("foto")
+                        .add(photoData)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
+                            fotoCaricata = true
+                            fabCamera.hide()
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e(TAG, "Errore nel salvataggio del riferimento della foto", exception)
+                            Toast.makeText(requireContext(), "Errore nel salvataggio del riferimento della foto", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Log.e(TAG, "Locale non trovato")
+                    Toast.makeText(requireContext(), "Locale non trovato", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Errore nel cercare il locale", exception)
+                Toast.makeText(requireContext(), "Errore nel cercare il locale", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadFabState(): Boolean {
+        val prefs = requireActivity().getSharedPreferences("FAB_PREFS", Activity.MODE_PRIVATE)
+        return prefs.getBoolean("fab_visible_$eventoId", true)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_LOCATION_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getUserLocation {}
+                }
+            }
+            REQUEST_CAMERA_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera()
+                } else {
+                    Toast.makeText(requireContext(), "Permesso per la fotocamera negato", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun getUserLocation(onLocationObtained: () -> Unit) {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(
@@ -286,30 +450,24 @@ class VistaEventoFragment : Fragment() {
             }
     }
 
-    private fun calculateDistance(point1: GeoPoint, point2: GeoPoint): Float {
-        val results = FloatArray(1)
-        Location.distanceBetween(
-            point1.latitude, point1.longitude,
-            point2.latitude, point2.longitude,
-            results
-        )
-        return results[0]
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
     }
 
-    private fun checkProximityAndDate(eventStartDate: Long, eventEndDate: Long, eventLocation: GeoPoint) {
-        val currentDate = System.currentTimeMillis()
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
 
-        if (currentDate in eventStartDate..eventEndDate) {
-            fabCamera.show()
-        } else {
-            fabCamera.hide()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
 
-        userLocation?.let {
-            val distance = calculateDistance(it, eventLocation)
-            if (distance <= 5) {
-            }
-        }
+    companion object {
+        private const val TAG = "VistaEventoFragment"
     }
 }
+
 

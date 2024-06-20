@@ -23,9 +23,6 @@ class LocaleSelezionaMappaFragment : Fragment() {
     private lateinit var marker: Marker
     private lateinit var db: FirebaseFirestore
 
-    private var latitudine: Double? = null
-    private var longitudine: Double? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +54,7 @@ class LocaleSelezionaMappaFragment : Fragment() {
                 setInitialLocation(geoPoint)
             }
         } else {
-            val initialLocation = GeoPoint(43.6158, 13.5189) // Centro di Ancona
+            val initialLocation = GeoPoint(43.6158, 13.5189)
             setInitialLocation(initialLocation)
         }
 
@@ -69,6 +66,7 @@ class LocaleSelezionaMappaFragment : Fragment() {
             parentFragmentManager.setFragmentResult("location_request", result)
             parentFragmentManager.popBackStack()
         }
+
     }
 
     private fun setInitialLocation(geoPoint: GeoPoint) {
@@ -80,7 +78,7 @@ class LocaleSelezionaMappaFragment : Fragment() {
         marker.position = geoPoint
 
         // Resize the marker icon
-        val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64) // Adjust the width and height as needed
+        val resizedIcon = getResizedBitmap(R.drawable.marker, 64, 64)
         marker.icon = BitmapDrawable(resources, resizedIcon)
 
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
@@ -110,7 +108,6 @@ class LocaleSelezionaMappaFragment : Fragment() {
                         return@addOnSuccessListener
                     }
                 }
-                // Se non ci sono risultati o le coordinate non sono valide, usa la posizione predefinita
                 callback(GeoPoint(43.6158, 13.5189)) // Centro di Ancona
             }
             .addOnFailureListener {
@@ -140,13 +137,4 @@ class LocaleSelezionaMappaFragment : Fragment() {
         mapView.onPause()
     }
 
-    /*companion object {
-        fun newInstance(): LocaleSelezionaMappaFragment {
-            val fragment = LocaleSelezionaMappaFragment()
-            val args = Bundle()
-            args.putString("localeName", localeName)
-            fragment.arguments = args
-            return fragment
-        }
-    }*/
 }

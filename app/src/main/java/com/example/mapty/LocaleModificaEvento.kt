@@ -19,9 +19,11 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
 
 class LocaleModificaEvento : Fragment() {
 
@@ -52,11 +54,10 @@ class LocaleModificaEvento : Fragment() {
         auth = FirebaseAuth.getInstance()
         eventoId = arguments?.getString("eventoId") ?: ""
 
-        // Imposta il listener per i risultati dei frammenti
-        setFragmentResultListener("mapSelectionRequestKey") { requestKey, bundle ->
-            latitudine = bundle.getDouble("latitudine")
-            longitudine = bundle.getDouble("longitudine")
-            coordinateEvento.text = "$latitudine, $longitudine"
+        setFragmentResultListener("location_request") { requestKey, bundle ->
+            latitudine = bundle.getDouble("latitude")
+            longitudine = bundle.getDouble("longitude")
+            "Latitudine: $latitudine, Longitudine: $longitudine".also { coordinateEvento.text = it }
         }
     }
 
@@ -78,17 +79,14 @@ class LocaleModificaEvento : Fragment() {
         buttonEliminaEvento = view.findViewById(R.id.buttonEliminaEvento)
         buttonModifica = view.findViewById(R.id.buttonModifica)
 
-        // Impostazione del dropdown per tipo evento
         val tipiEvento = arrayOf("Bar Party", "Beach Party", "Disco Party", "Films Night",
             "Karaoke", "Live Music", "Local Parties", "Raggaeton Party", "Slay Party", "Techno", "Thematic Party")
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipiEvento)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTipoEvento.adapter = adapter
 
-        // Recupero e popolamento dei dati dell'evento
         fetchEventDetails()
 
-        // Gestione dei click sui bottoni e campi di testo
         buttonAnnulla.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
@@ -102,7 +100,11 @@ class LocaleModificaEvento : Fragment() {
         }
 
         coordinateEvento.setOnClickListener {
-            findNavController().navigate(R.id.action_localeModificaEvento_to_localeSelezionaMappaFragment)
+            val bundle = Bundle().apply {
+                putDouble("latitudine", latitudine ?: 0.0)
+                putDouble("longitudine", longitudine ?: 0.0)
+            }
+            findNavController().navigate(R.id.action_localeModificaEvento_to_localeSelezionaMappaFragment, bundle)
         }
 
         etData.setOnClickListener {
@@ -120,7 +122,6 @@ class LocaleModificaEvento : Fragment() {
         return view
     }
 
-    // Metodo per il recupero dei dettagli dell'evento da Firestore
     private fun fetchEventDetails() {
         firestore.collection("eventos").document(eventoId)
             .get()
@@ -137,11 +138,14 @@ class LocaleModificaEvento : Fragment() {
                     nomeLocale = document.getString("nomeLocale") ?: ""
                     numeroTelefono = document.getString("numeroTelefono") ?: ""
 
-                    // Popolare coordinateEvento con latitudine e longitudine
-                    latitudine = document.getDouble("latitudine")
-                    longitudine = document.getDouble("longitudine")
-                    coordinateEvento.text = "$latitudine, $longitudine"
-
+                    val geoPoint = document.getGeoPoint("location")
+                    if (geoPoint != null) {
+                        latitudine = geoPoint.latitude
+                        longitudine = geoPoint.longitude
+                        "Latitudine: ${latitudine ?: ""}, Longitudine: ${longitudine ?: ""}".also { coordinateEvento.text = it }
+                    } else {
+                        "Coordinate".also { coordinateEvento.text = it }
+                    }
                 } else {
                     Toast.makeText(context, "Evento non trovato", Toast.LENGTH_SHORT).show()
                     requireActivity().supportFragmentManager.popBackStack()
@@ -153,7 +157,6 @@ class LocaleModificaEvento : Fragment() {
             }
     }
 
-    // Metodo per l'aggiornamento dell'evento su Firestore
     private fun updateEvento() {
         val nomeEvento = editNomeEvento.text.toString().trim()
         val descrizioneEvento = editDescrizioneEvento.text.toString().trim()
@@ -168,7 +171,6 @@ class LocaleModificaEvento : Fragment() {
             return
         }
 
-        // Convertire data e ora in millisecondi
         val cal = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
@@ -183,18 +185,18 @@ class LocaleModificaEvento : Fragment() {
             dataFine = cal.timeInMillis
         }
 
-        // Preparare i dati aggiornati dell'evento
+        val geoPoint = GeoPoint(latitudine!!, longitudine!!)
+
         val updatedEvento = hashMapOf(
             "nomeEvento" to nomeEvento,
             "descrizione" to descrizioneEvento,
             "tipo" to tipoEvento,
             "data" to dataInizio,
             "dataFine" to dataFine,
-            "prezzo" to prezzoEvento.toDouble(),
+            "prezzo" to prezzoEvento,
             "nomeLocale" to nomeLocale,
             "numeroTelefono" to numeroTelefono,
-            "latitudine" to latitudine,
-            "longitudine" to longitudine
+            "luogo" to geoPoint
         )
 
         firestore.collection("eventos").document(eventoId)
@@ -280,8 +282,3 @@ class LocaleModificaEvento : Fragment() {
         return 0
     }
 }
-
-
-
-
-
